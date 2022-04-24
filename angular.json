@@ -1,9 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "f413de34-86cb-4478-937b-2a701e31b1ed"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "modern-client": {
+    "common": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -13,25 +16,25 @@
           "strict": true
         }
       },
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "app",
+      "root": "projects/common",
+      "sourceRoot": "projects/common/src",
+      "prefix": "common",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/modern-client",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/common",
+            "index": "projects/common/src/index.html",
+            "main": "projects/common/src/main.ts",
+            "polyfills": "projects/common/src/polyfills.ts",
+            "tsConfig": "projects/common/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/common/src/favicon.ico",
+              "projects/common/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/common/src/styles.scss"
             ],
             "scripts": []
           },
@@ -51,8 +54,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "projects/common/src/environments/environment.ts",
+                  "with": "projects/common/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -72,10 +75,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "modern-client:build:production"
+              "browserTarget": "common:build:production"
             },
             "development": {
-              "browserTarget": "modern-client:build:development"
+              "browserTarget": "common:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,23 +86,231 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "modern-client:build"
+            "browserTarget": "common:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "main": "projects/common/src/test.ts",
+            "polyfills": "projects/common/src/polyfills.ts",
+            "tsConfig": "projects/common/tsconfig.spec.json",
+            "karmaConfig": "projects/common/karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/common/src/favicon.ico",
+              "projects/common/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/common/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "modern": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/modern",
+      "sourceRoot": "projects/modern/src",
+      "prefix": "modern",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/modern",
+            "index": "projects/modern/src/index.html",
+            "main": "projects/modern/src/main.ts",
+            "polyfills": "projects/modern/src/polyfills.ts",
+            "tsConfig": "projects/modern/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/modern/src/favicon.ico",
+              "projects/modern/src/assets"
+            ],
+            "styles": [
+              "projects/common/src/styles.scss",
+              "projects/modern/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/modern/src/environments/environment.ts",
+                  "with": "projects/modern/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "modern:build:production"
+            },
+            "development": {
+              "browserTarget": "modern:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "modern:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/modern/src/test.ts",
+            "polyfills": "projects/modern/src/polyfills.ts",
+            "tsConfig": "projects/modern/tsconfig.spec.json",
+            "karmaConfig": "projects/modern/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/modern/src/favicon.ico",
+              "projects/modern/src/assets"
+            ],
+            "styles": [
+              "projects/modern/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "deliverme": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/deliverme",
+      "sourceRoot": "projects/deliverme/src",
+      "prefix": "deliverme",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/deliverme",
+            "index": "projects/deliverme/src/index.html",
+            "main": "projects/deliverme/src/main.ts",
+            "polyfills": "projects/deliverme/src/polyfills.ts",
+            "tsConfig": "projects/deliverme/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/deliverme/src/favicon.ico",
+              "projects/deliverme/src/assets"
+            ],
+            "styles": [
+              "projects/common/src/styles.scss",
+              "projects/deliverme/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/deliverme/src/environments/environment.ts",
+                  "with": "projects/deliverme/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "deliverme:build:production"
+            },
+            "development": {
+              "browserTarget": "deliverme:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "deliverme:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/deliverme/src/test.ts",
+            "polyfills": "projects/deliverme/src/polyfills.ts",
+            "tsConfig": "projects/deliverme/tsconfig.spec.json",
+            "karmaConfig": "projects/deliverme/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/deliverme/src/favicon.ico",
+              "projects/deliverme/src/assets"
+            ],
+            "styles": [
+              "projects/deliverme/src/styles.scss"
             ],
             "scripts": []
           }
@@ -107,5 +318,5 @@
       }
     }
   },
-  "defaultProject": "modern-client"
+  "defaultProject": "modern"
 }
