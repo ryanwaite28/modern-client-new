@@ -1,0 +1,85 @@
+<div [ngSwitch]="!!you!.stripe_account_id && !!you!.stripe_account_verified">
+  <div *ngSwitchCase="false" class="card-box-1">
+    <div class="uk-card-body">
+      Your stripe account is not connected/valid. 
+      Go back to setting to finish connecting your stripe account. <br/>
+      <a [routerLink]="['/', 'modern', 'users', you.id, 'settings']">Settings</a>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="true">
+    <div class="border-grey-1 card-box-1">
+      <div class="uk-card-body">
+        <p class="text-3xl mb-3">Active Deliveries</p>
+      </div>
+    </div>
+    <div *ngFor="let delivery of current_deliverings" class="border-grey-1 card-box-1">
+      <deliverme-delivery-card
+        [delivery]="delivery"
+        [you]="you"
+        [showEmbeddedContent]="true"
+        [deliveryCardDisplayMode]="DeliveryCardDisplayMode.DEFAULT"
+        (deliveryCompleted)="onCurrentDeliveryCompleted(delivery)"
+      >
+        <div>
+          <span class="margin-right-10">
+            <button
+              *ngIf="!delivery.datetime_picked_up && !delivery.datetime_delivered"
+              type="button"
+              class="btn-primary-1"
+              [disabled]="loading"
+              (click)="unassignDelivery(delivery)"
+            >
+              Cancel Delivery
+            </button>
+          </span>
+  
+          <span class="margin-right-10">
+            <button
+              *ngIf="!delivery.datetime_picked_up && !delivery.datetime_delivered"
+              type="button"
+              class="btn-primary-1"
+              [disabled]="loading"
+              (click)="markDeliveryAsPickedUp(delivery)"
+            >
+              Mark As Picked Up
+            </button>
+          </span>
+  
+          <span class="margin-right-10">
+            <button
+              *ngIf="delivery.datetime_picked_up && !delivery.datetime_delivered"
+              type="button"
+              class="btn-primary-1"
+              [disabled]="loading"
+              (click)="markDeliveryAsDroppedOff(delivery)"
+            >
+              Mark As Dropped Off
+            </button>
+          </span>
+        </div>
+      </deliverme-delivery-card>
+    </div>
+    
+    <div class="card-box-1">
+      <div class="uk-card-body">
+        <p class="text-3xl mb-3">Past Deliveries</p>
+      </div>
+    </div>
+    <div *ngFor="let delivery of past_deliverings" class="margin-bottom-10">
+      <deliverme-delivery-card
+        [delivery]="delivery"
+        [you]="you"
+      ></deliverme-delivery-card>
+    </div>
+    <button
+      *ngIf="!end_reached_past"
+      type="submit"
+      class="btn-primary-1"
+      [disabled]="loading"
+      (click)="getDeliverings()"
+    >
+      Load More
+    </button>
+  </div>
+</div>

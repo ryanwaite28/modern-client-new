@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EnvironmentService } from 'projects/common/src/app/services/environment.service';
 
 @Component({
   selector: 'modern-welcome',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor() { }
+  apps: any[] = [];
+
+  constructor(
+    private envService: EnvironmentService
+  ) { }
 
   ngOnInit(): void {
+    this.apps = this.envService.APPS;
   }
 
 }

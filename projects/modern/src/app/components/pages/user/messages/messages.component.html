@@ -1,0 +1,121 @@
+<div class="card-box-1">
+  <div class="uk-card-body">
+    <ng-container [ngSwitch]="!!currentMessagingSelected">
+      <div class="messagings-container" *ngSwitchCase="false">
+        <div class="messagings-item transition" *ngFor="let m of messagings_list" (click)="setMessaging(m)">
+          <div class="messagings-item-inner">
+            <div class="user-icon-container-left">
+              <img
+                class="user-icon-circle"
+                [src]="(m.sender_id === you!.id ? m.user.icon_link : m.sender.icon_link) || './assets/img/anon.png'"
+              />
+            </div>
+            <p>
+              {{ m.sender_id === you!.id ? (m.user.firstname + ' ' + m.user.lastname) : (m.sender.firstname + ' ' + m.sender.lastname) }}
+              &nbsp; 
+              <span *ngIf="m.unread_messages_count && m.unread_messages_count > 0" class="badge badge-info">{{ m.unread_messages_count }}</span>
+              <br/>
+              <small class="text-grey"><em>{{ (m.created_at || m.createdAt) | date : 'MMM d, y (h:mm a)' }}</em></small>
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngSwitchCase="true">
+        <div class="border-grey-1 padding-10">
+          <button
+            (click)="unsetCurrentMessagingSelected()"
+            title="Load more"
+            class="btn-primary-1 btn-primary-1-small btn-primary-1-primary"
+            [disabled]="loading"
+          >
+            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back
+          </button>
+        </div>
+  
+        <div>
+          <div class="messages-item transition" *ngIf="!messages_list_end">
+            <button
+              (click)="getMessages()"
+              title="Load more"
+              class="btn-primary-1 btn-primary-1-small btn-primary-1-primary"
+              [disabled]="loading"
+            >
+              <i class="fas fa-sync"></i>
+              Load More
+            </button>
+          </div>
+  
+          <div class="messages-item transition" *ngFor="let m of messages_list">
+            <div class="messages-item-inner">
+              <div class="user-icon-container-{{ m.from.id === you!.id ? 'right' : 'left' }}">
+                <img
+                  class="user-icon-circle"
+                  [src]="(m.from.icon_link) || './assets/img/anon.png'"
+                />
+              </div>
+              <div class="message-text-{{ m.from.id === you!.id ? 'right' : 'left' }}">
+                <p>
+                  <a [routerLink]="['/', 'modern', 'users', m.from.id, 'home']">
+                   {{ m.from.firstname + ' ' + m.from.lastname }}
+                  </a>
+                  <br/>
+                  <span class="lead" [innerHTML]="m.body"></span>
+                  <br/>
+                  <small class="text-grey">
+                    <em>{{ m.created_at | date : 'MMM d, y (h:mm a)' }}</em>
+                  </small>
+                </p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="messages-item transition" *ngIf="userIsTyping">
+            <p class="text-grey">
+              <i class="fas fa-comment-dots"></i>
+              &nbsp;
+              <small>
+                <em>
+                  {{ 
+                    currentMessagingSelected.sender_id === you!.id
+                      ? currentMessagingSelected.user.firstname
+                      : currentMessagingSelected.sender.firstname
+                  }} is typing...
+                </em>
+              </small>
+            </p>
+          </div>
+  
+          <div class="messages-item transition">
+            <form class="" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+              <div class="uk-margin">
+                <span class="label-info">
+                  Body ({{ messageForm.value.body.length }}/{{ MSG_MAX_LENGTH }})
+                </span>
+                <textarea
+                  type="text"
+                  class="input-text-1"
+                  placeholder="Enter message..."
+                  rows="3"
+                  (keyup)="sendTypingSocketEvent()"
+                  formControlName="body"
+                ></textarea>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  title="Message this user"
+                  class="btn-primary-1"
+                  [disabled]="loading || !messageForm.value.body.trim().length"
+                >
+                  <i class="fas fa-paper-plane"></i>
+                  Send
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

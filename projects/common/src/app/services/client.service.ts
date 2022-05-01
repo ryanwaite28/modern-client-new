@@ -19,7 +19,7 @@ export class ClientService {
     private environmentService: EnvironmentService,
   ) {
     this.isProd = this.environmentService.PRODUCTION;
-    this.DOMAIN = this.environmentService.DOMAIN;
+    this.DOMAIN = this.environmentService.API_DOMAIN;
     const apiDomain = this.DOMAIN + '/apps';
     this.API_PREFIX = apiDomain;
   }

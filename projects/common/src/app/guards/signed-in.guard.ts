@@ -34,7 +34,7 @@ export class SignedInGuard implements CanActivate {
     return this.usersService.checkUserSession().pipe(
       map((you) => {
         if (!you) {
-          this.router.navigate(['/', 'modern', 'signin']);
+          this.router.navigate(['/', 'signin']);
         }
         return !!you;
       })

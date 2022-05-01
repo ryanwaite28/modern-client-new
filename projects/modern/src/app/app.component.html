@@ -1,9 +1,11 @@
-<div id="App">
+<div id="ModernApp" class="main-app-page-container flex flex-col">
   <modern-navbar></modern-navbar>
 
-  <section class="main">
+  <section class="main grow">
     <router-outlet></router-outlet>
   </section>
 
   <modern-footer></modern-footer>
+
+  <common-alerts-fragment></common-alerts-fragment>
 </div>

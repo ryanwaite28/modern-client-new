@@ -33,8 +33,17 @@ export class SignedOutGuard implements CanActivate {
   ): CanActivateReturn {
     return this.usersService.checkUserSession().pipe(
       map((you) => {
+        console.log(this, { route, state });
         if (!!you) {
-          this.router.navigate(['/', 'modern', 'users', you.id]);
+          const redirect = route.queryParams['redirect'];
+          if (redirect) {
+            const jwt = window.localStorage.getItem('rmw-modern-apps-jwt');
+            const redirectUrl = `${redirect}?jwt=${jwt}`;
+            window.location.href = redirectUrl;
+            return false;
+          }
+
+          this.router.navigate(['/', 'users', you.id]);
         }
         return !you;
       })

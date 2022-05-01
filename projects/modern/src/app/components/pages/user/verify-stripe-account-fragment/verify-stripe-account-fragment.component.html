@@ -1,0 +1,12 @@
+<div class="card-box-1">
+  <div class="uk-card-body">
+    <div *ngIf="results">
+      <p>{{ results.message }}</p>
+
+      <div *ngIf="results.error">
+        Go back to setting to finish connecting your stripe account. <br/>
+        <a [routerLink]="['/', 'users', you.id, 'settings']">Settings</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -15,6 +15,13 @@ export interface IFormSubmitEvent {
   photoInput: ElementRef<HTMLInputElement>;
 }
 
+export interface IUserSubscriptionInfo {
+  status: string,
+  active: boolean,
+  current_period_start: number,
+  current_period_end: number,
+}
+
 export interface IReaction extends ICommonModel {
   name: string;
 }
@@ -353,3 +360,10 @@ export type ServiceMethodResults<T = any> = {
 };
 
 export type ServiceMethodAsyncResults<T = any> = Promise<ServiceMethodResults<T>>;
+
+
+export interface INavigatorGeoLocation {
+  position: any,
+  lat:  number,
+  lng: number,
+}

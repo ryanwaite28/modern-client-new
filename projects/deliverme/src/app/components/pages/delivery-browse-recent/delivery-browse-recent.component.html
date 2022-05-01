@@ -1,0 +1,42 @@
+<div id="delivery-browse-recent-container">
+  <div class="page-container-1 middlr">
+    <div *ngIf="!deliveries.length" class="card-box-1">
+      <div class="uk-card-body">
+        <p class="text-3xl mb-3">None</p>
+      </div>
+    </div>
+  
+    <div class="">
+      <div *ngFor="let delivery of deliveries" class="margin-bottom-20">
+        <deliverme-delivery-card
+          [delivery]="delivery"
+          [deliveryCardDisplayMode]="DeliveryCardDisplayMode.BROWSE"
+          [showEmbeddedContent]="true"
+          [you]="you"
+        >
+          <div class="delivery-card-content-container">
+            <!-- Take this delivery? -->
+            <button
+              type="submit"
+              class="btn-primary-1"
+              [disabled]="loading"
+              (click)="assignDelivery(delivery)"
+            >
+              Take Delivery!
+            </button>
+          </div>
+        </deliverme-delivery-card>
+      </div>
+    </div>
+    
+    <button
+      *ngIf="!end_reached"
+      type="submit"
+      class="btn-primary-1"
+      [disabled]="loading"
+      (click)="getDeliveries()"
+    >
+      Load More
+    </button>
+  </div>
+</div>

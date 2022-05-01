@@ -1,0 +1,38 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { UserAuthGuard } from 'projects/common/src/app/guards/auth.guard';
+import { UserSubscriptionInfoResolver } from 'projects/common/src/app/resolvers/user-subscription-info.resolver';
+import { UserResolver } from 'projects/common/src/app/resolvers/user.resolver';
+import { HomePageComponent } from './components/pages/user-page/home-page/home-page.component';
+import { MechanicProfilePageComponent } from './components/pages/user-page/mechanic-profile-page/mechanic-profile-page.component';
+import { SettingsPageComponent } from './components/pages/user-page/settings-page/settings-page.component';
+import { UserPageComponent } from './components/pages/user-page/user-page.component';
+import { WelcomeComponent } from './components/pages/welcome/welcome.component';
+
+const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'welcome' },
+  { path: 'welcome', pathMatch: 'full', component: WelcomeComponent },
+
+  {
+    path: 'users/:user_id',
+    component: UserPageComponent,
+    resolve: {
+      user: UserResolver,
+      user_subscription_info: UserSubscriptionInfoResolver,
+    },
+    data: { authParamsProp: 'user_id' },
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
+  
+      { path: 'home', component: HomePageComponent },
+      { path: 'mechanic-profile', component: MechanicProfilePageComponent },
+      { path: 'settings', component: SettingsPageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
+    ]
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

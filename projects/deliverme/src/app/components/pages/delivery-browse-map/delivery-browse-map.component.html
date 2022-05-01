@@ -1,0 +1,39 @@
+<div id="delivery-browse-map-container">
+  <div class="page-container mx-auto">
+    <div class="browse-map-div-container">
+      <div #mapDiv class="browse-map-div mx-auto"></div>
+    </div>
+
+    <div class="p-2">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full block my-7 mx-auto text-center"
+        [disabled]="!coordinates || loading"
+        (click)="browseByCoordinates()"
+      >
+        Search This Area
+      </button>
+    </div>
+
+    <div class="">
+      <div *ngFor="let delivery of deliveries" class="mb-3">
+        <deliverme-delivery-card
+          [delivery]="delivery"
+          [deliveryCardDisplayMode]="DeliveryCardDisplayMode.BROWSE"
+          [showEmbeddedContent]="true"
+          [you]="you"
+        >
+          <div *ngIf="!!you && !delivery.carrier_id && you.id !== delivery.carrier_id" class="delivery-card-content-container">
+            <button
+              type="submit"
+              class="btn-primary-1"
+              [disabled]="loading"
+              (click)="assignDelivery(delivery)"
+            >
+              Take Delivery!
+            </button>
+          </div>
+        </deliverme-delivery-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,304 @@
-<p>settings works!</p>
+<div>
+  <div class="card-box-1">
+    <div class="p-3">
+      <p class="text-5xl">Settings</p>
+    </div>
+  </div>
+
+  <div class="card-box-1">
+    <div class="uk-card-body">
+      <form class="" [formGroup]="userInfoForm" (ngSubmit)="onSubmitUserInfoForm()">
+        <fieldset class="uk-fieldset">
+          <legend class="text-2xl">Basic Info</legend>
+          <br/>
+          
+          <div class="uk-child-width-expand@s" uk-grid>
+            <div class="mb-7">
+              <span class="label-info">
+                Username ({{ userInfoForm.value.username.length }}/{{ TEXT_FORM_LIMIT }})
+              </span>
+              <input class="input-text-1" type="text" placeholder="Username" formControlName="username" >
+            </div>
+            <div class="">
+              <span class="label-info">
+                Display Name ({{ userInfoForm.value.displayname.length }}/{{ TEXT_FORM_LIMIT }})
+              </span>
+              <input class="input-text-1" type="text" placeholder="Display Name" formControlName="displayname" >
+            </div>
+          </div>
+
+          <div class="mb-7">
+            <span class="label-info">
+              Email ({{ userInfoForm.value.email.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <input class="input-text-1" type="email" placeholder="Email" formControlName="email" >
+          </div>
+
+          <div class="mb-7">
+            <span class="label-info">
+              Bio ({{ userInfoForm.value.bio.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <textarea type="text" class="input-text-1" placeholder="Bio" rows="5" formControlName="bio"></textarea>
+          </div>
+
+          <!-- Map Container -->
+          
+          <div id="map-div"></div>
+          <div class="mb-7">
+            <span class="label-info">
+              Location (City and State | Current Location: {{ you!.location }})
+            </span>
+            <input type="text" id="location-input" class="input-text-1" placeholder="Enter a Location" />
+          </div>
+        </fieldset>
+  
+        <button
+          type="submit"
+          class="btn-primary-1"
+          [disabled]="!userInfoForm.valid || loading"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Phone -->
+  <div class="card-box-1">
+    <div class="uk-card-body">
+      <h3 class="text-2xl">Phone</h3>
+      <p>Change Phone Number</p>
+
+      <form class="" [formGroup]="phoneForm" (ngSubmit)="send_sms_verification()">
+        <div class="mb-7">
+          <span class="label-info">
+            Phone <small>10-11 digit number</small> <small *ngIf="you!.phone"> (current phone number: {{ you!.phone }})</small>
+          </span>
+          <input class="input-text-1" type="text" placeholder="Phone" formControlName="phone" >
+        </div>
+        
+        <button type="submit" class=btn-primary-1
+          [disabled]="phone_is_verified || verification_requested_successfully || !phoneForm.valid || '1' + phoneForm.value.phone === you!.phone">
+          Submit
+        </button>
+      </form>
+
+      <br/>
+
+      <form class="" *ngIf="verification_requested_successfully" [formGroup]="phoneVerifyForm" (ngSubmit)="verify_sms_code()">
+        <div class="mb-7">
+          <span class="label-info">
+            Enter verification code 
+          </span>
+          <input class="input-text-1" type="text" placeholder="Enter code" formControlName="code" >
+        </div>
+
+        <button type="submit" class=btn-primary-1
+          [disabled]="phone_is_verified || !phoneVerifyForm.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card-box-1">
+    <div class="uk-card-body">
+      <form class="" [formGroup]="userPasswordForm" (ngSubmit)="onSubmitUserPasswordForm()">
+        <fieldset class="uk-fieldset">
+          <legend class="text-2xl">Password</legend>
+          <br/>
+          
+          <div class="mb-7">
+            <span class="label-info">
+              Old Password ({{ userPasswordForm.value.oldPassword.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <input class="input-text-1" type="password" placeholder="Old Password" formControlName="oldPassword" >
+          </div>
+          <div class="mb-7">
+            <span class="label-info">
+              Password ({{ userPasswordForm.value.password.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <input class="input-text-1" type="password" placeholder="Password" formControlName="password" >
+          </div>
+          <div class="mb-7">
+            <span class="label-info">
+              Confirm Password ({{ userPasswordForm.value.confirmPassword.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <input class="input-text-1" type="password" placeholder="Confirm Password" formControlName="confirmPassword" >
+          </div>
+        </fieldset>
+  
+        <button
+          type="submit"
+          class=btn-primary-1
+          [disabled]="!userPasswordForm.valid || loading"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Icon -->
+  <div class="card-box-1">
+    <div class="uk-card-body">
+      <h3 class="text-2xl">Icon</h3>
+      <form
+        #userIconFormElm
+        [formGroup]="userIconForm"
+        (ngSubmit)="onSubmitUserIconForm(userIconFormElm, iconInput)"
+      >
+        <div class="">
+          <input
+            #iconInput
+            type="file"
+            class=""
+            name="icon"
+            formControlName="file"
+          />
+        </div>
+        <br/>
+        <div class="form-group">
+          <button
+            type="submit"
+            class=btn-primary-1
+            [disabled]="userIconForm.invalid || loading"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Stripe account -->
+  <div class="card-box-1">
+    <div class="uk-card-body">
+      <h3 class="text-2xl">Stripe Account</h3>
+      
+      <ng-container [ngSwitch]="!!you!.stripe_account_id && !!you!.stripe_account_verified">
+        <a *ngSwitchCase="false" (click)="createStripeAccount()" class="stripe-connect"><span>Connect with</span></a>
+
+        <p *ngSwitchCase="true">You're connected!</p>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Stripe membership -->
+  <div class="card-box-1">
+    <div class="uk-card-body">
+      <h3 class="text-2xl mb-4">Membership</h3>
+      
+      <ng-container [ngSwitch]="!!platform_subscription">
+        <ng-container *ngSwitchCase="true" [ngSwitch]="platform_subscription.status">
+          <div *ngSwitchCase="'active'">
+            <div class="border px-4 py-3 rounded relative mb-3" [ngClass]="AlertDivClass.success">
+              <strong class="font-bold mr-3">You have an active membership!</strong>
+              <span>It will renew on {{ platform_subscription.current_period_end * 1000 | date }}</span>
+            </div>
+  
+            <button
+              type="button"
+              class=btn-primary-1
+              [disabled]="loading"
+              (click)="cancel_membership()"
+            >
+              Cancel Membership
+            </button>
+          </div>
+
+          <div *ngSwitchCase="'canceled'">
+            <div class="border px-4 py-3 rounded relative mb-3" [ngClass]="AlertDivClass.warning">
+              <strong class="font-bold mr-3">You have a canceled membership.</strong>
+              <span>It will expire on {{ platform_subscription.current_period_end * 1000 | date }}</span>
+            </div>
+          </div>
+        </ng-container>
+
+        <div *ngSwitchCase="false">
+          <p>Subscribe today for membership perks!</p>
+
+          <div class="uk-margin">
+            <span class="label-info">
+              Payment Method
+            </span>
+            <p *ngIf="!!payment_methods && !payment_methods.length" class="font-bold">
+              You do not have any payment methods (debit/credit card) linked to your account. Please go to your setting and add one.
+            </p>
+            <select *ngIf="!!payment_methods && !!payment_methods.length" class="input-text-1" [formControl]="membershipPaymentMethodControl">
+              <option *ngFor="let pm of payment_methods" [value]="pm.id">
+                {{ pm.card!.brand | uppercase }} ending in {{ pm.card!.last4 }} (expires: {{ pm.card!.exp_month }}/{{ pm.card!.exp_year }})
+              </option>
+            </select>
+          </div>
+
+          <button
+            type="button"
+            class=btn-primary-1
+            [disabled]="membershipPaymentMethodControl.invalid || loading"
+            (click)="create_membership()"
+          >
+            Submit
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Stripe Customer account -->
+  <div class="card-box-1">
+    <div class="uk-card-body">
+      <h3 class="text-2xl">Stripe Customer Account</h3>
+
+      <div class="mb-10">
+        <p class="mb-3">Add a debit/credit card to your customer account</p>
+        <div #newCardPaymentContainer id="new-card-payment-container"></div>
+        <button
+          [disabled]="loading || cardFormHasErrors" 
+          id="card-submit-button" 
+          class="bg-primary hover:bg-accent text-[color:white] cursor-pointer font-bold py-2 px-4 rounded mt-3"
+          [ngClass]="{ 'cursor-not-allowed': loading || cardFormHasErrors }"
+          type="button"
+          (click)="createPaymentMethod()"
+        >
+          Add Card
+        </button>
+
+        <div id="card-errors" role="alert"></div>
+      </div>
+
+
+
+      <div class="flex flex-col gap-3">
+        <h4>Your Cards</h4>
+        <div *ngFor="let pm of payment_methods" class="p-2 border-gray-1">
+          <p>
+            Brand: {{ pm.card!.brand | uppercase }}
+            <span class="mx-3">&bull;</span>
+            Last 4 Digits: {{ pm.card!.last4 }}
+            <span class="mx-3">&bull;</span>
+            Expires: {{ pm.card!.exp_month }}/{{ pm.card!.exp_year }}
+          </p>
+
+          <button
+            (click)="removePaymentMethod(pm)"
+            class=btn-primary-1
+            [disabled]="loading"
+          >
+            <i class="fas fa-times mr-2"></i>
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Key -->
+  <div class="card-box-1">
+    <div class="uk-card-body">
+      <h3 class="text-2xl">API Key</h3>
+      
+      <p *ngIf="apiKey">
+        Your API Key: <strong>{{ apiKey.key }}</strong>
+      </p>
+    </div>
+  </div>
+</div>

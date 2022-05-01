@@ -1,0 +1,84 @@
+.messagings-list {
+  border-right: 1px solid lightgrey;
+}
+
+.messagings-container {
+  border: 1px solid lightgrey;
+}
+
+.messagings-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  .messagings-item-inner {
+    overflow: hidden;
+
+    .user-icon-square {
+      float: left;
+      margin-right: 10px;
+    }
+  }
+}
+
+.messagings-item:hover {
+  background: #fbfbfb;
+  cursor: pointer;
+}
+
+.messages-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  .messages-item-inner {
+    overflow: hidden;
+
+    .user-icon-square {
+      float: left;
+      margin-right: 10px;
+    }
+
+    .message-text {
+      margin-left: 60px;
+      padding: 5px;
+      white-space: pre-wrap;
+    }
+  }
+}
+
+.messages-item:last-child,
+.messagings-item:last-child {
+  border-bottom: none;
+}
+
+.bg-message-you {
+  background: #00EF86;
+  border: 1px solid #00BB69;
+}
+
+.bg-message-other {
+  background: #eaeaea;
+  border: 1px solid #a9a9a9;
+}
+
+.user-icon-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 35px;
+}
+
+.user-icon-container-left img {
+  float: left;
+  margin-right: 10px;
+}
+.user-icon-container-right img {
+  float: right;
+  margin-left: 10px;
+}
+
+.message-text-left {
+  margin-left: 50px;
+  white-space: pre-wrap;
+}
+.message-text-right {
+  text-align: right;
+  margin-right: 50px;
+  white-space: pre-wrap;
+}

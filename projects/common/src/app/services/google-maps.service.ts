@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { PlainObject } from '../interfaces/json-object.interface';
+import { INavigatorGeoLocation } from '../interfaces/_common.interface';
 import { ClientService } from './client.service';
 
 @Injectable({
@@ -87,6 +88,7 @@ export class GoogleMapsService {
       console.log('already loading google maps...');
       return this.isReady();
     }
+
     return new Observable<any>((observer) => {
       if (!google_api_key) {
         const e = new TypeError(`google_api_key has no value; cannot load google maps`);
@@ -95,6 +97,7 @@ export class GoogleMapsService {
         observer.complete();
         return;
       }
+
       if (this.google) {
         this.isReadyStream.next(this.google);
         observer.next(this.google);
@@ -125,6 +128,7 @@ export class GoogleMapsService {
         document.body.removeChild(googleScript);
         observer.complete();
       };
+
       document.body.appendChild(googleScript);
     });
   }
@@ -286,7 +290,7 @@ export class GoogleMapsService {
     }
   }
 
-  getCurrentLocation() {
+  getCurrentLocation(): Observable<INavigatorGeoLocation> {
     // https://developers.google.com/web/fundamentals/native-hardware/user-location
     return new Observable((observer) => {
       // check for Geolocation support
@@ -305,14 +309,18 @@ export class GoogleMapsService {
 
       let nudgeTimeoutId = setTimeout(() => {}, 5000);
 
-      const geoSuccess = function(position: any) {
+      const geoSuccess = (position: any) => {
         // We have the location, don't display banner
         clearTimeout(nudgeTimeoutId);
         console.log(position);
-        observer.next(position);
+        observer.next({
+          position: position,
+          lat: position.coords.latitude as number,
+          lng: position.coords.longitude as number,
+        });
         observer.complete();
       };
-      const geoError = function(error: any) {
+      const geoError = (error: any) => {
         console.log(error);
 
         switch(error.code) {

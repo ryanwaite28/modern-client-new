@@ -1,0 +1,252 @@
+<div class="">
+  <div class="card-box-1 border-grey-1">
+    <div class="uk-child-width-expand@m" uk-grid>
+      <div class="uk-width-2-5@m conversations-list">
+        <div class="conversations-item">
+          <form
+            #conversationFormElm 
+            [formGroup]="conversationForm" 
+            (ngSubmit)="isEditingCurrentConversationSelected ? editConversation(conversationFormElm) : createConversation(conversationFormElm)"
+          >
+            <h4>{{ isEditingCurrentConversationSelected ? 'Edit' : 'Create' }} Conversation</h4>
+
+            <div class="uk-margin">
+              <span class="label-info">
+                Title ({{ conversationForm.value.title.length }}/150)
+              </span>
+              <input class="input-text-1" type="text" placeholder="Username" name="title"
+                formControlName="title" >
+            </div>
+            <div class="form-group">
+              <label for="">
+                Icon
+              </label>
+              <div class="form-group space-bottom">
+                <input type="file" name="icon" />
+              </div>
+            </div>
+            
+            <button
+              type="submit"
+              class="btn-primary-1 btn-primary-1-small btn-primary-1-primary"
+              [disabled]="!conversationForm.value.title.trim().length || loading"
+            >
+              <i class="fas fa-{{ isEditingCurrentConversationSelected ? 'edit' : 'plus' }}"></i>
+              {{ isEditingCurrentConversationSelected ? 'Edit' : 'Create' }}
+            </button>
+          </form>
+        </div>
+        <div class="conversations-item transition" *ngFor="let c of conversations_list" (click)="setConversation(c)">
+          <div class="conversations-item-inner">
+            <img
+              class="user-icon-square"
+              [src]="c.icon_link || './assets/img/default-1.png'"
+            />
+            <p>
+              {{ c.title }}
+              &nbsp; 
+              <span *ngIf="c.unseen_messages_count && c.unseen_messages_count > 0" class="badge badge-info">{{ c.unseen_messages_count }}</span>
+              <br/>
+              <small>
+                <em class="text-grey">
+                  {{ c.last_opened | date : 'MMM d, y (h:mm a)' }}
+                  <!-- <br/>
+                  Members: {{ c.members_count }} -->
+                </em>
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="uk-width-expand@m" *ngIf="currentConversationSelected">
+        <div class="conversations-messages-item transition">
+          <div class="controls-header">
+            <h4 class="conversation-selected-label">{{ currentConversationSelected.title }}</h4>
+            <div class="buttons-box">
+              <button
+                (click)="setEditingState()"
+                class="btn btn-sm btn-primary"
+                *ngIf="currentConversationSelected.creator_id === you.id"
+              >
+                <i class="fas fa-edit"></i>
+                {{ isEditingCurrentConversationSelected ? 'Cancel' : 'Edit' }}
+              </button>
+              &nbsp;
+              <button
+                (click)="setAddingMembersState()"
+                title="Add members"
+                class="btn btn-sm btn-success"
+                *ngIf="currentConversationSelected.creator_id === you.id"
+              >
+                <i class="fas fa-{{ shouldShowAddingMemberForm ? 'times' : 'plus' }}"></i>
+                {{ shouldShowAddingMemberForm ? 'Close' : 'Add' }}
+              </button>
+              &nbsp; 
+              <button
+                (click)="setRemovingMembersState()"
+                title="Remove members"
+                class="btn btn-sm btn-secondary"
+              >
+                <i class="fas fa-users"></i>
+                {{ shouldShowMemberForm ? 'Close' : 'Members' }}
+              </button>
+              &nbsp; 
+              <button
+                (click)="deleteConversation()"
+                class="btn btn-sm btn-danger"
+                *ngIf="currentConversationSelected.creator_id === you.id"
+              >
+                <i class="fas fa-trash"></i>
+                Delete
+              </button>
+              &nbsp; 
+              <button
+                (click)="leaveConversation()"
+                class="btn btn-sm btn-danger"
+                *ngIf="currentConversationSelected.creator_id !== you.id"
+              >
+                <i class="fas fa-trash"></i>
+                Leave
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="shouldShowMemberForm">
+            <br/>
+            <div class="search-members-results-box">
+              <div class="search-members-results-box-inner" *ngFor="let member of conversation_members_list">
+                <div class="user-chip-container">
+                  <!-- <common-user-card
+                    [user]="member.user"
+                  ></common-user-card> -->
+                </div>
+                <div *ngIf="currentConversationSelected.creator_id === you.id">
+                  <button
+                    (click)="removeConversationMember(member)"
+                    class="btn btn-sm btn-dark"
+                    *ngIf="member.user.id !== you.id"
+                  >
+                    <i class="fas fa-times"></i>
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="shouldShowAddingMemberForm">
+            <form [formGroup]="searchUsersForm">
+              <div class="form-group">
+                <label for="">
+                  Name <span class="label-info"></span>
+                </label>
+                <input type="text" class="form-control"
+                  placeholder="Search users by name..."
+                  formControlName="name"
+                />
+              </div>
+            </form>
+            <div class="search-members-results-box">
+              <div class="search-members-results-box-inner" *ngFor="let user of search_results">
+                <div class="user-chip-container">
+                  <!-- <common-user-card
+                    [user]="user"
+                  ></common-user-card> -->
+                </div>
+                <div>
+                  <button
+                    (click)="addConversationMember(user)"
+                    class="btn btn-sm btn-success"
+                  >
+                    <i class="fas fa-plus"></i>
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="conversations-messages-item transition" *ngIf="!conversation_messages_list_end">
+          <button
+            (click)="getConversationMessages()"
+            title="Load more"
+            class="btn btn-sm btn-success"
+            [disabled]="loading"
+          >
+            <i class="fas fa-sync"></i>
+            Load More
+          </button>
+        </div>
+
+        <div class="conversations-messages-item transition" *ngFor="let m of conversation_messages_list">
+          <div class="conversations-messages-item-inner">
+            <div class="user-icon-container-{{ m.user && m.user.id === you.id ? 'right' : 'left' }}">
+              <img
+                *ngIf="m.user"
+                class="user-icon-circle"
+                [src]="(m.user.icon_link) || './assets/img/anon.png'"
+              />
+            </div>
+            <div class="message-text-{{ m.user && m.user.id === you.id ? 'right' : 'left' }}">
+              <p>
+                <a *ngIf="m.user" [routerLink]="['/', 'users', m.user.id, 'home']">
+                 {{ m.user.firstname + ' ' + m.user.lastname }}
+                </a>
+                <br/>
+                <span class="lead" [innerHTML]="m.body"></span>
+                <br/>
+                <small class="text-grey">
+                  <em>{{ m.created_at | date : 'MMM d, y (h:mm a)' }}</em>
+                </small>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="conversations-messages-item transition" *ngIf="usersTypingMap[currentConversationSelected.id] && usersTypingMap[currentConversationSelected.id].length">
+          <ul class="user-typings-list">
+            <li *ngFor="let u of usersTypingMap[currentConversationSelected.id]">
+              <img
+                class="user-icon-circle"
+                [src]="(u.icon_link) || './assets/img/anon.png'"
+              />
+              &nbsp;
+              <i class="fas fa-comment-dots"></i>
+            </li>
+          </ul>
+        </div>
+
+        <div class="conversations-messages-item transition">
+          <form class="" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+            <div class="uk-margin">
+              <span class="label-info">
+                Body ({{ messageForm.value.body.length }}/{{ MSG_MAX_LENGTH }})
+              </span>
+              <br/>
+              <textarea
+                type="text"
+                class="input-text-1"
+                placeholder="Enter message..."
+                (keyup)="sendTypingSocketEvent()"
+                rows="3"
+                formControlName="body"
+              ></textarea>
+            </div>
+            <div>
+              <button
+                type="submit"
+                title="Message this user"
+                class="btn-primary-1"
+                [disabled]="loading || messageForm.invalid"
+              >
+                <i class="fas fa-paper-plane"></i>
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

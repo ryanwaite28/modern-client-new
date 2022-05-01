@@ -1,0 +1,17 @@
+<div *ngIf="!!you">
+  <div [ngSwitch]="!!you!.stripe_account_id && !!you!.stripe_account_verified">
+    <div *ngSwitchCase="false" class="card-box-1">
+      <div class="uk-card-body">
+        Your stripe account is not connected/valid. 
+        Go back to setting to finish connecting your stripe account. <br/>
+        <a [routerLink]="['/', 'modern', 'users', you.id, 'settings']">Settings</a>
+      </div>
+    </div>
+  
+    <deliverme-delivery-form
+      *ngSwitchCase="true"
+      [isEditing]="false"
+      (deliveryFormSubmit)="onSubmitNewDelivery($event)"
+    ></deliverme-delivery-form>
+  </div>
+</div>

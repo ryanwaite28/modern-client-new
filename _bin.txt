@@ -7,6 +7,7 @@
 
 
 ng generate application common --prefix=common --routing=true --skip-install=true --skip-package-json=true --style=scss
+ng generate application carmaster --prefix=carmaster --routing=true --skip-install=true --skip-package-json=true --style=scss
 
 ng generate component components/pages/user-page/user-home-page --project=travellrs
 
@@ -14,7 +15,7 @@ ng generate service services/client --project=modern-common
 
 
 <!-- Phone -->
-  <div class="uk-card uk-card-default margin-bottom-10 border-grey-1">
+  <div class="card-box-1">
     <div class="uk-card-body">
 
       <form class="" [formGroup]="phoneForm" (ngSubmit)="send_sms_verification()">
@@ -26,7 +27,7 @@ ng generate service services/client --project=modern-common
             <span class="label-info">
               Verify your new phone number ({{ phoneForm.value.phone.length }}/{{ 10 }})
             </span>
-            <input type="phone" class="uk-input"
+            <input type="phone" class="input-text-1"
               placeholder="Phone"
               formControlName="phone"
             />
@@ -34,7 +35,7 @@ ng generate service services/client --project=modern-common
         </fieldset>
 
         <button type="submit"
-          class="uk-button uk-button-primary"
+          class="btn-primary-1"
           [disabled]="phone_is_verified || verification_requested_successfully || !phoneForm.valid || phoneForm.value.phone === you!.phone"
         >
           Submit
@@ -48,13 +49,13 @@ ng generate service services/client --project=modern-common
           <span class="label-info">
             Enter verification code ({{ phoneVerifyForm.value.code.length }}/{{ 6 }})
           </span>
-          <input type="text" class="uk-input"
+          <input type="text" class="input-text-1"
             placeholder="Code"
             formControlName="code"
           />
         </div>
         <br/>
-        <button type="submit" class="uk-button uk-button-primary"
+        <button type="submit" class="btn-primary-1"
           [disabled]="phone_is_verified || !phoneVerifyForm.valid">Submit</button>
       </form>
     </div>
@@ -62,7 +63,7 @@ ng generate service services/client --project=modern-common
   
 
 <!-- Wallpaper -->
-  <div class="uk-card uk-card-default margin-bottom-10 border-grey-1">
+  <div class="card-box-1">
     <div class="uk-card-body">
       <h3>Wallpaper</h3>
       <form
@@ -83,7 +84,7 @@ ng generate service services/client --project=modern-common
         <div class="form-group">
           <button
             type="submit"
-            class="uk-button uk-button-primary"
+            class="btn-primary-1"
             [disabled]="userWallpaperForm.invalid || loading"
           >
             Submit
@@ -102,7 +103,7 @@ ng generate service services/client --project=modern-common
             <span class="label-info">
               Tags <span><small>separated by commas</small></span>
             </span>
-            <textarea type="text" class="uk-textarea" placeholder="Enter Delivery Tags" rows="3" formControlName="tags"></textarea>
+            <textarea type="text" class="input-text-1" placeholder="Enter Delivery Tags" rows="3" formControlName="tags"></textarea>
           </div>
 
 
@@ -160,7 +161,7 @@ newDeliveryForm = new FormGroup({
   ) { }
 
   ngOnInit() {
-    this.userStore.getChangesObs().subscribe(you => {
+    this.userStore.getChangesObs().subscribe((you: IUser | null) => {
       this.you = you;
     });
   }

@@ -1,0 +1,120 @@
+.conversations-list {
+  border-right: 1px solid lightgrey;
+}
+
+.conversations-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  .conversations-item-inner {
+    overflow: hidden;
+
+    .user-icon-square {
+      float: left;
+      margin-right: 10px;
+    }
+  }
+}
+
+.conversations-item:hover {
+  background: #fbfbfb;
+  cursor: pointer;
+}
+
+.conversations-messages-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  .conversations-messages-item-inner {
+    overflow: hidden;
+
+    .user-icon-square {
+      float: left;
+      margin-right: 10px;
+    }
+
+    .message-text {
+      margin-left: 60px;
+      padding: 5px;
+      white-space: pre-wrap;
+    }
+  }
+}
+
+.conversations-messages-item:last-child,
+.conversations-item:last-child,
+.search-members-results-box-inner:last-child {
+  border-bottom: none;
+}
+
+.bg-message-you {
+  background: #00EF86;
+  border: 1px solid #00BB69;
+}
+
+.bg-message-other {
+  background: #eaeaea;
+  border: 1px solid #a9a9a9;
+}
+
+.user-typings-list {
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    margin: 5px 10px 5px 5px;
+  }
+}
+
+.user-icon-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 35px;
+}
+
+.controls-header {
+  overflow: hidden;
+  .conversation-selected-label {
+    float: left;
+    margin-right: 10px;
+  }
+}
+
+.search-members-results-box {
+  max-height: 250px;
+  overflow-y: scroll;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 10px;
+}
+
+.search-members-results-box-inner {
+  overflow: hidden;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  .user-chip-container {
+    float: left;
+    margin-right: 10px;
+  }
+  .user-chip-container-right {
+    float: right;
+    margin-left: 10px;
+  }
+}
+
+.user-icon-container-left img {
+  float: left;
+  margin-right: 10px;
+}
+.user-icon-container-right img {
+  float: right;
+  margin-left: 10px;
+}
+
+.message-text-left {
+  margin-left: 50px;
+  white-space: pre-wrap;
+}
+.message-text-right {
+  text-align: right;
+  margin-right: 50px;
+  white-space: pre-wrap;
+}

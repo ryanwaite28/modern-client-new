@@ -1,0 +1,101 @@
+<div [ngSwitch]="!!you!.stripe_account_id && !!you!.stripe_account_verified">
+  <div *ngSwitchCase="false" class="card-box-1">
+    <div class="uk-card-body">
+      Your stripe account is not connected/valid. 
+      Go back to setting to finish connecting your stripe account. <br/>
+      <a [routerLink]="['/', 'modern', 'users', you.id, 'settings']">Settings</a>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="true">
+    <div>
+      <div class="card-box-1">
+        <div class="uk-card-body">
+          <p class="text-3xl mb-3">Search Deliveries</p>
+        </div>
+      </div>
+    
+      <div class="card-box-1">
+        <div class="uk-card-body">
+          <div class="uk-margin">
+            <span class="label-info">
+              From Location 
+            </span>
+            <input #fromLocationInput type="text" class="input-text-1" placeholder="Enter From Location" />
+          </div>
+          <div class="uk-margin">
+            <span class="label-info">
+              To Location 
+            </span>
+            <input #toLocationInput type="text" class="input-text-1" placeholder="Enter To Location" />
+          </div>
+    
+          <button
+            type="button"
+            class="btn-primary-1"
+            [disabled]="loading || searchDeliveriesForm.invalid"
+            (click)="onSubmitSearchDeliveriesForm()"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    
+      <div *ngIf="!firstSearch && !search_deliveries_results.length" class="card-box-1">
+        <div class="uk-card-body">
+          <p class="text-3xl mb-3">{{ searchError || 'No results' }}</p>
+        </div>
+      </div>
+    
+      <div *ngFor="let delivery of search_deliveries_results" class="card-box-1 delivery-card margin-bottom-10">
+        <div class="uk-card-body">
+          <h3 class="uk-card-title">{{ delivery.title }}</h3>
+          
+          <div>
+            <p>
+              <strong>Delivery Created</strong><br/>
+              {{ delivery.created_at | date : 'MMM d, y - h:mm a' }}<br/>
+              <small>{{ delivery.created_at | timeAgo }}</small>
+            </p>
+        
+            <p>
+              <strong>Info</strong><br/>
+              <small>Size: {{ delivery.size }}</small><br/>
+              <small>Weight: {{ delivery.weight }} lbs</small><br/>
+              <small>Payout: ${{ delivery.payout }}</small><br/>
+              <small>Penalty: ${{ delivery.penalty }}</small><br/>
+            </p>
+        
+            <p>
+              <strong>From</strong><br/>
+              <small>City: {{ delivery.from_city }}</small><br/>
+              <small>State: {{ delivery.from_state }}</small><br/>
+            </p>
+            <p>
+              <strong>To</strong><br/>
+              <small>City: {{ delivery.to_city }}</small><br/>
+              <small>State: {{ delivery.to_state }}</small><br/>
+            </p>
+        
+            <p>
+              <strong>Distance</strong><br/>
+              {{ delivery.distance_miles | number }} Miles
+            </p>
+    
+            <p>
+              Take this delivery? 
+              <button
+                type="submit"
+                class="btn-primary-1"
+                [disabled]="loading"
+                (click)="assignDelivery(delivery)"
+              >
+                Take Delivery!
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

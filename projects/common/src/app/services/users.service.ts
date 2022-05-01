@@ -19,7 +19,8 @@ import { IUserField } from '../interfaces/user-field.interface';
 import { MODERN_APPS, USER_RECORDS } from '../enums/all.enums';
 import { HttpStatusCode } from '../enums/http-codes.enum';
 import { UtilityService } from './utility.service';
-import { IApiKey } from '../interfaces/_common.interface';
+import { IApiKey, IUserSubscriptionInfo } from '../interfaces/_common.interface';
+import { EnvironmentService } from './environment.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +28,26 @@ import { IApiKey } from '../interfaces/_common.interface';
 export class UsersService {
   session: GenericApiResponse | any;
   sessionChecked: boolean = false;
+  private is_subscription_active: boolean = false;
+  private is_subscription_active_stream = new BehaviorSubject<boolean>(this.is_subscription_active);
+
+  private isFirstCall = true;
 
   constructor(
     public http: HttpClient,
     private userStore: UserStoreService,
     private clientService: ClientService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private envService: EnvironmentService,
   ) {}
 
-  private isFirstCall = true;
+  getHasPlatformSubscription(): boolean {
+    return this.is_subscription_active;
+  }
+
+  getSubscriptionActiveStream() {
+    return this.is_subscription_active_stream.asObservable();
+  }
 
   checkUserSession(): Observable<IUser | null> {
     return this.userStore.getChangesObs().pipe(
@@ -53,7 +65,9 @@ export class UsersService {
 
   private checkSession() {
     const jwt = window.localStorage.getItem('rmw-modern-apps-jwt');
-    if (!jwt || jwt === `undefined` || !this.utilityService.isJwtFormat(jwt)) {
+    const badJwt = !jwt || jwt === `undefined`;// || !this.utilityService.isJwtFormat(jwt);
+    console.log({ badJwt });
+    if (badJwt) {
       window.localStorage.removeItem('rmw-modern-apps-jwt');
       this.userStore.setState(null);
       return of(<GenericApiResponse> {
@@ -73,6 +87,10 @@ export class UsersService {
       map((response) => {
         this.session = response;
         this.sessionChecked = true;
+        if (response.data?.is_subscription_active) {
+          this.is_subscription_active = response.data.is_subscription_active;
+          this.is_subscription_active_stream.next(this.is_subscription_active);
+        }
         this.userStore.setState(response.data!.you);
         if (response.data!.token) {
           window.localStorage.setItem('rmw-modern-apps-jwt', response.data!.token);
@@ -80,6 +98,11 @@ export class UsersService {
         return response;
       })
     );
+  }
+
+  use_jwt_from_url(jwt: string) {
+    window.localStorage.setItem('rmw-modern-apps-jwt', jwt);
+    return this.checkSession()
   }
 
   sign_out() {
@@ -511,6 +534,57 @@ export class UsersService {
   remove_card_payment_method_to_user_customer(you_id: number, payment_method_id: string) {
     const endpoint = `/common/users/${you_id}/customer-cards-payment-methods/${payment_method_id}`;
     return this.clientService.sendRequest<any>(endpoint, `DELETE`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+
+
+  get_platform_subscription(you_id: number) {
+    const endpoint = `/common/users/${you_id}/get-subscription`;
+    return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  get_platform_subscription_info(user_id: number) {
+    const endpoint = `/common/users/${user_id}/get-subscription-info`;
+    return this.clientService.sendRequest<IUserSubscriptionInfo | null>(endpoint, `GET`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  check_subscription_active(you_id: number) {
+    const endpoint = `/common/users/${you_id}/is-subscription-active`;
+    return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  create_subscription(you_id: number, payment_method_id: string) {
+    const endpoint = `/common/users/${you_id}/create-subscription/${payment_method_id}`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
+      map((response) => {
+        window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
+        this.userStore.setState(response.data.you);
+        this.is_subscription_active = true;
+        this.is_subscription_active_stream.next(this.is_subscription_active);
+        return response;
+      })
+    );
+  }
+
+  cancel_subscription(you_id: number) {
+    const endpoint = `/common/users/${you_id}/cancel-subscription`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
       map((response) => {
         return response;
       })

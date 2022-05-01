@@ -8,13 +8,14 @@ import { ClientService } from './client.service';
 // import { ConversationsService } from './conversations.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsersService } from './users.service';
+import { PlainObject } from '../interfaces/json-object.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketEventsService {
   private you: IUser | any;
-  private socket: any;
+  private socket?: SocketIOClient.Socket;
 
   private connect_event: any;
   private socket_id_event: any;
@@ -27,11 +28,10 @@ export class SocketEventsService {
 
   // event streams
   private streamsMap: { [key: string]: Subject<any>; } = {};
+  private registrationIsReadyStream = new Subject<void>();
 
   // user's conversations
   private youConversationsSocketListeners: any = {};
-
-  COMMON_EVENT_TYPES = COMMON_EVENT_TYPES;
 
   constructor(
     private clientService: ClientService,
@@ -39,13 +39,17 @@ export class SocketEventsService {
     private usersService: UsersService,
     // private conversationsService: ConversationsService,
   ) {
-    Object.keys(COMMON_EVENT_TYPES).forEach((key) => {
-      this.streamsMap[key] = new Subject<any>();
-    });
+    // Object.keys(COMMON_EVENT_TYPES).forEach((key) => {
+    //   this.streamsMap[key] = new Subject<any>();
+    // });
 
-    this.userStoreSubscription = this.userStore.getChangesObs().subscribe((you) => {
+    const socket = io(this.clientService.DOMAIN);
+    this.socket = socket;
+
+    this.userStoreSubscription = this.userStore.getChangesObs().subscribe((you: IUser | null) => {
       // if user logs in, `you` will have value (is null by default).
       // once user logs in, start listening to event for user
+
       if (!this.you && you) {
         this.you = you;
         console.log(`starting socket listener`);
@@ -62,22 +66,38 @@ export class SocketEventsService {
     });
   }
 
-  private startListener() {
-    const socket = io(this.clientService.DOMAIN);
-    this.socket = socket;
-    
-    const connect_event = socket.on('connect', (event: any) => {
-      console.log(`socket connected`, event);
-      socket.emit(`SOCKET_TRACK`, { user_id: this.you!.id });
+  getRegistrationIsReady() {
+    return this.registrationIsReadyStream.asObservable();
+  }
+
+  registerEventListenerStreams(event_types_map: PlainObject) {
+    const listeners: SocketIOClient.Emitter[] = [];
+    Object.keys(event_types_map).forEach((event_type) => {
+      const subjectStream = new Subject<any>();
+      this.streamsMap[event_type] = subjectStream;
+
+      const listener = this.socket!.on(event_type, (event: any) => {
+        console.log(`${event_type}`, { event });
+        subjectStream.next(event);
+      });
+      listeners.push(listener);
     });
-    const socket_id_event = socket.on('socket_id', (event: any) => {
+    return listeners;
+  }
+
+  private startListener() {
+    const connect_event = this.socket!.on('connect', (event: any) => {
+      console.log(`socket connected`, event);
+      this.socket!.emit(`SOCKET_TRACK`, { user_id: this.you!.id });
+    });
+    const socket_id_event = this.socket!.on('socket_id', (event: any) => {
       console.log(`socket_id:`, event);
       this.socket_id = event;
     });
-    const disconnect_event = socket.on('disconnect', (event: any) => {
+    const disconnect_event = this.socket!.on('disconnect', (event: any) => {
       console.log(`socket disconnected`, event);
     });
-    const user_event = socket.on(`FOR-USER:${this.you!.id}`, (event: any) => {
+    const user_event = this.socket!.on(`FOR-USER:${this.you!.id}`, (event: any) => {
       this.handleEvent(event);
     });
     
@@ -100,35 +120,50 @@ export class SocketEventsService {
 
   private handleEvent(event: any) {
     const subjectStream = this.streamsMap[event.event_type || event.event || event.eventName];
+    console.log({ event, subjectStream });
     if (subjectStream) {
       subjectStream.next(event);
     }
   }
 
   emit(eventName: string, data: any) {
-    this.socket.emit(eventName, data);
+    this.socket!.emit(eventName, data);
   }
 
   joinRoom(room: string) {
-    this.socket.emit(COMMON_EVENT_TYPES.SOCKET_JOIN_ROOM, { room });
+    this.socket!.emit(COMMON_EVENT_TYPES.SOCKET_JOIN_ROOM, { room });
   }
 
   leaveRoom(room: string) {
-    this.socket.emit(COMMON_EVENT_TYPES.SOCKET_LEAVE_ROOM, { room });
+    this.socket!.emit(COMMON_EVENT_TYPES.SOCKET_LEAVE_ROOM, { room });
   }
 
-  listen<T>(event_type: COMMON_EVENT_TYPES) {
+  // listen<T>(event_type: COMMON_EVENT_TYPES) {
+  //   const subjectStream = this.streamsMap[event_type];
+  //   if (!subjectStream) {
+  //     console.warn(`Unknown key for event stream: ${event_type}, creating new stream...`);
+  //     this.streamsMap[event_type] = new Subject<any>();
+  //     return this.streamsMap[event_type].asObservable() as Observable<T>;
+  //   }
+  //   const observable = (<Observable<T>> subjectStream.asObservable());
+  //   return observable;
+  // }
+
+  listenSocketCustom(event_type: string, call_back: (arg?: any) => any) {
+    return this.socket!.on(event_type, call_back);
+  }
+
+  listenToObservableEventStream<T>(event_type: string) {
     const subjectStream = this.streamsMap[event_type];
     if (!subjectStream) {
-      throw new ReferenceError(`Unknown key for event stream: ${event_type}`);
+      console.warn(`Unknown key for event stream: ${event_type}, creating new stream...`);
+      this.streamsMap[event_type] = new Subject<any>();
+      return this.streamsMap[event_type].asObservable() as Observable<T>;
     }
     const observable = (<Observable<T>> subjectStream.asObservable());
     return observable;
   }
 
-  listenCustom(event_type: string, call_back: (arg?: any) => any) {
-    return this.socket.on(event_type, call_back);
-  }
 
   // private methods
   /*

@@ -3,6 +3,7 @@ import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { from, mergeMap, of } from 'rxjs';
 import { StripeAmountFormatterPipe } from '../pipes/stripe-amount-formatter.pipe';
 import { ClientService } from './client.service';
+import { UsersService } from './users.service';
 
 
 
@@ -12,11 +13,19 @@ import { ClientService } from './client.service';
 export class StripeService {
   private stripe_public_key: any;
   private stripe: Stripe | null = null;
+  private is_subscription_active: boolean = false;
 
   constructor(
     private clientService: ClientService,
+    private usersService: UsersService,
     private stripeAmountFormatterPipe: StripeAmountFormatterPipe
-  ) { }
+  ) {
+    this.usersService.getSubscriptionActiveStream().subscribe({
+      next: (is_subscription_active: boolean) => {
+        this.is_subscription_active = is_subscription_active;
+      }
+    });
+  }
 
   loadStripe() {
     return this.clientService.sendRequest<{ data: string }>(`/common/utils/get-stripe-public-key`, 'POST')
@@ -59,7 +68,7 @@ export class StripeService {
     const stripe_processing_fee = Math.round(total * stripePercentageFeeRate) + stripeFixedFeeRate;
     let new_total = Math.round(total + stripe_processing_fee);
     const difference = new_total - total;
-    let app_fee = (parseInt((total * 0.1).toString(), 10));
+    let app_fee = this.is_subscription_active ? 0 : (parseInt((total * 0.1).toString(), 10));
     // app_fee = Math.round(difference + app_fee);
     const final_total = Math.round(new_total + app_fee);
     // new_total = new_total + app_fee;

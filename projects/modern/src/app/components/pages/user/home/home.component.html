@@ -1,1 +1,19 @@
-<p>home works!</p>
+<div class="card-box-1">
+  <div *ngIf="user" class="">
+    <p class="text-5xl mb-7">Home</p>
+
+    <p class="uk-text-default">
+      <strong>Bio</strong>:<br>
+      <em>{{ user.bio }}</em>
+    </p>
+
+    <p class="uk-text-default">
+      <strong>Location</strong><br>
+      <span class="uk-text-small">
+        City: {{ user.city }}<br/>
+        State: {{ user.state }}
+      </span>
+    </p>
+    
+  </div>
+</div>

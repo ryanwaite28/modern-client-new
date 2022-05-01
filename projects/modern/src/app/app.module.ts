@@ -8,13 +8,23 @@ import { FooterComponent } from './components/fragments/footer/footer.component'
 import { WelcomeComponent } from './components/pages/welcome/welcome.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { SigninComponent } from './components/pages/signin/signin.component';
-import { UserComponent } from './components/pages/user/user.component';
-import { HomeComponent } from './components/pages/user/home/home.component';
-import { SettingsComponent } from './components/pages/user/settings/settings.component';
 import { AboutComponent } from './components/pages/about/about.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { TermsAgreementsComponent } from './components/pages/terms-agreements/terms-agreements.component';
 import { PrivacyPolicyComponent } from './components/pages/privacy-policy/privacy-policy.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SignoutComponent } from './components/pages/signout/signout.component';
+
+import { UserHomeFragmentComponent } from './components/pages/user/home/home.component';
+import { UserSettingsFragmentComponent } from './components/pages/user/settings/settings.component';
+import { UserPageComponent } from './components/pages/user/user-page.component';
+import { UserNotificationsFragmentComponent } from './components/pages/user/notifications/notifications.component';
+import { UserFieldsComponent } from './components/pages/user/user-fields/user-fields.component';
+import { UserVerifyStripeAccountFragmentComponent } from './components/pages/user/verify-stripe-account-fragment/verify-stripe-account-fragment.component';
+import { UserMessagesFragmentComponent } from './components/pages/user/messages/messages.component';
+import { UserConversationsComponent } from './components/pages/user/conversations/conversations.component';
+import { UserFollowersComponent } from './components/pages/user/followers/followers.component';
+import { UserFollowingsComponent } from './components/pages/user/followings/followings.component';
 
 
 
@@ -26,20 +36,33 @@ import { PrivacyPolicyComponent } from './components/pages/privacy-policy/privac
     WelcomeComponent,
     SignupComponent,
     SigninComponent,
-    UserComponent,
-    HomeComponent,
-    SettingsComponent,
     AboutComponent,
     ContactComponent,
     TermsAgreementsComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    SignoutComponent,
+
+    UserHomeFragmentComponent,
+    UserSettingsFragmentComponent,
+    UserPageComponent,
+    UserNotificationsFragmentComponent,
+    UserFieldsComponent,
+    UserVerifyStripeAccountFragmentComponent,
+    UserMessagesFragmentComponent,
+    UserConversationsComponent,
+    UserFollowersComponent,
+    UserFollowingsComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ModernCommonModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

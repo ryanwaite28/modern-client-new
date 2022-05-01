@@ -1,1 +1,77 @@
-<p>signup works!</p>
+<div class="container mx-auto">
+  <div class="background-white m-16">
+    <form class="p-16 border border-gray-300 shadow-sm" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <fieldset class="uk-fieldset">
+        <legend class="text-5xl mb-10">Sign Up</legend>
+
+        <div class="uk-child-width-expand@s" uk-grid>
+          <div class="mb-7">
+            <span class="label-info">
+              First Name ({{ signupForm.value.firstname.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <input class="input-text-1" type="text" placeholder="First Name" formControlName="firstname" />
+          </div>
+
+          <div class="mb-7">
+            <span class="label-info">
+              Middle Name ({{ signupForm.value.middlename.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <input class="input-text-1" type="text" placeholder="Middle Name (Optional)" formControlName="middlename" >
+          </div>
+
+          <div class="mb-7">
+            <span class="label-info">
+              Last Name ({{ signupForm.value.lastname.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <input class="input-text-1" type="text" placeholder="Last Name" formControlName="lastname" >
+          </div>
+        </div>
+
+        <div class="uk-child-width-expand@s" uk-grid>
+          <div class="mb-7">
+            <span class="label-info">
+              Username ({{ signupForm.value.username.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <input class="input-text-1" type="text" placeholder="Username" formControlName="username" >
+          </div>
+
+          <div class="mb-7">
+            <span class="label-info">
+              Display Name ({{ signupForm.value.displayname.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <input class="input-text-1" type="text" placeholder="Display Name" formControlName="displayname" >
+          </div>
+        </div>
+
+        <div class="mb-7">
+          <span class="label-info">
+            Email ({{ signupForm.value.email.length }}/{{ TEXT_FORM_LIMIT }})
+          </span>
+          <input class="input-text-1" type="email" placeholder="Email" formControlName="email" >
+        </div>
+
+        <div class="mb-7">
+          <span class="label-info">
+            Password ({{ signupForm.value.password.length }}/{{ TEXT_FORM_LIMIT }})
+          </span>
+          <input class="input-text-1" type="password" placeholder="Password" formControlName="password" >
+        </div>
+
+        <div class="mb-7">
+          <span class="label-info">
+            Confirm Password ({{ signupForm.value.confirmPassword.length }}/{{ TEXT_FORM_LIMIT }})
+          </span>
+          <input class="input-text-1" type="password" placeholder="Confirm Password" formControlName="confirmPassword" >
+        </div>
+      </fieldset>
+
+      <button
+        type="submit"
+        class=btn-primary-1
+        [disabled]="loading"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

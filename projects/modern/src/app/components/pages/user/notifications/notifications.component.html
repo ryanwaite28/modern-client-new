@@ -1,0 +1,40 @@
+<div>
+  <div>
+    <div class="card-box-1" *ngIf="!notifications.length" >
+      <div class="uk-card-body">
+        <h1 class="display-5">None for now...</h1>
+      </div>
+    </div>
+
+    <div *ngFor="let notification of notifications">
+      <div class="card-box-1 notification-item">
+        <div class="uk-card-body">
+          <div class="overflow-hidden flex-inline-slim">
+            <div class="space-right" style="width: 75px;">
+              <img [src]="notification.from!.icon_link || './assets/img/anon.png'" class="user-icon-circle" />
+            </div>
+            <div>
+              <p class="lead">{{ notification.message }}</p>
+              <p class="text-grey">
+                <small><em>{{ notification.created_at | date : 'MMM d, y (h:mm a)' }} - {{ notification.created_at | timeAgo }}</em></small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br/>
+    </div>
+  </div>
+
+  <div class="" *ngIf="!end_reached">
+    <button
+      (click)="getNotifications()"
+      title="Load more"
+      class="btn-primary-1 btn-primary-1-small"
+      [disabled]="loading"
+    >
+      <i class="fas fa-sync"></i>
+      Load More
+    </button>
+  </div>
+</div>

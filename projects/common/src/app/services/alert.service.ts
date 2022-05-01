@@ -27,6 +27,10 @@ export class AlertService {
   }
 
   addAlert(alertObj: IAlert, autoClose: boolean = true) {
+    if (!alertObj || !alertObj.message || !alertObj.type) {
+      console.warn(`Bad alert arg`, alertObj);
+      return;
+    }
     this.alertsList.push(alertObj);
     this.newAlert.next({ alertObj, autoClose });
   }
@@ -45,38 +49,44 @@ export class AlertService {
     }
   }
 
-  showSuccessMessage(message: string) {
+  showSuccessMessage(message: string, autoClose: boolean = true) {
     this.addAlert({
       type: this.AlertTypes.SUCCESS,
       message,
-    }, true);
+    }, autoClose);
   }
 
-  showErrorMessage(message: string) {
+  showErrorMessage(message: string, autoClose: boolean = true) {
     this.addAlert({
       type: this.AlertTypes.DANGER,
       message,
-    }, true);
+    }, autoClose);
   }
 
-  showWarningMessage(message: string) {
+  showWarningMessage(message: string, autoClose: boolean = true) {
     this.addAlert({
       type: this.AlertTypes.WARNING,
       message,
-    }, true);
+    }, autoClose);
   }
 
-  handleResponseSuccessGeneric(response: { message: string }) {
+  handleResponseSuccessGeneric(response?: Partial<{ message: string }>, autoClose: boolean = true) {
+    if (!response || !response.message) {
+      return;
+    }
     this.addAlert({
       type: this.AlertTypes.SUCCESS,
       message: response.message
-    }, true);
+    }, autoClose);
   }
 
-  handleResponseErrorGeneric(error: HttpErrorResponse) {
+  handleResponseErrorGeneric(error?: HttpErrorResponse, autoClose: boolean = true) {
+    if (!error) {
+      return;
+    }
     this.addAlert({
       type: this.AlertTypes.DANGER,
       message: error.error.message
-    }, true);
+    }, autoClose);
   }
 }

@@ -1,18 +1,48 @@
 import { APP_INITIALIZER } from "@angular/core";
-import { catchError, mergeMap, of, take } from "rxjs";
+import { catchError, map, mergeMap, of, take } from "rxjs";
+import { COMMON_EVENT_TYPES } from "../enums/all.enums";
+import { PlainObject } from "../interfaces/json-object.interface";
 import { ClientService } from "../services/client.service";
 import { GoogleMapsService } from "../services/google-maps.service";
+import { SocketEventsService } from "../services/socket-events.service";
 import { StripeService } from "../services/stripe.service";
 import { UsersService } from "../services/users.service";
 
 
 
 
+export function APP_SOCKET_EVENTS_INITIALIZER_FACTORY_CURRY(
+  event_types_map: PlainObject
+) {
+  return function APP_SOCKET_EVENTS_INITIALIZER_FACTORY(
+   socketEventsService: SocketEventsService
+  ) {
+    function APP_SOCKET_EVENTS_INITIALIZER_FN(
+      resolve: (value: unknown) => void,
+      reject: (reasom?: any) => any
+      ) {
+      socketEventsService.registerEventListenerStreams(event_types_map);
+      return resolve(true);
+      // socketEventsService.getRegistrationIsReady().pipe(take(1)).subscribe({
+      //   next: () => {
+      //   }
+      // });
+    }
+
+    function returnFactoryFn() {
+      return new Promise(APP_SOCKET_EVENTS_INITIALIZER_FN);
+    }
+  
+    return returnFactoryFn;
+  }
+}
+
 export function APP_INITIALIZER_FACTORY(
   clientService: ClientService,
   usersService: UsersService,
   googleMapsService: GoogleMapsService,
   stripeService: StripeService,
+  socketEventsService: SocketEventsService,
 ) {
   function APP_INITIALIZER_FN(
     resolve: (value: unknown) => void,
@@ -34,8 +64,18 @@ export function APP_INITIALIZER_FACTORY(
         }),
         mergeMap((stripe_loaded, index) => {
           // console.log('APP_INITIALIZER (google maps) - admit one', googleMapsService);
-          resolve(stripe_loaded);
-          return of(undefined);
+          socketEventsService.registerEventListenerStreams(COMMON_EVENT_TYPES);
+          return of(true);
+          // return socketEventsService.getRegistrationIsReady().pipe(
+          //   take(1),
+          //   map(() => {
+          //   })
+          // )
+        }),
+        mergeMap((app_loaded, index) => {
+          // console.log('APP_INITIALIZER (google maps) - admit one', googleMapsService);
+          resolve(app_loaded);
+          return of(true);
         }),
         mergeMap((value, index) => {
           console.log(`\n\nDone App Initializations\n\n\n`);
@@ -65,6 +105,20 @@ export const APP_INIT_PROVIDER = {
     UsersService,
     GoogleMapsService,
     StripeService,
+    SocketEventsService,
   ],
   useFactory: APP_INITIALIZER_FACTORY
 };
+
+export const CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER = (event_types_map: PlainObject) => {
+  const factory = APP_SOCKET_EVENTS_INITIALIZER_FACTORY_CURRY(event_types_map);
+
+  return {
+    provide: APP_INITIALIZER,
+    multi: true,
+    deps: [
+      SocketEventsService
+    ],
+    useFactory: factory
+  };
+}

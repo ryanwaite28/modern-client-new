@@ -3,8 +3,18 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  DOMAIN: `http://localhost:6700`,
+  PRODUCTION: false,
+  API_DOMAIN: `http://localhost:6700`,
+  MODERN_DOMAIN: `http://localhost:5200`,
+
+  APPS: [
+    {
+      img: '',
+      title: 'DeliverMe',
+      description: 'Make money delivering!',
+      link: 'http://localhost:4200',
+    },
+  ],
 };
 
 /*

@@ -1,1 +1,31 @@
-<p>signin works!</p>
+<div class="container mx-auto">
+  <div class="background-white m-16">
+    <form class="p-16 border border-gray-300 shadow-sm" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+      <fieldset class="uk-fieldset">
+        <legend class="text-5xl mb-10">Sign In</legend>
+
+        <div class="mb-7">
+          <span class="label-info">
+            Email ({{ signinForm.value.email.length }}/{{ TEXT_FORM_LIMIT }})
+          </span>
+          <input class="input-text-1" type="email" placeholder="Email" formControlName="email" >
+        </div>
+
+        <div class="mb-7">
+          <span class="label-info">
+            Password ({{ signinForm.value.password.length }}/{{ TEXT_FORM_LIMIT }})
+          </span>
+          <input class="input-text-1" type="password" placeholder="Password" formControlName="password" >
+        </div>
+      </fieldset>
+
+      <button
+        type="submit"
+        class=btn-primary-1
+        [disabled]="loading"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
