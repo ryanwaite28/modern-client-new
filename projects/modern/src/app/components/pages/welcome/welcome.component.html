@@ -17,7 +17,7 @@
         <div *ngFor="let app of apps" class="app-container">
           
           <!-- https://v1.tailwindcss.com/components/cards -->
-          <div class="w-full shadow-md border-gray-1">
+          <div class="w-full shadow-md border-gray-1 mb-3">
             <!-- <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('/img/card-left.jpg')" title="Woman holding a mug"></div> -->
             <div class="bg-white rounded-1 p-4 flex flex-col justify-between leading-normal">
               <div class="mb-8">
@@ -28,7 +28,7 @@
                 <img *ngIf="!!app.img" class="w-10 h-10 rounded-full mr-4" [src]="app.img">
                 <div class="text-sm">
                   <p class="text-gray-900 leading-none">
-                    <a [routerLink]="app.link">Page</a>
+                    <a [href]="app.link" target="_blank">Page</a>
                   </p>
                 </div>
               </div>

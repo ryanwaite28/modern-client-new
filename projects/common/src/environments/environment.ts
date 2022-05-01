@@ -14,6 +14,12 @@ export const environment = {
       description: 'Make money delivering!',
       link: 'http://localhost:4200',
     },
+    {
+      img: '',
+      title: 'CarMaster',
+      description: 'The platform for car mechanics',
+      link: 'http://localhost:6200',
+    },
   ],
 };
 
