@@ -1,0 +1,78 @@
+<div class="border border-gray-300 bg-gray-100 p-3">
+  <form #formElm [formGroup]="form" (ngSubmit)="onSubmit(formElm)">
+    <div class="flex flex-col sm:flex-row gap-3 mb-2">
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Make
+        </span>
+
+        <select class="input-text-1" formControlName="make">
+          <option *ngFor="let car of cars" [value]="car.brand">
+            {{ car.brand }}
+          </option>
+        </select>
+      </div>
+
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Model
+        </span>
+
+        <select class="input-text-1" formControlName="model">
+          <option *ngFor="let model of make_models" [value]="model">
+            {{ model }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-2">
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Type ({{ form.value.type.length }}/255)
+        </span>
+        <input class="input-text-1" type="text" placeholder="Enter Type" formControlName="type" />
+      </div>
+
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Trim ({{ form.value.trim.length }}/255)
+        </span>
+        <input class="input-text-1" type="text" placeholder="Enter Trim" formControlName="trim" />
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-2">
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Min Year
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Min Year" formControlName="min_year" />
+      </div>
+
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Max Year
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Max Year" formControlName="max_year" />
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Description ({{ form.value.description.length }}/500)
+      </span>
+      <textarea type="text" class="input-text-1" placeholder="Enter Description" rows="3" formControlName="description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <button
+        type="submit"
+        class=btn-primary-1
+        [disabled]="loading"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

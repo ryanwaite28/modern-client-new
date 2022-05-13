@@ -1,18 +1,101 @@
 <div>
-  <div class="card-box-1">
+  <div class="card-box-1 mb-7">
     <div class="">
       <h3 class="text-3xl mb-3">Mechanic Profile</h3>
 
-      <p *ngIf="!user_subscription_info || !user_subscription_info.active">
-        You must have an active membership subscription to use this service.
+      <p *ngIf="!isUserActiveMember">
+        You must have an active membership subscription to create and use.
       </p>
     </div>
   </div>
 
-  <div *ngIf="!!user_subscription_info && !!user_subscription_info.active">
+  <div *ngIf="isUserActiveMember && !!mechanic_profile">
+
     <div class="card-box-1">
       <div class="">
-        <h3 class="text-3xl mb-3">Mechanic Profile</h3>
+        <h3 class="text-3xl mb-3">Info</h3>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onProfileInfoSubmit()">
+        <div class="mb-2">
+          <span class="label-info">
+            Bio ({{ profileForm.value.bio.length }}/{{ TEXT_FORM_LIMIT }})
+          </span>
+          <textarea type="text" class="input-text-1" placeholder="Enter Bio" rows="3" formControlName="bio"></textarea>
+        </div>
+
+        <div class="mb-2">
+          <span class="label-info">
+            Website ({{ profileForm.value.website.length }}/255)
+          </span>
+          <input class="input-text-1" type="text" placeholder="Enter Website" formControlName="website" />
+        </div>
+
+        <div class="mb-2">
+          <span class="label-info">
+            Phone ({{ profileForm.value.phone.length }}/255)
+          </span>
+          <input class="input-text-1" type="text" placeholder="Enter Phone" formControlName="phone" />
+        </div>
+
+        <div class="mb-2">
+          <span class="label-info">
+            Email ({{ profileForm.value.email.length }}/255)
+          </span>
+          <input class="input-text-1" type="text" placeholder="Enter Email" formControlName="email" />
+        </div>
+
+        <div class="mb-2">
+          <span class="label-info">
+            Location (City and State | Current Location: {{ you!.location }})
+          </span>
+          <input type="text" id="location-input" class="input-text-1" placeholder="Enter a Location" />
+        </div>
+
+
+      </form>
+    </div>
+
+    <div class="card-box-1">
+      <div class="">
+        <h3 class="text-3xl mb-3">Credentials</h3>
+      </div>
+
+      <div *ngIf="isYou" class="border-b border-gray-200 pb-3 mb-3">
+        <carmaster-mechanic-credential-form
+        ></carmaster-mechanic-credential-form>
+      </div>
+
+
+    </div>
+
+    <div class="card-box-1">
+      <div class="">
+        <h3 class="text-3xl mb-3">Expertises</h3>
+      </div>
+
+      <div *ngIf="isYou" class="border-b border-gray-200 pb-3 mb-3">
+        <carmaster-mechanic-expertise-form
+        ></carmaster-mechanic-expertise-form>
+      </div>
+
+    </div>
+
+    <div class="card-box-1">
+      <div class="">
+        <h3 class="text-3xl mb-3">Services</h3>
+      </div>
+
+      <div *ngIf="isYou" class="border-b border-gray-200 pb-3 mb-3">
+        <carmaster-mechanic-service-form
+        ></carmaster-mechanic-service-form>
+      </div>
+
+    </div>
+
+    <div class="card-box-1">
+      <div class="">
+        <h3 class="text-3xl mb-3">Ratings</h3>
       </div>
     </div>
 

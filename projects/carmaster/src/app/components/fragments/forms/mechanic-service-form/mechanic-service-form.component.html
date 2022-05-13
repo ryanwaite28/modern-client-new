@@ -1,0 +1,72 @@
+<div class="border border-gray-300 bg-gray-100 p-3">
+  <form #formElm [formGroup]="form" (ngSubmit)="onSubmit(formElm)">
+    <div class="mb-2">
+      <span class="label-info">
+        Service Category
+      </span>
+
+      <select class="input-text-1" formControlName="service_category">
+        <option *ngFor="let service_category of service_categories" [value]="service_category.key">
+          {{ service_category.display }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Service Type
+      </span>
+
+      <select class="input-text-1" formControlName="service_type">
+        <option *ngFor="let service_type of service_types" [value]="service_type">
+          {{ service_type }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Service Action
+      </span>
+
+      <select class="input-text-1" formControlName="service_action">
+        <option *ngFor="let service_action of service_actions" [value]="service_action">
+          {{ service_action }}
+        </option>
+      </select>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-2">
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Cost
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Service Cost" formControlName="cost" />
+      </div>
+
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Deposit
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Service Deposit" formControlName="deposit" />
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Description ({{ form.value.description.length }}/500)
+      </span>
+      <textarea type="text" class="input-text-1" placeholder="Enter Credential Description" rows="3" formControlName="description"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <button
+        type="submit"
+        class=btn-primary-1
+        [disabled]="loading"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

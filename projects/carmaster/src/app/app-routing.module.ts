@@ -8,6 +8,7 @@ import { MechanicProfilePageComponent } from './components/pages/user-page/mecha
 import { SettingsPageComponent } from './components/pages/user-page/settings-page/settings-page.component';
 import { UserPageComponent } from './components/pages/user-page/user-page.component';
 import { WelcomeComponent } from './components/pages/welcome/welcome.component';
+import { MechanicProfileResolver } from './resolvers/mechanic-profile.resolver';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
@@ -19,6 +20,7 @@ const routes: Routes = [
     resolve: {
       user: UserResolver,
       user_subscription_info: UserSubscriptionInfoResolver,
+      mechanic_profile: MechanicProfileResolver,
     },
     data: { authParamsProp: 'user_id' },
     children: [

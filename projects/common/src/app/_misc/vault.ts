@@ -8,3 +8,7 @@ export const genderOptions = [
 export const youtube_regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/gi;
 
 export const ratingOptions = Array(5).fill(0).map((k, i) => i + 1);
+
+export const COMMON_TEXT_FORM_LIMIT = 250;
+
+export const COMMON_CURRENT_DATE = new Date();

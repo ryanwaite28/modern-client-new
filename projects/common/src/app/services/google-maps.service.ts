@@ -210,9 +210,10 @@ export class GoogleMapsService {
         manage.marker.setVisible(true);
 
         manage.infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-        'Place ID: ' + place.place_id + '<br>' +
-        place.formatted_address +
-        '</div>');
+          'Place ID: ' + place.place_id + '<br>' +
+          place.formatted_address +
+          '</div>'
+        );
 
         manage.infowindow.open(manage.map, manage.marker);
       }
@@ -256,7 +257,7 @@ export class GoogleMapsService {
     // Get the full place details when the user selects a place from the list of suggestions.
     google.maps.event.addListener(manage.autocomplete, 'place_changed', place_changed_success_callback);
 
-    place_changes.subscribe({
+    const sub = place_changes.subscribe({
       next: () => {},
       error: () => {},
       complete: () => {
@@ -264,6 +265,9 @@ export class GoogleMapsService {
         console.log(`removing listener...`);
         google.maps.event.clearInstanceListeners(manage.autocomplete);
         console.log(`removed listener.`);
+        if (sub) {
+          sub?.unsubscribe();
+        }
       }
     });
 

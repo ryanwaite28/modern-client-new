@@ -39,6 +39,7 @@ export class UserPageComponent implements OnInit {
     });
 
     this.route.data.subscribe((data) => {
+      console.log(data);
       this.user = data['user'];
       this.user_subscription_info = data['user_subscription_info'];
     });

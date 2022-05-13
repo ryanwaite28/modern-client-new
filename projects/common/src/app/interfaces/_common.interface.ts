@@ -41,7 +41,7 @@ export const ReactionsCountsPropByReactionType: PlainObject = {
   [REACTION_TYPES.CONFUSED]: 'confused_count',
 };
 
-export interface ICommonModel {
+export interface ICommonModel extends PlainObject {
   id:                      number,
   date_created:            string,
   uuid:                    string,
