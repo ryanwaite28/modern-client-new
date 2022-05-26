@@ -128,6 +128,11 @@ export const service_categories = [
   { display: 'Tire Services', key: 'tire_services' },
 ];
 
+export const service_categories_display_by_key = service_categories.reduce((obj, service) => {
+  obj[service.key] = service.display;
+  return obj;
+}, {} as PlainObject);
+
 export const service_types_by_service_category = Object.freeze({
   standard_services,
   engine_services,

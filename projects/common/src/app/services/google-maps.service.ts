@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { PlainObject } from '../interfaces/json-object.interface';
-import { INavigatorGeoLocation } from '../interfaces/_common.interface';
+import { IGoogleAutocompleteEvent, INavigatorGeoLocation } from '../interfaces/_common.interface';
 import { ClientService } from './client.service';
 
 @Injectable({
@@ -140,7 +140,7 @@ export class GoogleMapsService {
   makeTextInputIntoLocationAutoComplete(
     locationInput: HTMLInputElement,
     mapBox?: HTMLDivElement
-  ): Subject<{ manage: PlainObject; placeData: PlainObject; }> {
+  ): Subject<IGoogleAutocompleteEvent> {
     const google = this.google;
     if (!google) {
       throw new ReferenceError(`makeTextInputIntoLocationAutoComplete() error: Google maps API is not loaded...`);
@@ -178,7 +178,7 @@ export class GoogleMapsService {
     }
     
     // create by-directional communicator
-    const place_changes = new Subject<{ manage: PlainObject; placeData: PlainObject; }>();
+    const place_changes = new Subject<IGoogleAutocompleteEvent>();
 
     const place_changed_success_callback = () => {
       manage.infowindow.close();
@@ -270,8 +270,6 @@ export class GoogleMapsService {
         }
       }
     });
-
-    Object.freeze(manage);
 
     return place_changes;
   }

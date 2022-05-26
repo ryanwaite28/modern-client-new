@@ -26,9 +26,9 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
   
-      { path: 'home', component: HomePageComponent },
+      { path: 'home', component: HomePageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
       { path: 'mechanic-profile', component: MechanicProfilePageComponent },
-      { path: 'settings', component: SettingsPageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
+      // { path: 'settings', component: SettingsPageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
     ]
   }
 ];

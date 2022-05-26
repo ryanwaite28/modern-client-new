@@ -8,11 +8,11 @@ import { IUser } from './user.interface';
 
 
 export interface IFormSubmitEvent {
-  formData: FormData;
-  payload: PlainObject;
-  form: FormGroup;
-  formElm: ElementRef<HTMLFormElement>;
-  photoInput: ElementRef<HTMLInputElement>;
+  formData: FormData,
+  payload: PlainObject,
+  form: FormGroup,
+  formElm: HTMLFormElement,
+  resetForm?: () => void,
 }
 
 export interface IUserSubscriptionInfo {
@@ -366,4 +366,9 @@ export interface INavigatorGeoLocation {
   position: any,
   lat:  number,
   lng: number,
+}
+
+export interface IGoogleAutocompleteEvent {
+  manage: PlainObject;
+  placeData: PlainObject;
 }

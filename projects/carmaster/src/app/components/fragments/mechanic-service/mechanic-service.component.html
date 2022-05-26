@@ -1,0 +1,31 @@
+<div class="border border-gray-200 bg-gray-50 p-3">
+  <div class="flex flex-row gap-3 mb-2">
+    <div class="w-full sm:w-3/4">
+      <div class="flex flex-row gap-3 mb-2">
+        <div class="w-full sm:w-1/2">
+          <p>{{ service_categories_display_by_key[service.service_category] }}</p>
+          <p>{{ service.service_type }}</p>
+          <p>{{ service.service_action }}</p>
+        </div>
+      
+        <div class="w-full sm:w-1/2">
+          <p>Cost: ${{ service.cost | number }}</p>
+          <p>Deposit: ${{ service.deposit | number }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="w-full sm:w-1/4" *ngIf="isYou">
+      <span class="mx-3 cursor-pointer" (click)="isEditing = !isEditing">{{ isEditing ? 'Cancel Edit' : 'Edit' }}</span>
+      <span class="cursor-pointer" (click)="emitDelete()">Delete</span>
+    </div>
+  </div>
+
+  <div *ngIf="isEditing">
+    <carmaster-mechanic-service-form
+      (formSubmit)="updateService($event)"
+      [isEditing]="isEditing"
+      [service]="service"
+    ></carmaster-mechanic-service-form>
+  </div>
+</div>

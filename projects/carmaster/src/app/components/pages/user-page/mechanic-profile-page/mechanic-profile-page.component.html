@@ -6,6 +6,16 @@
       <p *ngIf="!isUserActiveMember">
         You must have an active membership subscription to create and use.
       </p>
+
+      <button
+        type="button"
+        *ngIf="isUserActiveMember && !mechanic_profile"
+        class=btn-primary-1
+        [disabled]="loading"
+        (click)="createMechanicProfile()"
+      >
+        Create Mechanic Profile
+      </button>
     </div>
   </div>
 
@@ -15,45 +25,85 @@
       <div class="">
         <h3 class="text-3xl mb-3">Info</h3>
       </div>
-
-      <form [formGroup]="profileForm" (ngSubmit)="onProfileInfoSubmit()">
-        <div class="mb-2">
-          <span class="label-info">
-            Bio ({{ profileForm.value.bio.length }}/{{ TEXT_FORM_LIMIT }})
-          </span>
-          <textarea type="text" class="input-text-1" placeholder="Enter Bio" rows="3" formControlName="bio"></textarea>
-        </div>
-
-        <div class="mb-2">
-          <span class="label-info">
-            Website ({{ profileForm.value.website.length }}/255)
-          </span>
-          <input class="input-text-1" type="text" placeholder="Enter Website" formControlName="website" />
-        </div>
-
-        <div class="mb-2">
-          <span class="label-info">
-            Phone ({{ profileForm.value.phone.length }}/255)
-          </span>
-          <input class="input-text-1" type="text" placeholder="Enter Phone" formControlName="phone" />
-        </div>
-
-        <div class="mb-2">
-          <span class="label-info">
-            Email ({{ profileForm.value.email.length }}/255)
-          </span>
-          <input class="input-text-1" type="text" placeholder="Enter Email" formControlName="email" />
-        </div>
-
-        <div class="mb-2">
-          <span class="label-info">
-            Location (City and State | Current Location: {{ you!.location }})
-          </span>
-          <input type="text" id="location-input" class="input-text-1" placeholder="Enter a Location" />
+      
+      <ng-container [ngSwitch]="isYou">
+        <div *ngSwitchCase="false">
+          <div *ngIf="!!mechanic_profile">
+            <p>{{ mechanic_profile.bio }}</p>
+            <p>{{ mechanic_profile.website }}</p>
+            <p>{{ mechanic_profile.phone }}</p>
+            <p>{{ mechanic_profile.email }}</p>
+            <p>{{ mechanic_profile.city }}, {{ mechanic_profile?.state }}, {{ mechanic_profile?.country }}</p>
+          </div>
         </div>
 
 
-      </form>
+        <form *ngSwitchCase="true" [formGroup]="profileForm" (ngSubmit)="onProfileInfoSubmit()">
+          <div class="mb-2">
+            <span class="label-info">
+              Bio ({{ profileForm.value.bio.length }}/{{ TEXT_FORM_LIMIT }})
+            </span>
+            <textarea type="text" class="input-text-1" placeholder="Enter Bio" rows="3" formControlName="bio"></textarea>
+          </div>
+  
+          <div class="mb-2">
+            <span class="label-info">
+              Website ({{ profileForm.value.website.length }}/255)
+            </span>
+            <input class="input-text-1" type="text" placeholder="Enter Website" formControlName="website" />
+          </div>
+  
+          <div class="mb-2">
+            <span class="label-info">
+              Phone ({{ profileForm.value.phone.length }}/255)
+            </span>
+            <input class="input-text-1" type="text" placeholder="Enter Phone" formControlName="phone" />
+          </div>
+  
+          <div class="mb-2">
+            <span class="label-info">
+              Email ({{ profileForm.value.email.length }}/255)
+            </span>
+            <input class="input-text-1" type="text" placeholder="Enter Email" formControlName="email" />
+          </div>
+  
+          <div class="mb-2">
+            <span class="label-info">
+              Location (City and State | Current Location: {{ mechanic_profile?.city }}, {{ mechanic_profile?.state }}, {{ mechanic_profile?.country }})
+            </span>
+            <input type="text" id="location-input" autocomplete="off" class="input-text-1" placeholder="Enter a Location" />
+          </div>
+  
+          <button
+            type="submit"
+            class=btn-primary-1
+            [disabled]="loading"
+          >
+            Submit
+          </button>
+        </form>
+      </ng-container>
+    </div>
+
+    <div class="card-box-1">
+      <div class="">
+        <h3 class="text-3xl mb-2">Fields</h3>
+        <h3 class="text-lg mb-3">Additional information about you</h3>
+      </div>
+
+      <div *ngIf="isYou" class="pb-3 mb-3">
+        <carmaster-mechanic-field-form
+          (formSubmit)="createField($event)"
+        ></carmaster-mechanic-field-form>
+      </div>
+
+      <div *ngIf="mechanic_profile?.mechanic_fields?.length" class="pt-3">
+        <carmaster-mechanic-field *ngFor="let field of mechanic_profile?.mechanic_fields!"
+          [field]="field"
+          [mechanic_profile]="mechanic_profile"
+          (onDelete)="deleteField(field)"
+        ></carmaster-mechanic-field>
+      </div>
     </div>
 
     <div class="card-box-1">
@@ -61,12 +111,19 @@
         <h3 class="text-3xl mb-3">Credentials</h3>
       </div>
 
-      <div *ngIf="isYou" class="border-b border-gray-200 pb-3 mb-3">
+      <div *ngIf="isYou" class="pb-3 mb-3">
         <carmaster-mechanic-credential-form
+          (formSubmit)="createCredential($event)"
         ></carmaster-mechanic-credential-form>
       </div>
 
-
+      <div *ngIf="mechanic_profile?.mechanic_credentials?.length" class="pt-3">
+        <carmaster-mechanic-credential *ngFor="let credential of mechanic_profile?.mechanic_credentials!"
+          [credential]="credential"
+          [mechanic_profile]="mechanic_profile"
+          (onDelete)="deleteCredential(credential)"
+        ></carmaster-mechanic-credential>
+      </div>
     </div>
 
     <div class="card-box-1">
@@ -74,11 +131,19 @@
         <h3 class="text-3xl mb-3">Expertises</h3>
       </div>
 
-      <div *ngIf="isYou" class="border-b border-gray-200 pb-3 mb-3">
+      <div *ngIf="isYou" class="pb-3 mb-3">
         <carmaster-mechanic-expertise-form
+          (formSubmit)="createExpertise($event)"
         ></carmaster-mechanic-expertise-form>
       </div>
 
+      <div *ngIf="mechanic_profile?.mechanic_expertises?.length" class="pt-3">
+        <carmaster-mechanic-expertise *ngFor="let expertise of mechanic_profile?.mechanic_expertises!"
+          [expertise]="expertise"
+          [mechanic_profile]="mechanic_profile"
+          (onDelete)="deleteExpertise(expertise)"
+        ></carmaster-mechanic-expertise>
+      </div>
     </div>
 
     <div class="card-box-1">
@@ -86,16 +151,37 @@
         <h3 class="text-3xl mb-3">Services</h3>
       </div>
 
-      <div *ngIf="isYou" class="border-b border-gray-200 pb-3 mb-3">
+      <div *ngIf="isYou" class="pb-3 mb-3">
         <carmaster-mechanic-service-form
+          (formSubmit)="createService($event)"
         ></carmaster-mechanic-service-form>
       </div>
 
+      <div *ngIf="mechanic_profile?.mechanic_services?.length" class="pt-3">
+        <carmaster-mechanic-service *ngFor="let service of mechanic_profile?.mechanic_services!"
+          [service]="service"
+          [mechanic_profile]="mechanic_profile"
+          (onDelete)="deleteService(service)"
+        ></carmaster-mechanic-service>
+      </div>
     </div>
 
     <div class="card-box-1">
       <div class="">
         <h3 class="text-3xl mb-3">Ratings</h3>
+      </div>
+
+      <div *ngIf="!isYou" class="pb-3 mb-3">
+        <carmaster-mechanic-rating-form
+          (formSubmit)="createRating($event)"
+        ></carmaster-mechanic-rating-form>
+      </div>
+
+      <div *ngIf="mechanic_profile?.mechanic_ratings?.length" class="pt-3">
+        <carmaster-mechanic-rating *ngFor="let rating of mechanic_profile?.mechanic_ratings!"
+          [rating]="rating"
+          [mechanic_profile]="mechanic_profile"
+        ></carmaster-mechanic-rating>
       </div>
     </div>
 

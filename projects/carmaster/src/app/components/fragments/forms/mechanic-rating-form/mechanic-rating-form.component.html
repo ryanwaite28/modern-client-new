@@ -1,1 +1,39 @@
-<p>mechanic-rating-form works!</p>
+<div class="border border-gray-300 bg-gray-100 p-3">
+  <form #formElm [formGroup]="form" (ngSubmit)="onSubmit(formElm)">
+    <div class="mb-2">
+      <span class="label-info">
+        Rating
+      </span>
+
+      <select class="input-text-1" formControlName="rating">
+        <option *ngFor="let rating of ratingOptions" [ngValue]="rating">
+          {{ rating }}
+        </option>
+      </select>
+    </div>
+    
+    <div class="mb-2">
+      <span class="label-info">
+        Title
+      </span>
+      <input class="input-text-1" type="text" placeholder="Enter Title" formControlName="title" />
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Summary
+      </span>
+      <textarea type="text" class="input-text-1" placeholder="Enter Summary" rows="3" formControlName="summary"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <button
+        type="submit"
+        class=btn-primary-1
+        [disabled]="loading"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

@@ -80,6 +80,13 @@ export interface IMechanicRating extends ICommonModel {
   mechanic?: IMechanic,
 }
 
+export interface IMechanicRatingEdit extends ICommonModel {
+  rating_id: number,
+  summary: string,
+
+  rating?: IMechanicRating,
+}
+
 export interface IMechanicExpertise extends ICommonModel {
   mechanic_id: number,
   credential_id: number,

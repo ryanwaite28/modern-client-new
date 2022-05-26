@@ -1,0 +1,25 @@
+<div class="border border-gray-200 bg-gray-50 p-3">
+  <div class="flex flex-row gap-3 mb-2">
+    <div class="w-full sm:w-3/4">
+      <p>Car: {{ expertise.make }} {{ expertise.model }}</p>
+      <p>Type: {{ expertise.type }}</p>
+      <p>Trim: {{ expertise.trim }}</p>
+      <p class="mb-3">Years: {{ expertise.min_year }} - {{ expertise.max_year }}</p>
+      
+      <p>{{ expertise.description }}</p>
+    </div>
+  
+    <div class="w-full sm:w-1/4" *ngIf="isYou">
+      <span class="mx-3 cursor-pointer" (click)="isEditing = !isEditing">{{ isEditing ? 'Cancel Edit' : 'Edit' }}</span>
+      <span class="cursor-pointer" (click)="emitDelete()">Delete</span>
+    </div>
+  </div>
+
+  <div *ngIf="isEditing">
+    <carmaster-mechanic-expertise-form
+      (formSubmit)="updateExpertise($event)"
+      [isEditing]="isEditing"
+      [expertise]="expertise"
+    ></carmaster-mechanic-expertise-form>
+  </div>
+</div>

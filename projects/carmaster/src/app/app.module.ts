@@ -19,6 +19,13 @@ import { MechanicRatingFormComponent } from './components/fragments/forms/mechan
 import { MechanicFieldFormComponent } from './components/fragments/forms/mechanic-field-form/mechanic-field-form.component';
 import { MechanicCredentialReportingFormComponent } from './components/fragments/forms/mechanic-credential-reporting-form/mechanic-credential-reporting-form.component';
 import { MechanicCredentialReportingMessageFormComponent } from './components/fragments/forms/mechanic-credential-reporting-message-form/mechanic-credential-reporting-message-form.component';
+import { MechanicFieldComponent } from './components/fragments/mechanic-field/mechanic-field.component';
+import { MechanicCredentialComponent } from './components/fragments/mechanic-credential/mechanic-credential.component';
+import { MechanicExpertiseComponent } from './components/fragments/mechanic-expertise/mechanic-expertise.component';
+import { MechanicServiceComponent } from './components/fragments/mechanic-service/mechanic-service.component';
+import { MechanicRatingComponent } from './components/fragments/mechanic-rating/mechanic-rating.component';
+import { MechanicSearchComponent } from './components/pages/mechanic-search/mechanic-search.component';
+import { CreateServiceRequestComponent } from './components/pages/create-service-request/create-service-request.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +46,13 @@ import { MechanicCredentialReportingMessageFormComponent } from './components/fr
     MechanicFieldFormComponent,
     MechanicCredentialReportingFormComponent,
     MechanicCredentialReportingMessageFormComponent,
+    MechanicFieldComponent,
+    MechanicCredentialComponent,
+    MechanicExpertiseComponent,
+    MechanicServiceComponent,
+    MechanicRatingComponent,
+    MechanicSearchComponent,
+    CreateServiceRequestComponent,
   ],
   imports: [
     BrowserModule,

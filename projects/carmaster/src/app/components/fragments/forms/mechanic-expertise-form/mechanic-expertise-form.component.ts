@@ -57,6 +57,10 @@ export class MechanicExpertiseFormComponent implements OnInit {
         this.make_models = car.models;
       }
     });
+
+    if (this.isEditing) {
+      this.form.get('make')?.setValue(this.expertise?.make);
+    }
   }
 
   resetForm(
@@ -72,22 +76,25 @@ export class MechanicExpertiseFormComponent implements OnInit {
   }
 
   onSubmit(
-    formElm: HTMLFormElement
+    formElm: HTMLFormElement,
   ) {
+    if (this.form.invalid) {
+      return console.log(`form invalid.`);
+    }
     const formData = new FormData(formElm);
     const payload = this.form.value;
     formData.append(`payload`, JSON.stringify(payload));
-    console.log(formElm, this);
 
-    this.formSubmit.emit({
+    const emitData = {
       formElm: formElm,
       form: this.form,
       formData,
       payload,
-      fileInput: null,
       resetForm: () => {
         this.resetForm(formElm);
       }
-    });
+    };
+    console.log(emitData);
+    this.formSubmit.emit(emitData);
   }
 }

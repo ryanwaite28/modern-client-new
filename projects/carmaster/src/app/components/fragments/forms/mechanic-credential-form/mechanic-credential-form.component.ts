@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IMechanicCredential } from 'projects/carmaster/src/app/interfaces/carmaster.interface';
+import { IFormSubmitEvent } from 'projects/common/src/app/interfaces/_common.interface';
 
 
 const default_form_config = [
@@ -21,7 +22,7 @@ export class MechanicCredentialFormComponent implements OnInit {
   @Input() credential?: IMechanicCredential;
   @Input() isEditing: boolean = false;
 
-  @Output() formSubmit = new EventEmitter<any>();
+  @Output() formSubmit = new EventEmitter<IFormSubmitEvent>();
 
   loading = false;
 
@@ -59,20 +60,23 @@ export class MechanicCredentialFormComponent implements OnInit {
     formElm: HTMLFormElement,
     fileInput: HTMLInputElement
   ) {
+    if (this.form.invalid) {
+      return console.log(`form invalid.`);
+    }
     const formData = new FormData(formElm);
     const payload = this.form.value;
     formData.append(`payload`, JSON.stringify(payload));
-    console.log(formElm, this);
 
-    this.formSubmit.emit({
+    const emitData = {
       formElm: formElm,
       form: this.form,
       formData,
       payload,
-      fileInput,
       resetForm: () => {
         this.resetForm(formElm, fileInput);
       }
-    });
+    };
+    console.log(emitData);
+    this.formSubmit.emit(emitData);
   }
 }

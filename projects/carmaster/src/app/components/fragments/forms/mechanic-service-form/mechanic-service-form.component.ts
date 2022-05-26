@@ -57,6 +57,10 @@ export class MechanicServiceFormComponent implements OnInit {
         this.service_types = service_types;
       }
     });
+
+    if (this.isEditing) {
+      this.form.get('service_category')?.setValue(this.service?.service_category);
+    }
   }
 
   resetForm(
@@ -72,22 +76,25 @@ export class MechanicServiceFormComponent implements OnInit {
   }
 
   onSubmit(
-    formElm: HTMLFormElement
+    formElm: HTMLFormElement,
   ) {
+    if (this.form.invalid) {
+      return console.log(`form invalid.`);
+    }
     const formData = new FormData(formElm);
     const payload = this.form.value;
     formData.append(`payload`, JSON.stringify(payload));
-    console.log(formElm, this);
 
-    this.formSubmit.emit({
+    const emitData = {
       formElm: formElm,
       form: this.form,
       formData,
       payload,
-      fileInput: null,
       resetForm: () => {
         this.resetForm(formElm);
       }
-    });
+    };
+    console.log(emitData);
+    this.formSubmit.emit(emitData);
   }
 }
