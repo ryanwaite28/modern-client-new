@@ -78,6 +78,7 @@ export interface IMechanicRating extends ICommonModel {
 
   writer?: IUser,
   mechanic?: IMechanic,
+  mechanic_rating_edits?: IMechanicRatingEdit[],
 }
 
 export interface IMechanicRatingEdit extends ICommonModel {

@@ -1,1 +1,17 @@
-<p>mechanic-search works!</p>
+<div>
+  <div class="m-16">
+    <div class="container mx-auto">
+      <div class="flex flex-col gap-4">
+        <div class="w-full">
+          <carmaster-mechanic-search-form
+            (formSubmit)="searchMechanics($event)"
+          ></carmaster-mechanic-search-form>
+        </div>
+
+        <div class="w-full">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

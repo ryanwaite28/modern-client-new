@@ -26,6 +26,7 @@ import { MechanicServiceComponent } from './components/fragments/mechanic-servic
 import { MechanicRatingComponent } from './components/fragments/mechanic-rating/mechanic-rating.component';
 import { MechanicSearchComponent } from './components/pages/mechanic-search/mechanic-search.component';
 import { CreateServiceRequestComponent } from './components/pages/create-service-request/create-service-request.component';
+import { MechanicSearchFormComponent } from './components/fragments/forms/mechanic-search-form/mechanic-search-form.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { CreateServiceRequestComponent } from './components/pages/create-service
     MechanicRatingComponent,
     MechanicSearchComponent,
     CreateServiceRequestComponent,
+    MechanicSearchFormComponent,
   ],
   imports: [
     BrowserModule,

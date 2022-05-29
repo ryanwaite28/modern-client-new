@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
+import { finalize } from 'rxjs';
 import { IMechanic, IMechanicRating } from '../../../interfaces/carmaster.interface';
 import { CarmasterService } from '../../../services/carmaster.service';
 
@@ -16,12 +19,22 @@ export class MechanicRatingComponent implements OnInit {
 
   you: IUser | null = null;
   loading = false;
+  summaryControl = new FormControl('', [Validators.required]);
 
   get isYou(): boolean {
     const isYours = (
       this.you && 
       this.mechanic_profile &&
       this.mechanic_profile.user_id === this.you.id
+    );
+    return !!isYours;
+  };
+
+  get isRatingOwner(): boolean {
+    const isYours = (
+      this.you && 
+      this.rating &&
+      this.rating.writer_id === this.you.id
     );
     return !!isYours;
   };
@@ -36,6 +49,28 @@ export class MechanicRatingComponent implements OnInit {
     this.userStore.getChangesObs().subscribe({
       next: (you) => {
         this.you = you;
+      }
+    });
+  }
+
+  onSubmitEdit() {
+    if (this.summaryControl.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    const data: any = {
+      summary: this.summaryControl.value
+    };
+    this.carmasterService.create_mechanic_rating_edit(this.rating!.mechanic_id, this.rating!.id, data)
+    .pipe(finalize(() => { this.loading = false; }))
+    .subscribe({
+      next: (response) => {
+        this.alertService.handleResponseSuccessGeneric(response);
+        this.rating!.mechanic_rating_edits!.unshift(response.data!);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.handleResponseErrorGeneric(error);
       }
     });
   }

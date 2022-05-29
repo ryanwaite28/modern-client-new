@@ -35,6 +35,8 @@ export class NavbarComponent implements OnInit {
           ? [
               { text: `Home`, href: ['/', 'users', you.id, 'home'] },
               { text: `Mechanic Profile`, href: ['/', 'users', you.id, 'mechanic-profile'] },
+              { text: `Search`, href: ['/', 'mechanic-search'] },
+              { text: `Create Service Request`, href: ['/', 'create-service-request'] },
               // { text: `Settings`, href: ['/', 'users', you.id, 'settings'] },
 
               { text: `Sign Out`, clickFn: (event: any) => { this.signout(); } },
