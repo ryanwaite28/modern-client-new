@@ -191,8 +191,13 @@
         <ng-container *ngSwitchCase="true" [ngSwitch]="platform_subscription.status">
           <div *ngSwitchCase="'active'">
             <div class="border px-4 py-3 rounded relative mb-3" [ngClass]="AlertDivClass.success">
-              <strong class="font-bold mr-3">You have an active membership!</strong>
-              <span>It will renew on {{ platform_subscription.current_period_end * 1000 | date }}</span>
+              <span>
+                You have an active membership!
+                It will renew on 
+                <span class="font-bold">
+                  {{ platform_subscription.current_period_end * 1000 | date:'EEEE, MMMM d, y, h:mm:ss a' }}
+                </span>
+              </span>
             </div>
   
             <button
@@ -206,13 +211,61 @@
           </div>
 
           <div *ngSwitchCase="'canceled'">
-            <div class="border px-4 py-3 rounded relative mb-3" [ngClass]="AlertDivClass.warning">
-              <strong class="font-bold mr-3">You have a canceled membership.</strong>
-              <span>It will expire on {{ platform_subscription.current_period_end * 1000 | date }}</span>
-            </div>
+            <ng-container [ngSwitch]="isSubscriptionCanceledAndExpired">
+              <!-- renew -->
+              <div *ngSwitchCase="true">
+                <div class="border px-4 py-3 rounded relative mb-3" [ngClass]="AlertDivClass.danger">
+                  <span>
+                    You have an expired membership.
+                    It expired on 
+                    <span class="">
+                      {{ platform_subscription.current_period_end * 1000 | date:'EEEE, MMMM d, y, h:mm:ss a' }}
+                    </span>
+                  </span>
+                </div>
+                <!-- form -->
+                <div>
+                  <div class="uk-margin">
+                    <span class="label-info">
+                      Payment Method
+                    </span>
+                    <p *ngIf="!!payment_methods && !payment_methods.length" class="font-bold">
+                      You do not have any payment methods (debit/credit card) linked to your account. Please go to your setting and add one.
+                    </p>
+                    <select *ngIf="!!payment_methods && !!payment_methods.length" class="input-text-1" [formControl]="membershipPaymentMethodControl">
+                      <option *ngFor="let pm of payment_methods" [value]="pm.id">
+                        {{ pm.card!.brand | uppercase }} ending in {{ pm.card!.last4 }} (expires: {{ pm.card!.exp_month }}/{{ pm.card!.exp_year }})
+                      </option>
+                    </select>
+                  </div>
+
+                  <button
+                    type="button"
+                    class=btn-primary-1
+                    [disabled]="membershipPaymentMethodControl.invalid || loading"
+                    (click)="create_membership()"
+                  >
+                    Submit
+                  </button>
+                </div>
+                <!-- end form -->
+              </div>
+
+              <!-- still active -->
+              <div *ngSwitchCase="false" class="border px-4 py-3 rounded relative mb-3" [ngClass]="AlertDivClass.warning">
+                <span>
+                  You have a canceled membership.
+                  It will expire on 
+                  <span class="">
+                    {{ platform_subscription.current_period_end * 1000 | date:'EEEE, MMMM d, y, h:mm:ss a' }}
+                  </span>
+                </span>
+              </div>
+            </ng-container>
           </div>
         </ng-container>
 
+        <!-- form -->
         <div *ngSwitchCase="false">
           <p>Subscribe today for membership perks!</p>
 
@@ -239,6 +292,7 @@
             Submit
           </button>
         </div>
+        <!-- end form -->
       </ng-container>
     </div>
   </div>

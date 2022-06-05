@@ -3,13 +3,23 @@
     <div class="container mx-auto">
       <div class="flex flex-col gap-4">
         <div class="w-full">
-          <carmaster-mechanic-search-form
-            (formSubmit)="searchMechanics($event)"
-          ></carmaster-mechanic-search-form>
+          <div class="card-box-1">
+            <div class="">
+              <h3 class="text-3xl mb-3">Search for mechanics</h3>
+            </div>
+      
+            <carmaster-mechanic-search-form
+              (formSubmit)="searchMechanics($event)"
+            ></carmaster-mechanic-search-form>
+          </div>
         </div>
 
-        <div class="w-full">
-          <router-outlet></router-outlet>
+        <div class="flex flex-col gap-4">
+          <div class="w-full sm:w-1/2 lg:w-1/3" *ngFor="let mechanic of mechanics">
+            <common-user-profile-card
+              [user]="mechanic.user!"
+            ></common-user-profile-card>
+          </div>
         </div>
       </div>
     </div>

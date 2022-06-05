@@ -1,1 +1,132 @@
-<p>mechanic-search-form works!</p>
+<div class="border border-gray-300 bg-gray-100 p-3">
+  <form #formElm [formGroup]="form" (ngSubmit)="onSubmit(formElm)">
+    <!-- expertise section -->
+    <div class="flex flex-col sm:flex-row gap-3 mb-2">
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Make
+        </span>
+
+        <select class="input-text-1" formControlName="make">
+          <option *ngFor="let car of cars" [value]="car.brand">
+            {{ car.brand }}
+          </option>
+        </select>
+      </div>
+
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Model
+        </span>
+
+        <select class="input-text-1" formControlName="model">
+          <option *ngFor="let model of make_models" [value]="model">
+            {{ model }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-2">
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Type ({{ form.value.type.length }}/255)
+        </span>
+        <input class="input-text-1" type="text" placeholder="Enter Type" formControlName="type" />
+      </div>
+
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Trim ({{ form.value.trim.length }}/255)
+        </span>
+        <input class="input-text-1" type="text" placeholder="Enter Trim" formControlName="trim" />
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-2">
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Min Year
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Min Year" formControlName="min_year" />
+      </div>
+
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Max Year
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Max Year" formControlName="max_year" />
+      </div>
+    </div>
+
+    <!-- Service section -->
+    <div class="mb-2">
+      <span class="label-info">
+        Service Category
+      </span>
+
+      <select class="input-text-1" formControlName="service_category">
+        <option *ngFor="let service_category of service_categories" [value]="service_category.key">
+          {{ service_category.display }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Service Type
+      </span>
+
+      <select class="input-text-1" formControlName="service_type">
+        <option *ngFor="let service_type of service_types" [value]="service_type">
+          {{ service_type }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Service Action
+      </span>
+
+      <select class="input-text-1" formControlName="service_action">
+        <option *ngFor="let service_action of service_actions" [value]="service_action">
+          {{ service_action }}
+        </option>
+      </select>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-2">
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Cost
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Service Cost" formControlName="cost" />
+      </div>
+
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Deposit
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Service Deposit" formControlName="deposit" />
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Location (City and State)
+      </span>
+      <input type="text" id="location-input" autocomplete="off" class="input-text-1" placeholder="Enter a Location" />
+    </div>
+
+    <div class="form-group">
+      <button
+        type="submit"
+        class=btn-primary-1
+        [disabled]="loading"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

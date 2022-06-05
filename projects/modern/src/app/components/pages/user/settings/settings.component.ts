@@ -24,6 +24,7 @@ import { Subscription } from 'rxjs';
 })
 export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnDestroy {
   you: IUser | null = null;
+  now: number = Date.now();
   loading: boolean = false;
   initState = false;
   infoData: PlainObject = {};
@@ -102,6 +103,17 @@ export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnD
   cardElement?: StripeCardElement;
   cardFormHasErrors = true;
   AlertDivClass = AlertDivClass;
+
+  get isSubscriptionCanceledAndExpired(): boolean {
+    if (!this.platform_subscription) {
+      return false;
+    }
+    const now = this.now * 1000;
+    const end = this.platform_subscription.current_period_end * 1000;
+    const match = now > end;
+    // console.log({ now, end, match });
+    return match; 
+  }
 
   cardChangeHandler = (event: any) => {
     const displayError = document.getElementById('card-errors');

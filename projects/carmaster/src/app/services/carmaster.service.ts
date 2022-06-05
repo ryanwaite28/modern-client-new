@@ -53,6 +53,16 @@ export class CarmasterService {
   }
 
 
+  search_mechanics(data: any) {
+    const endpoint = `/carmaster/mechanics/search`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`, data).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+
 
   // mechanic fields
 
