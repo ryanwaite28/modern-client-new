@@ -38,7 +38,7 @@ const routes: Routes = [
     },
     data: { authParamsProp: 'user_id' },
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'home' },
+      { path: '', pathMatch: 'full', redirectTo: 'mechanic-profile' },
   
       { path: 'home', component: HomePageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
       { path: 'mechanic-profile', component: MechanicProfilePageComponent },

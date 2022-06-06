@@ -5,7 +5,9 @@
       <img class="h-auto w-full mx-auto" [src]="user.icon_link || './assets/img/anon.png'" alt="">
     </div>
     <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{ user.displayname }}</h1>
-    <h3 class="text-gray-600 font-lg text-semibold leading-6">@{{ user.username }}</h3>
+    <h3 class="text-gray-600 font-lg text-semibold leading-6">
+      <a [routerLink]="['/', 'users', user.id]">@{{ user.username }}</a>
+    </h3>
     <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">{{ user.bio }}</p>
     <ul
       class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">

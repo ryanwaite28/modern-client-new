@@ -159,7 +159,7 @@
         <div class="form-group">
           <button
             type="submit"
-            class=btn-primary-1
+            class="btn-primary-1"
             [disabled]="userIconForm.invalid || loading"
           >
             Submit
@@ -172,10 +172,10 @@
   <!-- Stripe account -->
   <div class="card-box-1">
     <div class="uk-card-body">
-      <h3 class="text-2xl">Stripe Account</h3>
+      <h3 class="text-2xl mb-4">Stripe Account</h3>
       
       <ng-container [ngSwitch]="!!you!.stripe_account_id && !!you!.stripe_account_verified">
-        <a *ngSwitchCase="false" (click)="createStripeAccount()" class="stripe-connect"><span>Connect with</span></a>
+        <a *ngSwitchCase="false" (click)="createStripeAccount()" class="btn-primary-1"><span>Connect with Stripe</span></a>
 
         <p *ngSwitchCase="true">You're connected!</p>
       </ng-container>

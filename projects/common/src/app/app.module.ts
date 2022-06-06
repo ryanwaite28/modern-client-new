@@ -49,6 +49,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonAlertsFragmentComponent } from './components/alerts-fragment/alerts-fragment.component';
 import { BackgroundImageCoverDirective } from './directives/background-image-cover.directive';
 import { UserProfileCardComponent } from './components/user-profile-card/user-profile-card.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { UserProfileCardComponent } from './components/user-profile-card/user-pr
     BrowserModule,
     CommonModule,
     HttpClientModule,
+    RouterModule,
     
     FormsModule,
     ReactiveFormsModule,

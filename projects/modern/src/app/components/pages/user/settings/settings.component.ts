@@ -500,7 +500,8 @@ export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnD
     this.usersService.create_stripe_account(this.you!.id).subscribe(
       (response: any) => {
         this.loading = false;
-        window.open(response.onboarding_url, `_blank`);
+        // window.location.href = response.data.onboarding_url;
+        window.open(response.data.onboarding_url, `_blank`);
       },
       (error: HttpErrorResponse) => {
         this.loading = false;

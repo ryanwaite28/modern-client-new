@@ -11,6 +11,9 @@ import { UsersService } from '../../services/users.service';
 export class UserProfileCardComponent implements OnInit {
   @Input() user?: IUser | null;
   @Input() user_subscription_info: IUserSubscriptionInfo | null = null;
+  
+  
+  @Input() app: string = 'modern';
 
   constructor(
     private usersService: UsersService,
