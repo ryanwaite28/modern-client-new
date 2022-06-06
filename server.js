@@ -6,7 +6,18 @@ const path = require('path');
 const app = express();
 app.use(secure);
 
-const appName = 'modern-client';
+const appName = process.argv[2];
+
+const isAppNameValid = [
+  'modern',
+  'deliverme',
+  'carmaster',
+].includes(appName);
+
+if (!isAppNameValid) {
+  console.log(`${appName} is invalid...`);
+  process.exit(1);
+}
 
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + `/dist/${appName}`));

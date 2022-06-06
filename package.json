@@ -11,13 +11,14 @@
     "start-dev-proxy": "ng serve --proxy-config proxy.config.json --port 7600",
     "start-dev-open": "ng serve --open --port 7600",
     "start-dev-proxy-open": "ng serve --open --proxy-config proxy.config.json --port 7600",
-    "build": "ng build --output-hashing=all",
-    "build-aot": "ng build --aot",
-    "build-hashing": "ng build --output-hashing=all",
-    "build-aot-hashing": "ng build --aot --output-hashing=all",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+
+    "build-modern": "ng build modern",
+    "build-deliverme": "ng build deliverme",
+    "build-carmaster": "ng build carmaster",
+
     "serve-modern": "ng serve --project=modern --port=5200",
     "serve-deliverme": "ng serve --project=deliverme --port=4200",
     "serve-carmaster": "ng serve --project=carmaster --port=6200"
