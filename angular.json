@@ -160,6 +160,10 @@
               ],
               "fileReplacements": [
                 {
+                  "replace": "projects/common/src/environments/environment.ts",
+                  "with": "projects/common/src/environments/environment.prod.ts"
+                },
+                {
                   "replace": "projects/modern/src/environments/environment.ts",
                   "with": "projects/modern/src/environments/environment.prod.ts"
                 }
@@ -265,6 +269,10 @@
               ],
               "fileReplacements": [
                 {
+                  "replace": "projects/common/src/environments/environment.ts",
+                  "with": "projects/common/src/environments/environment.prod.ts"
+                },
+                {
                   "replace": "projects/deliverme/src/environments/environment.ts",
                   "with": "projects/deliverme/src/environments/environment.prod.ts"
                 }
@@ -369,6 +377,10 @@
                 }
               ],
               "fileReplacements": [
+                {
+                  "replace": "projects/common/src/environments/environment.ts",
+                  "with": "projects/common/src/environments/environment.prod.ts"
+                },
                 {
                   "replace": "projects/carmaster/src/environments/environment.ts",
                   "with": "projects/carmaster/src/environments/environment.prod.ts"

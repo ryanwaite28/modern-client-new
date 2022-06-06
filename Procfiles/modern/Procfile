@@ -1,2 +1,1 @@
-builder: npm run build-modern
 web: node server.js modern
