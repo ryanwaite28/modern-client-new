@@ -1,7 +1,7 @@
 export const environment = {
   PRODUCTION: true,
   API_DOMAIN: `https://rmw-modern-server.herokuapp.com`,
-  MODERN_DOMAIN: `https://rmw-modern-client.herokuapp.com`,
+  MODERN_DOMAIN: `https://duauo4c3sv632.cloudfront.net`,
 
   APPS: [
     {

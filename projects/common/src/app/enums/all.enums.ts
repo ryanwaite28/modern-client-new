@@ -91,6 +91,7 @@ export enum MODERN_APPS {
   TRAVELLRS = 'travellrs',
   WORLDNEWS = 'worldnews',
   MYFAVORS = 'myfavors',
+  CARMASTER = 'carmaster',
 }
 
 export enum REACTIONS {

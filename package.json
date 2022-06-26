@@ -14,16 +14,17 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-
     "build": "ng build",
-
     "build-modern": "ng build modern",
     "build-deliverme": "ng build deliverme",
     "build-carmaster": "ng build carmaster",
-
     "serve-modern": "ng serve --project=modern --port=5200",
     "serve-deliverme": "ng serve --project=deliverme --port=4200",
-    "serve-carmaster": "ng serve --project=carmaster --port=6200"
+    "serve-carmaster": "ng serve --project=carmaster --port=6200",
+
+    "deploy-cloudfront-modern": "node deploy-cloudfront.js modern",
+    "deploy-cloudfront-deliverme": "node deploy-cloudfront.js deliverme",
+    "deploy-cloudfront-carmaster": "node deploy-cloudfront.js carmaster"
   },
   "private": true,
   "dependencies": {
@@ -48,13 +49,16 @@
     "@stripe/terminal-js": "^0.8.0",
     "@types/google.maps": "^3.45.6",
     "@types/socket.io-client": "^1.4.33",
+    "aws-sdk": "^2.1162.0",
     "bootstrap": "^4.5.2",
     "bulma": "^0.9.1",
+    "dotenv": "^16.0.1",
     "express": "^4.17.1",
     "express-force-https": "^1.0.0",
     "flowbite": "^1.4.2",
     "jquery": "^3.5.1",
     "js-cookie": "^3.0.1",
+    "mime-types": "^2.1.35",
     "moment": "^2.29.1",
     "ngx-bootstrap": "^6.1.0",
     "ngx-sharebuttons": "^8.0.1",

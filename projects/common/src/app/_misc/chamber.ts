@@ -1,4 +1,5 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { MODERN_APPS, USER_RECORDS } from '../enums/all.enums';
 import { INotification } from '../interfaces/notification.interface';
 import { IUser } from '../interfaces/user.interface';
 import { checkPrimitive } from './clone-object';
@@ -98,3 +99,20 @@ export function clone<T>  (obj: any): T  {
   const typedCopy = copy as T;
   return typedCopy;
 };
+
+export function get_user_records_endpoint(
+  user_id: number,
+  app: MODERN_APPS,
+  path: USER_RECORDS,
+  min_id?: number,
+  get_all: boolean = false,
+  is_public: boolean = true
+) {
+  const partial_prefix = is_public ? '/get-' : '/';
+  const endpoint = get_all
+    ? '/' + app + '/users/' + user_id + partial_prefix + path + '/all'
+    : min_id
+      ? '/' + app + '/users/' + user_id + `${partial_prefix}` + path + '/' + min_id
+      : '/' + app + '/users/' + user_id + `${partial_prefix}` + path;
+  return endpoint;
+}

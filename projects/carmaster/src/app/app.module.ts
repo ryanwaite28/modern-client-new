@@ -27,6 +27,8 @@ import { MechanicRatingComponent } from './components/fragments/mechanic-rating/
 import { MechanicSearchComponent } from './components/pages/mechanic-search/mechanic-search.component';
 import { CreateServiceRequestComponent } from './components/pages/create-service-request/create-service-request.component';
 import { MechanicSearchFormComponent } from './components/fragments/forms/mechanic-search-form/mechanic-search-form.component';
+import { UserMessagesFragmentComponent } from './components/pages/user-page/messages-page/messages.component';
+import { UserNotificationsFragmentComponent } from './components/pages/user-page/notifications-page/notifications.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { MechanicSearchFormComponent } from './components/fragments/forms/mechan
     MechanicSearchComponent,
     CreateServiceRequestComponent,
     MechanicSearchFormComponent,
+    UserMessagesFragmentComponent,
+    UserNotificationsFragmentComponent,
   ],
   imports: [
     BrowserModule,

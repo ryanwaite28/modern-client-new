@@ -5,6 +5,7 @@ import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 })
 export class BackgroundImageCoverDirective implements OnInit {
   @Input() bgImgCover: any;
+  @Input() height?: string;
 
   constructor(
     private el: ElementRef
@@ -15,5 +16,9 @@ export class BackgroundImageCoverDirective implements OnInit {
     this.el.nativeElement.style.backgroundRepeat = `no-repeat`;
     this.el.nativeElement.style.backgroundSize = `cover`;
     this.el.nativeElement.style.backgroundPosition = `center center`;
+
+    if (this.height) {
+      this.el.nativeElement.style.height = this.height;
+    }
   }
 }

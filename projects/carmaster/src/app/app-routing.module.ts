@@ -8,6 +8,8 @@ import { CreateServiceRequestComponent } from './components/pages/create-service
 import { MechanicSearchComponent } from './components/pages/mechanic-search/mechanic-search.component';
 import { HomePageComponent } from './components/pages/user-page/home-page/home-page.component';
 import { MechanicProfilePageComponent } from './components/pages/user-page/mechanic-profile-page/mechanic-profile-page.component';
+import { UserMessagesFragmentComponent } from './components/pages/user-page/messages-page/messages.component';
+import { UserNotificationsFragmentComponent } from './components/pages/user-page/notifications-page/notifications.component';
 import { SettingsPageComponent } from './components/pages/user-page/settings-page/settings-page.component';
 import { UserPageComponent } from './components/pages/user-page/user-page.component';
 import { WelcomeComponent } from './components/pages/welcome/welcome.component';
@@ -43,6 +45,8 @@ const routes: Routes = [
       { path: 'home', component: HomePageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
       { path: 'mechanic-profile', component: MechanicProfilePageComponent },
       // { path: 'settings', component: SettingsPageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
+      { path: 'notifications', component: UserNotificationsFragmentComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
+      { path: 'messages', component: UserMessagesFragmentComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
     ]
   }
 ];

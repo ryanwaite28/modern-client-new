@@ -6,6 +6,9 @@
 /out-tsc
 /bazel-out
 
+.env
+deploy-cloudfront-logs/
+
 # Node
 /node_modules
 npm-debug.log

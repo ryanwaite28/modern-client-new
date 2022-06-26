@@ -21,6 +21,7 @@ import { HttpStatusCode } from '../enums/http-codes.enum';
 import { UtilityService } from './utility.service';
 import { IApiKey, IUserSubscriptionInfo } from '../interfaces/_common.interface';
 import { EnvironmentService } from './environment.service';
+import { get_user_records_endpoint } from '../_misc/chamber';
 
 @Injectable({
   providedIn: 'root'
@@ -269,13 +270,8 @@ export class UsersService {
     get_all: boolean = false,
     is_public: boolean = true
   ) {
-    const partial_prefix = is_public ? '/get-' : '/';
-    const endpoint = get_all
-      ? '/' + app + '/users/' + user_id + partial_prefix + path + '/all'
-      : min_id
-        ? '/' + app + '/users/' + user_id + `${partial_prefix}` + path + '/' + min_id
-        : '/' + app + '/users/' + user_id + `${partial_prefix}` + path;
-    return this.clientService.sendRequest<GenericApiResponse<T>>(endpoint, `GET`).pipe(
+    const endpoint = get_user_records_endpoint(user_id, app, path, min_id, get_all, is_public);
+    return this.clientService.sendRequest(endpoint, `GET`).pipe(
       map((response) => {
         return response;
       })

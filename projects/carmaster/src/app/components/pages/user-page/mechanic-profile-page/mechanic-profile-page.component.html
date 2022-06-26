@@ -69,7 +69,7 @@
   
           <div class="mb-2">
             <span class="label-info">
-              Location (City and State | Current Location: {{ mechanic_profile?.city }}, {{ mechanic_profile?.state }}, {{ mechanic_profile?.country }})
+              Location (Enter city and state) <span class="" *ngIf="mechanic_profile?.city">Current Location: {{ mechanic_profile?.city }}, {{ mechanic_profile?.state }}, {{ mechanic_profile?.country }}</span>
             </span>
             <input type="text" id="location-input" autocomplete="off" class="input-text-1" placeholder="Enter a Location" />
           </div>
