@@ -69,12 +69,12 @@ async function getUploads(rootPath) {
       
       const stat = fs.statSync(absolutePath);
       const uploadItem = { absolutePath, relativePath, s3UploadPath, contentType, stats: JSON.stringify(stat) };
-      logs.push(JSON.stringify(uploadItem));
       
       const isFile = stat.isFile();
       const isDir = stat.isDirectory();
       
       if (isFile) {
+        logs.push(JSON.stringify(uploadItem));
         list.push(uploadItem);
       }
       if (isDir) {
@@ -243,8 +243,8 @@ async function deployProject(appName) {
         InvalidationBatch: {
           CallerReference: `${Date.now()}`,
           Paths: {
-            Quantity: 1,
-            Items: [`/*`],
+            Quantity: 3,
+            Items: [`${oldOriginPath}/*`, `/index.html`, `/*`],
           }
         }
       };
