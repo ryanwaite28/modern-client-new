@@ -8,13 +8,13 @@ export const environment = {
       img: '',
       title: 'DeliverMe',
       description: 'Make money delivering!',
-      link: 'https://rmw-deliverme-client.herokuapp.com',
+      link: 'https://d21wms91ke8cf7.cloudfront.net',
     },
     {
       img: '',
       title: 'CarMaster',
       description: 'The platform for car mechanics',
-      link: 'https://rmw-carmaster-client.herokuapp.com',
+      link: 'https://d1gkh7995y4cri.cloudfront.net',
     },
   ],
 };
