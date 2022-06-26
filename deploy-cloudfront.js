@@ -235,7 +235,7 @@ async function deployProject(appName) {
   logs.push(`origin path updated.`);
 
   if (oldOriginPath) {
-    logs.push(`attempting invalidation on old path: ${oldOriginPath}`);
+    logs.push(`attempting invalidation on old path: /*`);
     let invalidaion;
     try {
       const updateParams = {
@@ -244,13 +244,13 @@ async function deployProject(appName) {
           CallerReference: `${Date.now()}`,
           Paths: {
             Quantity: 1,
-            Items: [oldOriginPath],
+            Items: [`/*`],
           }
         }
       };
       invalidaion = await cloudfrontClient.createInvalidation(updateParams).promise();
-      logs.push(`invalidaion created on old path ${oldOriginPath}.`);
-    } catch (error) {
+      logs.push(`invalidaion created on old path /*.`);
+    } catch (err) {
       logs.push(String(err));
       savelogs();
       process.exit(1);
