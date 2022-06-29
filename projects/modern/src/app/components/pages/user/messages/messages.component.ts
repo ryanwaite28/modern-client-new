@@ -86,7 +86,7 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
       // the messages list is also reflecting the messaging; add the new message to the list
       this.messages_list.push(event.data);
       // the unseen service auto increments the count; decrement it since it is currently selected
-      this.unseenService.decrement('messages', 1);
+      // this.unseenService.decrement('messages', 1);
     } else {
       // check if there is an existing messaging in the list
       const messaging = this.messagings_list.find((m) => m.id === event.messaging.id);
@@ -179,7 +179,7 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
     });
 
     this.getMessages();
-    this.unseenService.decrement('messages', messaging.unread_messages_count);
+    // this.unseenService.decrement('messages', messaging.unread_messages_count);
   }
 
   getMessages() {

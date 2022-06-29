@@ -72,22 +72,23 @@ export class SocketEventsService {
 
   registerEventListenerStreams(event_types_map: PlainObject) {
     const listeners: SocketIOClient.Emitter[] = [];
+
     Object.keys(event_types_map).forEach((event_type) => {
       const subjectStream = new Subject<any>();
       this.streamsMap[event_type] = subjectStream;
-
       const listener = this.socket!.on(event_type, (event: any) => {
         console.log(`${event_type}`, { event });
         subjectStream.next(event);
       });
       listeners.push(listener);
     });
+
     return listeners;
   }
 
   private startListener() {
     const connect_event = this.socket!.on('connect', (event: any) => {
-      console.log(`socket connected`, event);
+      console.log(`socket connected.`, event);
       this.socket!.emit(`SOCKET_TRACK`, { user_id: this.you!.id });
     });
     const socket_id_event = this.socket!.on('socket_id', (event: any) => {

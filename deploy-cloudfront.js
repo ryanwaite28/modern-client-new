@@ -2,19 +2,26 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const fs = require('fs');
+const fs_p = require('fs/promises');
+// https://stackoverflow.com/questions/37732331/execute-bash-command-in-node-js-and-get-exit-code
+const util = require('util');
+const child_process = require('child_process');
+const exec = util.promisify(child_process.exec);
 const path = require('path');
 const AWS =  require('aws-sdk');
 const mime = require('mime-types')
 
+
+
 const s3 = new AWS.S3();
-
-
 const logs = [];
+const runDate = new Date();
 
 
-
+const givenAppName = process.argv[2];
+logs.push(`Date: ${runDate.toLocaleString()} (${runDate.toISOString()})`);
+logs.push(`given app name: ${givenAppName}`);
 logs.push(`dirname: ${__dirname}`);
-
 
 
 
@@ -40,9 +47,15 @@ function savelogs() {
     fs.mkdirSync(deployLogsPath);
   }
 
+  const deployAppLogsPath = path.join(deployLogsPath, givenAppName);
+  if (!fs.existsSync(deployAppLogsPath)) {
+    fs.mkdirSync(deployAppLogsPath);
+  }
+
   const contents = logs.join(`\n\n`);
-  const filename = `deploy-logs-${Date.now()}.txt`;
-  const filePath = path.join(deployLogsPath, filename);
+  const timestamp = Date.now();
+  const filename = `deploy-logs-${givenAppName}-${timestamp}.txt`;
+  const filePath = path.join(deployAppLogsPath, filename);
   const results = fs.writeFileSync(filePath, contents);
   console.log(`Logs saved`);
 
@@ -135,7 +148,7 @@ async function uploadToS3 (uploadItems, Bucket, bucketUploadPath) {
           logs.push(String(err));
           reject(err);
         } else {
-          logs.push('Successfully uploaded with params', data);
+          logs.push('Successfully uploaded with params:' + (typeof data === 'object') ? JSON.stringify(data) : String(data));
           resolve(data);
         }
       });
@@ -146,14 +159,44 @@ async function uploadToS3 (uploadItems, Bucket, bucketUploadPath) {
   return Promise.all(promises);
 }
 
+
+
+
+
 async function deployProject(appName) {
   // determine if project is built
   logs.push(`checking if ${appName} is built...`);
 
   const projectDistRoot = path.join(__dirname, `/dist/${appName}`).replace(/\\/g, '/');
-  const projectNotBuilt = fs.existsSync(projectDistRoot);
-  if (!projectNotBuilt) {
-    logs.push(`project "${appName}" is not built; could not find by path: ${projectDistRoot}`);
+  const projectBuildFound = fs.existsSync(projectDistRoot);
+  
+  if (projectBuildFound) {
+    logs.push(`found build for project "${appName}"; deleting old build and starting new build...`);
+    try {
+      logs.push(`attempting to delete dir: ${projectDistRoot}`);
+      await fs_p.rm(projectDistRoot, { recursive: true, force: true });
+      logs.push(`deleted dir ${projectDistRoot} successfully`);
+    }
+    catch (err) {
+      logs.push(String(err));
+      savelogs();
+      process.exit(1);
+    }
+  }
+
+  try {
+    logs.push(`attempting to build ${appName}...`);
+    const out = await exec(`npm run build-${appName}`).catch(e => { console.error(e); logs.push(String(e)); return e; });
+    logs.push(String(out));
+    out && out.stdout && logs.push(out.stdout);
+    if (out && out.code && out.code === 1) {
+      logs.push(`could not build ${appName}; exiting...`);
+      savelogs();
+      process.exit(1);
+    }
+  }
+  catch (err) {
+    logs.push(String(err));
     savelogs();
     process.exit(1);
   }
@@ -235,8 +278,9 @@ async function deployProject(appName) {
   logs.push(`origin path updated.`);
 
   if (oldOriginPath) {
-    logs.push(`attempting invalidation on old path: /*`);
+    logs.push(`attempting invalidation...`);
     let invalidaion;
+    const invalidaionPaths = [`${oldOriginPath}/*`, `/index.html`, `/*`];
     try {
       const updateParams = {
         DistributionId: cloudfrontId,
@@ -244,12 +288,12 @@ async function deployProject(appName) {
           CallerReference: `${Date.now()}`,
           Paths: {
             Quantity: 3,
-            Items: [`${oldOriginPath}/*`, `/index.html`, `/*`],
+            Items: invalidaionPaths,
           }
         }
       };
       invalidaion = await cloudfrontClient.createInvalidation(updateParams).promise();
-      logs.push(`invalidaion created on old path /*.`);
+      logs.push(`invalidaion created: ${JSON.stringify(updateParams)}`);
     } catch (err) {
       logs.push(String(err));
       savelogs();
@@ -277,11 +321,6 @@ async function deployProject(appName) {
   console.log(completeMsg);
   savelogs();
 }
-
-
-
-const givenAppName = process.argv[2];
-logs.push(`given app name: ${givenAppName}`);
 
 
 

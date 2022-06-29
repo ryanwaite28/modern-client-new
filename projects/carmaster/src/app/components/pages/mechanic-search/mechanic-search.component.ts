@@ -1,5 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { IFormSubmitEvent } from 'projects/common/src/app/interfaces/_common.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
@@ -17,6 +19,9 @@ export class MechanicSearchComponent implements OnInit {
   you: IUser | null = null;
   loading = false;
   mechanics: IMechanic[] = [];
+
+  MSG_MAX_LENGTH = 1000;
+  messageFormsByMechanicId: PlainObject<FormGroup> = {};
 
   constructor(
     private userStore: UserStoreService,
@@ -39,6 +44,39 @@ export class MechanicSearchComponent implements OnInit {
     .subscribe({
       next: (response) => {
         this.mechanics = response.data!;
+        if (!this.mechanics.length) {
+          this.alertService.showWarningMessage(`No results...`);
+          return;
+        }
+
+        this.messageFormsByMechanicId = {};
+        for (const mechanic of this.mechanics) {
+          this.messageFormsByMechanicId[mechanic.id] = new FormGroup({
+            sendText: new FormControl(false, []),
+            body: new FormControl('', [
+              Validators.required,
+              Validators.minLength(1),
+              Validators.maxLength(this.MSG_MAX_LENGTH)
+            ])
+          });
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.handleResponseErrorGeneric(error);
+      }
+    });
+  }
+
+  sendMessageToMechanic(mechanic: IMechanic) {
+    const formGroup = this.messageFormsByMechanicId[mechanic.id];
+    console.log({ formGroup, mechanic });
+    this.carmasterService.send_user_message(this.you!.id, mechanic.user_id, {
+      ...formGroup.value,
+      mechanic
+    }).subscribe({
+      next: (response) => {
+        this.alertService.handleResponseSuccessGeneric(response);
+        formGroup.get('body')?.setValue('');
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.handleResponseErrorGeneric(error);

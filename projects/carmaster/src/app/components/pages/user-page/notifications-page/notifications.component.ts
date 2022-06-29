@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CARMASTER_EVENT_TYPES } from 'projects/carmaster/src/app/enums/car-master.enum';
 import { CarmasterService } from 'projects/carmaster/src/app/services/carmaster.service';
+import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { INotification } from 'projects/common/src/app/interfaces/notification.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { UnseenService } from 'projects/common/src/app/services/unseen.service';
@@ -40,7 +42,7 @@ export class UserNotificationsFragmentComponent implements OnInit {
           .subscribe({
             next: (response: any) => {
               notificationSub.unsubscribe();
-              this.unseenService.clear('notifications');
+              // this.unseenService.clear(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES);
             }
           });
       }

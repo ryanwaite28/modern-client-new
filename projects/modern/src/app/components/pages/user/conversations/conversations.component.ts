@@ -194,7 +194,7 @@ export class UserConversationsComponent implements OnInit, OnDestroy {
       });
 
     // decrement unseen count by selected conversation's unseen count
-    this.unseenService.decrement('conversations', conversation.unseen_messages_count);
+    // this.unseenService.decrement('conversations', conversation.unseen_messages_count);
   }
 
   addListeners(conversation_id: number) {
@@ -312,7 +312,7 @@ export class UserConversationsComponent implements OnInit, OnDestroy {
       // mark as seen 
       this.markMessageAsSeen(event.data);
       // the unseen service auto increments the count; decrement it since it is currently selected
-      this.unseenService.decrement('conversations', 1);
+      // this.unseenService.decrement('conversations', 1);
     } else {
       // check if there is an existing messaging in the list
       const conversation = this.conversations_list.find((c) => c.id === event.data.conversation_id);

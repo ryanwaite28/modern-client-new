@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { EnvironmentService } from 'projects/common/src/app/services/environment.service';
+import { UnseenService } from 'projects/common/src/app/services/unseen.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
-import { combineLatest } from 'rxjs';
+import { combineLatest, take } from 'rxjs';
+import { CARMASTER_EVENT_TYPES } from './enums/car-master.enum';
 
 @Component({
   selector: 'carmaster-root',
@@ -19,9 +22,11 @@ export class AppComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private envService: EnvironmentService,
+    private unseenService: UnseenService,
   ) { }
 
   count = 0;
+  isListening = false;
 
   ngOnInit() {
     combineLatest([
@@ -37,15 +42,24 @@ export class AppComponent {
         // console.log(you);
         // console.log(jwt);
 
-        // if (you) {
-        //   this.router.navigate(['/']);
-        // }
-        if (jwt) {
+        if (you) {
+          // this.router.navigate(['/']);
+          if (!this.isListening) {
+            this.isListening = true;
+            this.unseenService.registerEvents(MODERN_APPS.CARMASTER, Object.keys(CARMASTER_EVENT_TYPES));
+          }
+        }
+        else if (jwt) {
           console.log(jwt);
           this.userService.use_jwt_from_url(jwt).subscribe({
             next: (you) => {
               console.log(`loaded user from jwt`, { you });
               this.router.navigate(['/']);
+
+              if (!this.isListening) {
+                this.isListening = true;
+                this.unseenService.registerEvents(MODERN_APPS.CARMASTER, Object.keys(CARMASTER_EVENT_TYPES));
+              }
             }
           });
         }

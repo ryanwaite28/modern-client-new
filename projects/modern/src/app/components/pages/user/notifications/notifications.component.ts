@@ -40,7 +40,7 @@ export class UserNotificationsFragmentComponent implements OnInit {
           .subscribe({
             next: (response: any) => {
               notificationSub.unsubscribe();
-              this.unseenService.clear('notifications');
+              // this.unseenService.clear('notifications');
             }
           });
       }

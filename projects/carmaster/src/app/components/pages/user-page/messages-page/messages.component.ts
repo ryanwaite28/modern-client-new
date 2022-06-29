@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Params, ActivatedRoute } from '@angular/router';
 import { CARMASTER_EVENT_TYPES } from 'projects/carmaster/src/app/enums/car-master.enum';
 import { CarmasterService } from 'projects/carmaster/src/app/services/carmaster.service';
+import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { SocketEventsService } from 'projects/common/src/app/services/socket-events.service';
@@ -85,7 +86,7 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
       // the messages list is also reflecting the messaging; add the new message to the list
       this.messages_list.push(event.data);
       // the unseen service auto increments the count; decrement it since it is currently selected
-      this.unseenService.decrement('messages', 1);
+      // this.unseenService.decrement(MODERN_APPS.CARMASTER, 'messages', 1);
     } else {
       // check if there is an existing messaging in the list
       const messaging = this.messagings_list.find((m) => m.id === event.messaging.id);
@@ -178,7 +179,7 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
     });
 
     this.getMessages();
-    this.unseenService.decrement('messages', messaging.unread_messages_count);
+    // this.unseenService.decrement('messages', messaging.unread_messages_count);
   }
 
   getMessages() {

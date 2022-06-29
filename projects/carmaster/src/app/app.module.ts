@@ -29,6 +29,9 @@ import { CreateServiceRequestComponent } from './components/pages/create-service
 import { MechanicSearchFormComponent } from './components/fragments/forms/mechanic-search-form/mechanic-search-form.component';
 import { UserMessagesFragmentComponent } from './components/pages/user-page/messages-page/messages.component';
 import { UserNotificationsFragmentComponent } from './components/pages/user-page/notifications-page/notifications.component';
+import { DecimalPipe } from '@angular/common';
+import { CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER } from 'projects/common/src/app/_misc/app-init';
+import { CARMASTER_EVENT_TYPES } from './enums/car-master.enum';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,8 @@ import { UserNotificationsFragmentComponent } from './components/pages/user-page
     ModernCommonModule,
   ],
   providers: [
-
+    CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER(CARMASTER_EVENT_TYPES),
+    DecimalPipe,
   ],
   bootstrap: [AppComponent]
 })
