@@ -5,7 +5,7 @@ import { CarmasterService } from 'projects/carmaster/src/app/services/carmaster.
 import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { INotification } from 'projects/common/src/app/interfaces/notification.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
-import { UnseenService } from 'projects/common/src/app/services/unseen.service';
+import { AppSocketEventsStateService } from 'projects/common/src/app/services/app-socket-events-state.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { take } from 'rxjs/operators';
 
@@ -27,7 +27,7 @@ export class UserNotificationsFragmentComponent implements OnInit {
     private carmasterService: CarmasterService,
     private router: Router,
     private route: ActivatedRoute,
-    private unseenService: UnseenService,
+    private appSocketEventsStateService: AppSocketEventsStateService,
   ) { }
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class UserNotificationsFragmentComponent implements OnInit {
           .subscribe({
             next: (response: any) => {
               notificationSub.unsubscribe();
-              // this.unseenService.clear(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES);
+              // this.appSocketEventsStateService.clear(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES);
             }
           });
       }

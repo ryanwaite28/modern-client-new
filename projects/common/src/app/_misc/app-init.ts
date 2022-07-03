@@ -1,6 +1,6 @@
 import { APP_INITIALIZER } from "@angular/core";
-import { catchError, map, mergeMap, of, take } from "rxjs";
-import { COMMON_EVENT_TYPES } from "../enums/all.enums";
+import { catchError, filter, firstValueFrom, map, mergeMap, of, take } from "rxjs";
+import { COMMON_EVENT_TYPES, MODERN_APPS } from "../enums/all.enums";
 import { PlainObject } from "../interfaces/json-object.interface";
 import { ClientService } from "../services/client.service";
 import { GoogleMapsService } from "../services/google-maps.service";
@@ -12,17 +12,26 @@ import { UsersService } from "../services/users.service";
 
 
 export function APP_SOCKET_EVENTS_INITIALIZER_FACTORY_CURRY(
+  app: MODERN_APPS,
   event_types_map: PlainObject
 ) {
   return function APP_SOCKET_EVENTS_INITIALIZER_FACTORY(
    socketEventsService: SocketEventsService
   ) {
-    function APP_SOCKET_EVENTS_INITIALIZER_FN(
+    async function APP_SOCKET_EVENTS_INITIALIZER_FN(
       resolve: (value: unknown) => void,
       reject: (reasom?: any) => any
-      ) {
-      socketEventsService.registerEventListenerStreams(event_types_map);
+    ) {
+
+      const isServiceReadyObs = socketEventsService.getServiceIsReady()
+        .pipe(filter((isReady) => { return isReady; }))
+        .pipe(take(1));
+
+      const isReady = await firstValueFrom(isServiceReadyObs);
+      console.log(`APP_SOCKET_EVENTS_INITIALIZER_FN - isReady:`, isReady);
+      socketEventsService.registerAppEventListenerStreams(app, event_types_map);
       return resolve(true);
+
       // socketEventsService.getRegistrationIsReady().pipe(take(1)).subscribe({
       //   next: () => {
       //   }
@@ -64,7 +73,7 @@ export function APP_INITIALIZER_FACTORY(
         }),
         mergeMap((stripe_loaded, index) => {
           // console.log('APP_INITIALIZER (google maps) - admit one', googleMapsService);
-          socketEventsService.registerEventListenerStreams(COMMON_EVENT_TYPES);
+          socketEventsService.registerAppEventListenerStreams(MODERN_APPS.COMMON, COMMON_EVENT_TYPES);
           return of(true);
           // return socketEventsService.getRegistrationIsReady().pipe(
           //   take(1),
@@ -110,8 +119,8 @@ export const APP_INIT_PROVIDER = {
   useFactory: APP_INITIALIZER_FACTORY
 };
 
-export const CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER = (event_types_map: PlainObject) => {
-  const factory = APP_SOCKET_EVENTS_INITIALIZER_FACTORY_CURRY(event_types_map);
+export const CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER = (app: MODERN_APPS, event_types_map: PlainObject) => {
+  const factory = APP_SOCKET_EVENTS_INITIALIZER_FACTORY_CURRY(app, event_types_map);
 
   return {
     provide: APP_INITIALIZER,

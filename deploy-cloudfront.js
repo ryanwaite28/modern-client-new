@@ -17,27 +17,40 @@ const s3 = new AWS.S3();
 const logs = [];
 const runDate = new Date();
 
+const allowedAppNames = new Set([
+  'modern',
+  'deliverme',
+  'carmaster',
+]);
 
-const givenAppName = process.argv[2];
+const allowedEnviroments = new Set([
+  'dev',
+  'prod'
+]);
+
+
+
+
 logs.push(`Date: ${runDate.toLocaleString()} (${runDate.toISOString()})`);
-logs.push(`given app name: ${givenAppName}`);
+
+const givenAppName = process.argv[2] && process.argv[2].toLowerCase().trim();
+if (!givenAppName) {
+  logs.push(`No valid argument for ${givenAppName}; exiting...`);
+  savelogs();
+  process.exit(1);
+}
+
+const givenEnviroment = process.argv[3] && process.argv[3].toLowerCase().trim();
+if (!givenEnviroment) {
+  logs.push(`No valid argument for ${givenEnviroment}; exiting...`);
+  savelogs();
+  process.exit(1);
+}
+
+
+
+logs.push(`given app name: ${givenAppName}; env: ${givenEnviroment}`);
 logs.push(`dirname: ${__dirname}`);
-
-
-
-const cloudfrontDistributionsByAppNameMap = new Map();
-cloudfrontDistributionsByAppNameMap.set(`modern`,       `E2Z43VS5TYP8MM`);
-cloudfrontDistributionsByAppNameMap.set(`deliverme`,    `E19JOPTUD5DT0P`);
-cloudfrontDistributionsByAppNameMap.set(`carmaster`,    `E3JW329FHL0PKB`);
-
-
-
-const s3BucketByAppNameMap = new Map();
-s3BucketByAppNameMap.set(`modern`,       `modern-apps-modern.s3.us-east-1.amazonaws.com`);
-s3BucketByAppNameMap.set(`deliverme`,    `modern-apps-deliverme.s3.us-east-1.amazonaws.com`);
-s3BucketByAppNameMap.set(`carmaster`,    `modern-apps-carmaster.s3.us-east-1.amazonaws.com`);
-
-
 
 
 
@@ -163,7 +176,22 @@ async function uploadToS3 (uploadItems, Bucket, bucketUploadPath) {
 
 
 
-async function deployProject(appName) {
+async function deployProject(appName, env) {
+  let appConfigs, deployConfig;
+  try {
+    appConfigs = require('./deploy-cloudfront.json');
+    deployConfig = appConfigs[appName][env];
+    if (!deployConfig) {
+      throw new Error(`No deploy config defined for app ${appName} env ${env}; exiting...`);
+    }
+  }
+  catch (err) {
+    logs.push(String(err));
+    savelogs();
+    process.exit(1);
+  }
+
+
   // determine if project is built
   logs.push(`checking if ${appName} is built...`);
 
@@ -204,7 +232,7 @@ async function deployProject(appName) {
   logs.push(`${appName} is built, checking distribution...`);
 
   // check if distribution exists for the given app
-  const cloudfrontId = cloudfrontDistributionsByAppNameMap.get(appName);
+  const cloudfrontId = deployConfig['cloudfront_distribution_id'];
   if (!cloudfrontId) {
     logs.push(`project "${appName}" does not have a cloudfront distribution associated to it...`);
     savelogs();
@@ -214,7 +242,7 @@ async function deployProject(appName) {
   logs.push(`project "${appName}" does have a cloudfront distribution associated to it. checking if project has bucket...`);
 
   // check if distribution exists for the given app
-  const bucketOrigin = s3BucketByAppNameMap.get(appName);
+  const bucketOrigin = deployConfig['s3_bucket'];
   if (!bucketOrigin) {
     logs.push(`project "${appName}" does not have a bucket associated to it...`);
     savelogs();
@@ -324,4 +352,4 @@ async function deployProject(appName) {
 
 
 
-deployProject(givenAppName);
+deployProject(givenAppName, givenEnviroment);

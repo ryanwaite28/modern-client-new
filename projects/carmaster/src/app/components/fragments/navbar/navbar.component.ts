@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { EnvironmentService } from 'projects/common/src/app/services/environment.service';
+import { AppSocketEventsStateService } from 'projects/common/src/app/services/app-socket-events-state.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
+import { combineLatest, map } from 'rxjs';
+import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
+import { CARMASTER_EVENT_TYPES } from '../../../enums/car-master.enum';
 
 
 
@@ -19,6 +23,7 @@ export class NavbarComponent implements OnInit {
   links: any;
 
   constructor(
+    private appSocketEventsStateService: AppSocketEventsStateService,
     private usersService: UsersService,
     private userStore: UserStoreService,
     private router: Router,
@@ -26,15 +31,33 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userStore.getChangesObs().subscribe({
-      next: (you) => {
+    const eventsObs = combineLatest([
+      this.appSocketEventsStateService.getAppEventStateChanges(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES.NEW_CARMASTER_MESSAGE),
+    ])
+    .pipe(
+      map((values) => {
+        return {
+          messages: values[0]
+        };
+      })
+    );
+
+    combineLatest([
+      eventsObs,
+      this.userStore.getChangesObs(),
+    ])
+    .subscribe({
+      next: (values) => {
+        const [eventsCounts, you] = values;
+        console.log(`NavbarComponent - values`, values);
+
         this.you = you;
-        console.log({ you });
         
         this.links = !!you
           ? [
               { text: `Home`, href: ['/', 'users', you.id, 'home'] },
               { text: `Mechanic Profile`, href: ['/', 'users', you.id, 'mechanic-profile'] },
+              { text: `Messages`, href: ['/', 'users', you.id, 'messages'], badgeCount: eventsCounts.messages },
               { text: `Search`, href: ['/', 'mechanic-search'] },
               { text: `Create Service Request`, href: ['/', 'create-service-request'] },
               // { text: `Settings`, href: ['/', 'users', you.id, 'settings'] },

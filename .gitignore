@@ -13,6 +13,7 @@ deploy-cloudfront-logs/
 /node_modules
 npm-debug.log
 yarn-error.log
+deploy-cloudfront.json
 
 # IDEs and editors
 .idea/

@@ -27,6 +27,7 @@ import { DeliveryFormComponent } from './components/fragments/delivery-form/deli
 import { DeliverMeDeliveryBrowseFeaturedPageComponent } from './components/pages/delivery-browse-featured/delivery-browse-featured.component';
 import { CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER } from 'projects/common/src/app/_misc/app-init';
 import { DELIVERME_EVENT_TYPES } from './enums/deliverme.enum';
+import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 
 
 
@@ -60,7 +61,7 @@ import { DELIVERME_EVENT_TYPES } from './enums/deliverme.enum';
     ModernCommonModule,
   ],
   providers: [
-    CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER(DELIVERME_EVENT_TYPES),
+    CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER(MODERN_APPS.DELIVERME, DELIVERME_EVENT_TYPES),
     DecimalPipe,
   ],
   bootstrap: [AppComponent]

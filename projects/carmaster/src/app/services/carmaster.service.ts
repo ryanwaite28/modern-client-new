@@ -51,6 +51,14 @@ export class CarmasterService {
     );
   }
 
+  mark_message_as_read(you_id: number, message_id: number) {
+    return this.clientService.sendRequest<any>(`/carmaster/users/${you_id}/message/${message_id}/mark-as-read`, `PUT`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
   // notifications
 
   update_user_last_opened_notifications(you_id: number) {

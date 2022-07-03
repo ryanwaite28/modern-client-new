@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { EnvironmentService } from 'projects/common/src/app/services/environment.service';
-import { UnseenService } from 'projects/common/src/app/services/unseen.service';
+import { AppSocketEventsStateService } from 'projects/common/src/app/services/app-socket-events-state.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { combineLatest, filter, skip } from 'rxjs';
@@ -22,7 +22,7 @@ export class AppComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private envService: EnvironmentService,
-    private unseenService: UnseenService,
+    private appSocketEventsStateService: AppSocketEventsStateService,
   ) { }
 
   count = 0;
@@ -46,7 +46,7 @@ export class AppComponent {
           // this.router.navigate(['/']);
           if (!this.isListening) {
             this.isListening = true;
-            this.unseenService.registerEvents(MODERN_APPS.DELIVERME, Object.keys(DELIVERME_EVENT_TYPES));
+            this.appSocketEventsStateService.registerEvents(MODERN_APPS.DELIVERME, Object.keys(DELIVERME_EVENT_TYPES));
           }
         }
         if (jwt) {
@@ -56,7 +56,7 @@ export class AppComponent {
               this.router.navigate(['/']);
               if (!this.isListening) {
                 this.isListening = true;
-                this.unseenService.registerEvents(MODERN_APPS.CARMASTER, Object.keys(DELIVERME_EVENT_TYPES));
+                this.appSocketEventsStateService.registerEvents(MODERN_APPS.CARMASTER, Object.keys(DELIVERME_EVENT_TYPES));
               }
             }
           });

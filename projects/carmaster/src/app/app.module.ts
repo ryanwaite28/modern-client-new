@@ -32,6 +32,7 @@ import { UserNotificationsFragmentComponent } from './components/pages/user-page
 import { DecimalPipe } from '@angular/common';
 import { CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER } from 'projects/common/src/app/_misc/app-init';
 import { CARMASTER_EVENT_TYPES } from './enums/car-master.enum';
+import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,7 @@ import { CARMASTER_EVENT_TYPES } from './enums/car-master.enum';
     ModernCommonModule,
   ],
   providers: [
-    CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER(CARMASTER_EVENT_TYPES),
+    CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES),
     DecimalPipe,
   ],
   bootstrap: [AppComponent]

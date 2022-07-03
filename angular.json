@@ -59,7 +59,36 @@
                   "with": "projects/common/src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "aot": true,
+              "buildOptimizer": true,
+              "optimization": true,
+              "vendorChunk": false
+            },
+            "dev": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "40kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/common/src/environments/environment.ts",
+                  "with": "projects/common/src/environments/environment.dev.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "aot": true,
+              "buildOptimizer": true,
+              "optimization": true,
+              "vendorChunk": false
             },
             "development": {
               "buildOptimizer": false,
@@ -166,6 +195,31 @@
                 {
                   "replace": "projects/modern/src/environments/environment.ts",
                   "with": "projects/modern/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "dev": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "40kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/common/src/environments/environment.ts",
+                  "with": "projects/common/src/environments/environment.dev.ts"
+                },
+                {
+                  "replace": "projects/modern/src/environments/environment.ts",
+                  "with": "projects/modern/src/environments/environment.dev.ts"
                 }
               ],
               "outputHashing": "all"
@@ -279,6 +333,31 @@
               ],
               "outputHashing": "all"
             },
+            "dev": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "40kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/common/src/environments/environment.ts",
+                  "with": "projects/common/src/environments/environment.dev.ts"
+                },
+                {
+                  "replace": "projects/deliverme/src/environments/environment.ts",
+                  "with": "projects/deliverme/src/environments/environment.dev.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -384,6 +463,31 @@
                 {
                   "replace": "projects/carmaster/src/environments/environment.ts",
                   "with": "projects/carmaster/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "dev": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "40kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/common/src/environments/environment.ts",
+                  "with": "projects/common/src/environments/environment.dev.ts"
+                },
+                {
+                  "replace": "projects/carmaster/src/environments/environment.ts",
+                  "with": "projects/carmaster/src/environments/environment.dev.ts"
                 }
               ],
               "outputHashing": "all"

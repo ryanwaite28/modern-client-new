@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { EnvironmentService } from 'projects/common/src/app/services/environment.service';
-import { UnseenService } from 'projects/common/src/app/services/unseen.service';
+import { AppSocketEventsStateService } from 'projects/common/src/app/services/app-socket-events-state.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { combineLatest, take } from 'rxjs';
@@ -22,11 +22,15 @@ export class AppComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private envService: EnvironmentService,
-    private unseenService: UnseenService,
+    private appSocketEventsStateService: AppSocketEventsStateService,
   ) { }
 
   count = 0;
   isListening = false;
+
+  eventsListenTo = [
+    CARMASTER_EVENT_TYPES.NEW_CARMASTER_MESSAGE,
+  ];
 
   ngOnInit() {
     combineLatest([
@@ -46,7 +50,7 @@ export class AppComponent {
           // this.router.navigate(['/']);
           if (!this.isListening) {
             this.isListening = true;
-            this.unseenService.registerEvents(MODERN_APPS.CARMASTER, Object.keys(CARMASTER_EVENT_TYPES));
+            this.appSocketEventsStateService.registerEvents(MODERN_APPS.CARMASTER, this.eventsListenTo);
           }
         }
         else if (jwt) {
@@ -58,7 +62,7 @@ export class AppComponent {
 
               if (!this.isListening) {
                 this.isListening = true;
-                this.unseenService.registerEvents(MODERN_APPS.CARMASTER, Object.keys(CARMASTER_EVENT_TYPES));
+                this.appSocketEventsStateService.registerEvents(MODERN_APPS.CARMASTER, this.eventsListenTo);
               }
             }
           });
@@ -72,5 +76,4 @@ export class AppComponent {
       }
     });
   }
-  title = 'carmaster';
 }

@@ -2,11 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Params, ActivatedRoute } from '@angular/router';
-import { COMMON_EVENT_TYPES } from 'projects/common/src/app/enums/all.enums';
+import { COMMON_EVENT_TYPES, MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { SocketEventsService } from 'projects/common/src/app/services/socket-events.service';
-import { UnseenService } from 'projects/common/src/app/services/unseen.service';
+import { AppSocketEventsStateService } from 'projects/common/src/app/services/app-socket-events-state.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { Subscription } from 'rxjs';
@@ -48,7 +48,7 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private socketEventsService: SocketEventsService,
     private route: ActivatedRoute,
-    private unseenService: UnseenService
+    private appSocketEventsStateService: AppSocketEventsStateService
   ) { }
 
   ngOnInit() {
@@ -63,7 +63,7 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
       this.currentParams = params;
     });
 
-    this.newMessageSub = this.socketEventsService.listenToObservableEventStream(COMMON_EVENT_TYPES.NEW_MESSAGE)
+    this.newMessageSub = this.socketEventsService.listenToObservableEventStream(MODERN_APPS.COMMON, COMMON_EVENT_TYPES.NEW_MESSAGE)
       .subscribe((event: any) => {
         this.handleMessageEvent(event);
       });
@@ -86,7 +86,7 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
       // the messages list is also reflecting the messaging; add the new message to the list
       this.messages_list.push(event.data);
       // the unseen service auto increments the count; decrement it since it is currently selected
-      // this.unseenService.decrement('messages', 1);
+      // this.appSocketEventsStateService.decrement('messages', 1);
     } else {
       // check if there is an existing messaging in the list
       const messaging = this.messagings_list.find((m) => m.id === event.messaging.id);
@@ -179,7 +179,7 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
     });
 
     this.getMessages();
-    // this.unseenService.decrement('messages', messaging.unread_messages_count);
+    // this.appSocketEventsStateService.decrement('messages', messaging.unread_messages_count);
   }
 
   getMessages() {

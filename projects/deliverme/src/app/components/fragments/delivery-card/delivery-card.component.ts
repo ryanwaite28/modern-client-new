@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertDivClass } from 'projects/common/src/app/enums/all.enums';
+import { AlertDivClass, MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { INavigatorGeoLocation } from 'projects/common/src/app/interfaces/_common.interface';
@@ -159,6 +159,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
       const carrierAssignedListener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_ASSIGNED,
       ).subscribe({
         next: (event: any) => {
@@ -173,6 +174,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const carrierUnassignedListener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_UNASSIGNED,
       ).subscribe({
         next: (event: any) => {
@@ -187,6 +189,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const markedPickedListener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_MARKED_AS_PICKED_UP,
       ).subscribe({
         next: (event: any) => {
@@ -201,6 +204,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const markedDroppedListener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_MARKED_AS_DROPPED_OFF,
       ).subscribe({
         next: (event: any) => {
@@ -215,6 +219,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const trackingUpdateListener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.DELIVERY_NEW_TRACKING_UPDATE,
       ).subscribe({
         next: (event: any) => {
@@ -231,6 +236,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const deliveryCompletedListener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.DELIVERY_COMPLETED,
       ).subscribe({
         next: (event: any) => {
@@ -246,6 +252,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const deliveryReturnedListener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.DELIVERY_RETURNED,
       ).subscribe({
         next: (event: any) => {
@@ -261,6 +268,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const newDeliveryMessageListener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.DELIVERY_NEW_MESSAGE,
       ).subscribe({
         next: (event: any) => {
@@ -277,6 +285,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
       const carrierLocationRequested_listener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_REQUESTED,
       ).subscribe({
         next: (event: any) => {
@@ -292,6 +301,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       })
 
       const carrierLocationRequestAccepted_listener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_REQUEST_ACCEPTED,
       ).subscribe({
         next: (event: any) => {
@@ -307,6 +317,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const carrierLocationRequestDeclined_listener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_REQUEST_DECLINED,
       ).subscribe({
         next: (event: any) => {
@@ -322,6 +333,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const carrierLocationShared_listener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_SHARED,
       ).subscribe({
         next: (event: any) => {
@@ -337,6 +349,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const carrierLocationUnshared_listener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_UNSHARED,
       ).subscribe({
         next: (event: any) => {
@@ -352,6 +365,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       const carrierLocationUpdated_listener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_UPDATED,
       ).subscribe({
         next: (event: any) => {

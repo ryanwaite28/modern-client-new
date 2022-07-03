@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { INotification } from 'projects/common/src/app/interfaces/notification.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
-import { UnseenService } from 'projects/common/src/app/services/unseen.service';
+import { AppSocketEventsStateService } from 'projects/common/src/app/services/app-socket-events-state.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { take } from 'rxjs/operators';
@@ -25,7 +25,7 @@ export class UserNotificationsFragmentComponent implements OnInit {
     private userService: UsersService,
     private router: Router,
     private route: ActivatedRoute,
-    private unseenService: UnseenService,
+    private appSocketEventsStateService: AppSocketEventsStateService,
   ) { }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class UserNotificationsFragmentComponent implements OnInit {
           .subscribe({
             next: (response: any) => {
               notificationSub.unsubscribe();
-              // this.unseenService.clear('notifications');
+              // this.appSocketEventsStateService.clear('notifications');
             }
           });
       }

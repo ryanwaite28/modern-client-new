@@ -2,13 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Params, ActivatedRoute } from '@angular/router';
-import { COMMON_EVENT_TYPES } from 'projects/common/src/app/enums/all.enums';
+import { COMMON_EVENT_TYPES, MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { ConversationsService } from 'projects/common/src/app/services/conversations.service';
 import { SocketEventsService } from 'projects/common/src/app/services/socket-events.service';
-import { UnseenService } from 'projects/common/src/app/services/unseen.service';
+import { AppSocketEventsStateService } from 'projects/common/src/app/services/app-socket-events-state.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { Subscription, Subject } from 'rxjs';
@@ -80,7 +80,7 @@ export class UserConversationsComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private socketEventsService: SocketEventsService,
     private conversationsService: ConversationsService,
-    private unseenService: UnseenService,
+    private appSocketEventsStateService: AppSocketEventsStateService,
   ) { }
 
   ngOnInit(): void {
@@ -101,10 +101,10 @@ export class UserConversationsComponent implements OnInit, OnDestroy {
       this.searchUsersInputChanged.next(value);
     });
 
-    this.newConversationSub = this.socketEventsService.listenToObservableEventStream(COMMON_EVENT_TYPES.CONVERSATION_MEMBER_ADDED).subscribe((event: any) => {
+    this.newConversationSub = this.socketEventsService.listenToObservableEventStream(MODERN_APPS.COMMON, COMMON_EVENT_TYPES.CONVERSATION_MEMBER_ADDED).subscribe((event: any) => {
       this.handleMemberAddedEvent(event);
     });
-    this.removedSub = this.socketEventsService.listenToObservableEventStream(COMMON_EVENT_TYPES.CONVERSATION_MEMBER_REMOVED).subscribe((event: any) => {
+    this.removedSub = this.socketEventsService.listenToObservableEventStream(MODERN_APPS.COMMON, COMMON_EVENT_TYPES.CONVERSATION_MEMBER_REMOVED).subscribe((event: any) => {
       this.handleMemberRemovedEvent(event);
     });
 
@@ -194,7 +194,7 @@ export class UserConversationsComponent implements OnInit, OnDestroy {
       });
 
     // decrement unseen count by selected conversation's unseen count
-    // this.unseenService.decrement('conversations', conversation.unseen_messages_count);
+    // this.appSocketEventsStateService.decrement('conversations', conversation.unseen_messages_count);
   }
 
   addListeners(conversation_id: number) {
@@ -312,7 +312,7 @@ export class UserConversationsComponent implements OnInit, OnDestroy {
       // mark as seen 
       this.markMessageAsSeen(event.data);
       // the unseen service auto increments the count; decrement it since it is currently selected
-      // this.unseenService.decrement('conversations', 1);
+      // this.appSocketEventsStateService.decrement('conversations', 1);
     } else {
       // check if there is an existing messaging in the list
       const conversation = this.conversations_list.find((c) => c.id === event.data.conversation_id);
