@@ -73,13 +73,16 @@ export function APP_INITIALIZER_FACTORY(
         }),
         mergeMap((stripe_loaded, index) => {
           // console.log('APP_INITIALIZER (google maps) - admit one', googleMapsService);
-          socketEventsService.registerAppEventListenerStreams(MODERN_APPS.COMMON, COMMON_EVENT_TYPES);
-          return of(true);
-          // return socketEventsService.getRegistrationIsReady().pipe(
-          //   take(1),
-          //   map(() => {
-          //   })
-          // )
+
+          const isServiceReadyObs = socketEventsService.getServiceIsReady()
+            .pipe(filter((isReady) => { return isReady; }))
+            .pipe(take(1))
+            .pipe(map((state) => {
+              socketEventsService.registerAppEventListenerStreams(MODERN_APPS.COMMON, COMMON_EVENT_TYPES);
+              return state;
+            }))
+
+          return firstValueFrom(isServiceReadyObs);
         }),
         mergeMap((app_loaded, index) => {
           // console.log('APP_INITIALIZER (google maps) - admit one', googleMapsService);

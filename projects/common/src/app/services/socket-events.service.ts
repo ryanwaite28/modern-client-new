@@ -65,6 +65,11 @@ export class SocketEventsService {
   }
 
   registerAppEventListenerStreams(app: MODERN_APPS, event_types_map: PlainObject) {
+    if (!this.serviceIsReady) {
+      console.warn(`Service not ready...`);
+      return;
+    }
+
     if (!this.appEventStreamsMap[app]) {
       this.appEventStreamsMap[app] = {};
     }
@@ -72,11 +77,19 @@ export class SocketEventsService {
     const event_types = Object.keys(event_types_map);
 
     for (const event_type of event_types) {
+      const event_type_error = `${event_type}-error`;
+
       this.appEventStreamsMap[app][event_type] = new Subject<any>();
+      this.appEventStreamsMap[app][event_type_error] = new Subject<any>();
   
       const listener = this.socket!.on(event_type, (event: any) => {
         console.log(`${event_type}`, { event });
         this.appEventStreamsMap[app][event_type].next(event);
+      });
+
+      const listenerError = this.socket!.on(`${event_type}-error`, (event: any) => {
+        console.log(event_type_error, { event });
+        this.appEventStreamsMap[app][event_type_error].next(event);
       });
     }
   }
@@ -148,22 +161,11 @@ export class SocketEventsService {
     this.socket!.emit(COMMON_EVENT_TYPES.SOCKET_LEAVE_ROOM, { room });
   }
 
-  // listen<T>(event_type: COMMON_EVENT_TYPES) {
-  //   const subjectStream = this.streamsMap[event_type];
-  //   if (!subjectStream) {
-  //     console.warn(`Unknown key for event stream: ${event_type}, creating new stream...`);
-  //     this.streamsMap[event_type] = new Subject<any>();
-  //     return this.streamsMap[event_type].asObservable() as Observable<T>;
-  //   }
-  //   const observable = (<Observable<T>> subjectStream.asObservable());
-  //   return observable;
-  // }
-
   listenSocketCustom(event_type: string, call_back: (arg?: any) => any) {
     return this.socket!.on(event_type, call_back);
   }
 
-  listenToObservableEventStream<T>(app: MODERN_APPS, event_type: string) {
+  listenToObservableEventStream<T = any>(app: MODERN_APPS, event_type: string) {
     const subjectStream = this.appEventStreamsMap[app][event_type];
     if (!subjectStream) {
       console.warn(`Unknown key for event stream: ${event_type}, creating new stream...`);
@@ -173,44 +175,4 @@ export class SocketEventsService {
     const observable = (<Observable<T>> subjectStream.asObservable());
     return observable;
   }
-
-
-  // private methods
-  /*
-  private listenToConversations(conversation_id?: number) {
-    // add new listener
-    if (conversation_id) {
-      this.youConversationsSocketListeners[conversation_id] = this.listenCustom(
-        COMMON_EVENT_TYPES.NEW_CONVERSATION_MESSAGE,
-        (event: any) => {
-          this.streamsMap[COMMON_EVENT_TYPES.NEW_CONVERSATION_MESSAGE].next(event);
-        }
-      );
-      return;
-    }
-
-    // get all user's conversations and listen
-    this.conversationsService.get_user_conversations(
-      this.you!.id,
-      null,
-      true
-    ).subscribe({
-      next: (response: any) => {
-        for (const conversation of response.data) {
-          this.joinRoom(`conversation-${conversation.id}`);
-          
-          this.youConversationsSocketListeners[conversation.id] = this.listenCustom(
-            COMMON_EVENT_TYPES.NEW_CONVERSATION_MESSAGE,
-            (event: any) => {
-              this.streamsMap[COMMON_EVENT_TYPES.NEW_CONVERSATION_MESSAGE].next(event);
-            }
-          );
-        }
-      },
-      error: (error: HttpErrorResponse) => {
-        // this.alertService.handleResponseErrorGeneric(error);
-      }
-    });
-  }
-  */
 }

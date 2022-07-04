@@ -7,8 +7,8 @@ import { IFormSubmitEvent } from 'projects/common/src/app/interfaces/_common.int
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { finalize } from 'rxjs';
-import { IMechanic } from '../../../interfaces/carmaster.interface';
-import { CarmasterService } from '../../../services/carmaster.service';
+import { IMechanic } from '../../../../interfaces/carmaster.interface';
+import { CarmasterService } from '../../../../services/carmaster.service';
 
 @Component({
   selector: 'carmaster-mechanic-search',

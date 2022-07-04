@@ -25,7 +25,7 @@ const allowedAppNames = new Set([
 
 const allowedEnviroments = new Set([
   'dev',
-  'prod'
+  'production'
 ]);
 
 
@@ -34,22 +34,20 @@ const allowedEnviroments = new Set([
 logs.push(`Date: ${runDate.toLocaleString()} (${runDate.toISOString()})`);
 
 const givenAppName = process.argv[2] && process.argv[2].toLowerCase().trim();
-if (!givenAppName) {
-  logs.push(`No valid argument for ${givenAppName}; exiting...`);
-  savelogs();
+if (!givenAppName || !allowedAppNames.has(givenAppName)) {
+  console.log(`No valid argument for app; exiting...`);
   process.exit(1);
 }
 
 const givenEnviroment = process.argv[3] && process.argv[3].toLowerCase().trim();
-if (!givenEnviroment) {
-  logs.push(`No valid argument for ${givenEnviroment}; exiting...`);
-  savelogs();
+if (!givenEnviroment || !allowedEnviroments.has(givenEnviroment)) {
+  console.log(`No valid argument for enviroment; exiting...`);
   process.exit(1);
 }
 
 
 
-logs.push(`given app name: ${givenAppName}; env: ${givenEnviroment}`);
+logs.push(`given app name: ${givenAppName}; enviroment: ${givenEnviroment}`);
 logs.push(`dirname: ${__dirname}`);
 
 
@@ -65,12 +63,17 @@ function savelogs() {
     fs.mkdirSync(deployAppLogsPath);
   }
 
+  const deployAppEnvLogsPath = path.join(deployAppLogsPath, givenEnviroment);
+  if (!fs.existsSync(deployAppEnvLogsPath)) {
+    fs.mkdirSync(deployAppEnvLogsPath);
+  }
+
   const contents = logs.join(`\n\n`);
   const timestamp = Date.now();
-  const filename = `deploy-logs-${givenAppName}-${timestamp}.txt`;
-  const filePath = path.join(deployAppLogsPath, filename);
+  const filename = `deploy-logs-${givenAppName}-${givenEnviroment}-${timestamp}.txt`;
+  const filePath = path.join(deployAppEnvLogsPath, filename);
   const results = fs.writeFileSync(filePath, contents);
-  console.log(`Logs saved`);
+  console.log(`Logs saved\n`);
 
   return results;
 }
@@ -213,8 +216,8 @@ async function deployProject(appName, env) {
   }
 
   try {
-    logs.push(`attempting to build ${appName}...`);
-    const out = await exec(`npm run build-${appName}`).catch(e => { console.error(e); logs.push(String(e)); return e; });
+    logs.push(`attempting to build ${appName} for env ${env}...`);
+    const out = await exec(`npm run build-${appName}-${env}`).catch(e => { console.error(e); logs.push(String(e)); return e; });
     logs.push(String(out));
     out && out.stdout && logs.push(out.stdout);
     if (out && out.code && out.code === 1) {

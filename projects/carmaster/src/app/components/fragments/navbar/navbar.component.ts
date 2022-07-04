@@ -58,7 +58,7 @@ export class NavbarComponent implements OnInit {
               { text: `Home`, href: ['/', 'users', you.id, 'home'] },
               { text: `Mechanic Profile`, href: ['/', 'users', you.id, 'mechanic-profile'] },
               { text: `Messages`, href: ['/', 'users', you.id, 'messages'], badgeCount: eventsCounts.messages },
-              { text: `Search`, href: ['/', 'mechanic-search'] },
+              { text: `Search`, href: ['/', 'search'] },
               { text: `Create Service Request`, href: ['/', 'create-service-request'] },
               // { text: `Settings`, href: ['/', 'users', you.id, 'settings'] },
 

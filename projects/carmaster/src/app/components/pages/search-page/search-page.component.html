@@ -1,0 +1,20 @@
+<div class="m-16">
+  <div class="container mx-auto">
+    <div class="mb-5">
+      <h1 class="text-4xl mb-3">Search</h1>
+
+      <ul class="m-0 p-0">
+        <li>
+          <a [routerLink]="['/', 'search', 'mechanics']">Mechanics</a>
+        </li>
+        <li>
+          <a [routerLink]="['/', 'search', 'service-requests']">Service Requests</a>
+        </li>
+      </ul>
+    </div>
+  
+    <div class="">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

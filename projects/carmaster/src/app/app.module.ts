@@ -24,7 +24,7 @@ import { MechanicCredentialComponent } from './components/fragments/mechanic-cre
 import { MechanicExpertiseComponent } from './components/fragments/mechanic-expertise/mechanic-expertise.component';
 import { MechanicServiceComponent } from './components/fragments/mechanic-service/mechanic-service.component';
 import { MechanicRatingComponent } from './components/fragments/mechanic-rating/mechanic-rating.component';
-import { MechanicSearchComponent } from './components/pages/mechanic-search/mechanic-search.component';
+import { MechanicSearchComponent } from './components/pages/search-page/mechanic-search/mechanic-search.component';
 import { CreateServiceRequestComponent } from './components/pages/create-service-request/create-service-request.component';
 import { MechanicSearchFormComponent } from './components/fragments/forms/mechanic-search-form/mechanic-search-form.component';
 import { UserMessagesFragmentComponent } from './components/pages/user-page/messages-page/messages.component';
@@ -33,6 +33,8 @@ import { DecimalPipe } from '@angular/common';
 import { CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER } from 'projects/common/src/app/_misc/app-init';
 import { CARMASTER_EVENT_TYPES } from './enums/car-master.enum';
 import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
+import { SearchPageComponent } from './components/pages/search-page/search-page.component';
+import { ServiceRequestSearchComponent } from './components/pages/search-page/service-request-search/service-request-search.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
     MechanicSearchFormComponent,
     UserMessagesFragmentComponent,
     UserNotificationsFragmentComponent,
+    SearchPageComponent,
+    ServiceRequestSearchComponent,
   ],
   imports: [
     BrowserModule,

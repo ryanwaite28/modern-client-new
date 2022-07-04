@@ -48,10 +48,7 @@ export class AppComponent {
 
         if (you) {
           // this.router.navigate(['/']);
-          if (!this.isListening) {
-            this.isListening = true;
-            this.appSocketEventsStateService.registerEvents(MODERN_APPS.CARMASTER, this.eventsListenTo);
-          }
+          this.initEvents();
         }
         else if (jwt) {
           console.log(jwt);
@@ -59,11 +56,7 @@ export class AppComponent {
             next: (you) => {
               console.log(`loaded user from jwt`, { you });
               this.router.navigate(['/']);
-
-              if (!this.isListening) {
-                this.isListening = true;
-                this.appSocketEventsStateService.registerEvents(MODERN_APPS.CARMASTER, this.eventsListenTo);
-              }
+              this.initEvents();
             }
           });
         }
@@ -75,5 +68,18 @@ export class AppComponent {
         // }
       }
     });
+  }
+
+  initEvents() {
+    if (!this.isListening) {
+      this.isListening = true;
+      this.appSocketEventsStateService.registerEvents(MODERN_APPS.CARMASTER, this.eventsListenTo);
+
+      const assignments: Array<{ event: string, tag: string }> = [
+        { event: CARMASTER_EVENT_TYPES.NEW_CARMASTER_MESSAGE, tag: 'message' },
+        { event: CARMASTER_EVENT_TYPES.CREDENTIAL_REPORTED, tag: 'notification' },
+      ];
+      this.appSocketEventsStateService.assignTagToAppEvents(MODERN_APPS.CARMASTER, assignments);
+    }
   }
 }

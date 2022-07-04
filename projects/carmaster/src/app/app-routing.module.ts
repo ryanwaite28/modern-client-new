@@ -5,7 +5,8 @@ import { SignedInGuard } from 'projects/common/src/app/guards/signed-in.guard';
 import { UserSubscriptionInfoResolver } from 'projects/common/src/app/resolvers/user-subscription-info.resolver';
 import { UserResolver } from 'projects/common/src/app/resolvers/user.resolver';
 import { CreateServiceRequestComponent } from './components/pages/create-service-request/create-service-request.component';
-import { MechanicSearchComponent } from './components/pages/mechanic-search/mechanic-search.component';
+import { SearchPageComponent } from './components/pages/search-page/search-page.component';
+import { MechanicSearchComponent } from './components/pages/search-page/mechanic-search/mechanic-search.component';
 import { HomePageComponent } from './components/pages/user-page/home-page/home-page.component';
 import { MechanicProfilePageComponent } from './components/pages/user-page/mechanic-profile-page/mechanic-profile-page.component';
 import { UserMessagesFragmentComponent } from './components/pages/user-page/messages-page/messages.component';
@@ -14,22 +15,35 @@ import { SettingsPageComponent } from './components/pages/user-page/settings-pag
 import { UserPageComponent } from './components/pages/user-page/user-page.component';
 import { WelcomeComponent } from './components/pages/welcome/welcome.component';
 import { MechanicProfileResolver } from './resolvers/mechanic-profile.resolver';
+import { ServiceRequestSearchComponent } from './components/pages/search-page/service-request-search/service-request-search.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
   { path: 'welcome', pathMatch: 'full', component: WelcomeComponent },
+
   {
-    path: 'mechanic-search',
-    pathMatch: 'full',
-    component: MechanicSearchComponent,
+    path: 'search',
+    component: SearchPageComponent,
+    children: [
+      {
+        path: 'mechanics',
+        pathMatch: 'full',
+        component: MechanicSearchComponent,
+      },
+      {
+        path: 'service-requests',
+        pathMatch: 'full',
+        component: ServiceRequestSearchComponent,
+      },
+    ]
   },
+
   {
     path: 'create-service-request',
     pathMatch: 'full',
     component: CreateServiceRequestComponent,
     canActivate: [SignedInGuard]
   },
-
   {
     path: 'users/:user_id',
     component: UserPageComponent,
