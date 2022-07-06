@@ -1,1 +1,65 @@
-<p>service-request-search works!</p>
+<div class="">
+  <div class="flex flex-col gap-4">
+    <div class="w-full">
+      <div class="card-box-1">
+        <div class="">
+          <h3 class="text-3xl mb-3">Search for service requests</h3>
+        </div>
+  
+        <carmaster-service-request-search-form
+          (formSubmit)="searchServiceRequests($event)"
+        ></carmaster-service-request-search-form>
+      </div>
+    </div>
+
+
+    <div class="flex flex-col sm:flex-row gap-3 card-box" *ngFor="let service_request of service_requests">
+
+      <div class="h-auto w-full sm:w-96" [bgImgCover]="service_request.user!.icon_link || './assets/img/anon.png'" [height]="'400px'"></div>
+      
+      <div class="p-4 h-auto grow flex flex-col justify-between">
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="w-full sm:w-1/2">
+            <h1 class="text-gray-900 font-bold text-4xl leading-8 my-1">{{ service_request.user!.displayname }}</h1>
+            <h3 class="text-gray-600 font-lg text-semibold leading-6">
+              <a [routerLink]="['/', 'users', service_request.user!.id]">@{{ service_request.user!.username }}</a>
+            </h3>
+          </div>
+          <div class="w-full sm:w-1/2">
+            
+          </div>
+        </div>
+
+        <div>
+          <form *ngIf="!!you" [formGroup]="messageFormsByUserId[service_request.user_id]" (ngSubmit)="sendMessageToUser(service_request.user!)">
+            <p class="text-2xl">Send a message</p>
+            <div class="uk-margin">
+              <span class="label-info">
+                Body ({{ messageFormsByUserId[service_request.user_id].controls['body'].value.length }}/{{ MSG_MAX_LENGTH }})
+              </span>
+              <textarea
+                type="text"
+                class="input-text-1"
+                placeholder="Enter message..."
+                rows="3"
+                formControlName="body"
+              ></textarea>
+            </div>
+            <div>
+              <button
+                type="submit"
+                title="Message this user"
+                class="btn-primary-1"
+                [disabled]="loading || messageFormsByUserId[service_request.user_id].invalid"
+              >
+                <i class="fas fa-paper-plane"></i>
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

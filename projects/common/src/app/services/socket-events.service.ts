@@ -101,8 +101,11 @@ export class SocketEventsService {
     const connect_event = this.socket!.on('connect', () => {
       console.log(`socket connected. socket id: ${socket.id}`, event);
       this.socket_id = socket.id;
-      const jwt = window.localStorage.getItem('rmw-modern-apps-jwt') || '';
-      this.socket!.emit(`SOCKET_TRACK`, { jwt, user_id: this.you!.id });
+      if (this.you) {
+        console.log(`tracking user socket with jwt...`);
+        const jwt = window.localStorage.getItem('rmw-modern-apps-jwt') || '';
+        this.socket!.emit(`SOCKET_TRACK`, { jwt, user_id: this.you!.id });
+      }
     });
 
     const disconnect_event = this.socket!.on('disconnect', (event: any) => {

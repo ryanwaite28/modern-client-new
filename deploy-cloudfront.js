@@ -287,6 +287,8 @@ async function deployProject(appName, env) {
   const cloudfrontConfig = await cloudfrontClient.getDistributionConfig({ Id: cloudfrontId }).promise();
   logs.push(JSON.stringify(cloudfrontConfig));
 
+  cloudfrontConfig.DistributionConfig.Comment = `${appName} - ${env}`;
+
   const oldOriginPath = cloudfrontConfig.DistributionConfig.Origins.Items[0].OriginPath;
   cloudfrontConfig.DistributionConfig.Origins.Items[0].OriginPath = `/${bucketUploadPath}`;
 

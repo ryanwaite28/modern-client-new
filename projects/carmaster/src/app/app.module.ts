@@ -35,6 +35,8 @@ import { CARMASTER_EVENT_TYPES } from './enums/car-master.enum';
 import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { SearchPageComponent } from './components/pages/search-page/search-page.component';
 import { ServiceRequestSearchComponent } from './components/pages/search-page/service-request-search/service-request-search.component';
+import { ServiceRequestSearchFormComponent } from './components/fragments/forms/service-request-search-form/service-request-search-form.component';
+import { ServiceRequestFormComponent } from './components/fragments/forms/service-request-form/service-request-form.component';
 
 @NgModule({
   declarations: [
@@ -61,12 +63,14 @@ import { ServiceRequestSearchComponent } from './components/pages/search-page/se
     MechanicServiceComponent,
     MechanicRatingComponent,
     MechanicSearchComponent,
+    ServiceRequestSearchFormComponent,
     CreateServiceRequestComponent,
     MechanicSearchFormComponent,
     UserMessagesFragmentComponent,
     UserNotificationsFragmentComponent,
     SearchPageComponent,
     ServiceRequestSearchComponent,
+    ServiceRequestFormComponent,
   ],
   imports: [
     BrowserModule,

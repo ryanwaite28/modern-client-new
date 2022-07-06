@@ -131,9 +131,17 @@ export class CarmasterService {
     );
   }
 
-
   search_mechanics(data: any) {
-    const endpoint = `/carmaster/mechanics/search`;
+    const endpoint = `/carmaster/mechanics/search-mechanics`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`, data).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  search_service_requests(data: any) {
+    const endpoint = `/carmaster/mechanics/search-service-request`;
     return this.clientService.sendRequest<any>(endpoint, `POST`, data).pipe(
       map((response) => {
         return response;
