@@ -175,6 +175,9 @@
           },
           "configurations": {
             "production": {
+              "optimization": true,
+              "sourceMap": true,
+              "aot": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -200,6 +203,9 @@
               "outputHashing": "all"
             },
             "dev": {
+              "optimization": true,
+              "sourceMap": true,
+              "aot": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -227,9 +233,9 @@
             "development": {
               "buildOptimizer": false,
               "optimization": true,
+              "sourceMap": true,
               "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
               "namedChunks": true
             }
           },
@@ -309,6 +315,9 @@
           },
           "configurations": {
             "production": {
+              "optimization": true,
+              "sourceMap": true,
+              "aot": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -334,6 +343,9 @@
               "outputHashing": "all"
             },
             "dev": {
+              "optimization": true,
+              "sourceMap": true,
+              "aot": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -443,6 +455,9 @@
           },
           "configurations": {
             "production": {
+              "optimization": true,
+              "sourceMap": true,
+              "aot": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -468,6 +483,9 @@
               "outputHashing": "all"
             },
             "dev": {
+              "optimization": true,
+              "sourceMap": true,
+              "aot": true,
               "budgets": [
                 {
                   "type": "initial",

@@ -31,11 +31,6 @@ export function APP_SOCKET_EVENTS_INITIALIZER_FACTORY_CURRY(
       console.log(`APP_SOCKET_EVENTS_INITIALIZER_FN - isReady:`, isReady);
       socketEventsService.registerAppEventListenerStreams(app, event_types_map);
       return resolve(true);
-
-      // socketEventsService.getRegistrationIsReady().pipe(take(1)).subscribe({
-      //   next: () => {
-      //   }
-      // });
     }
 
     function returnFactoryFn() {
@@ -73,7 +68,7 @@ export function APP_INITIALIZER_FACTORY(
         }),
         mergeMap((stripe_loaded, index) => {
           // console.log('APP_INITIALIZER (google maps) - admit one', googleMapsService);
-
+          console.log(`registering common events`);
           const isServiceReadyObs = socketEventsService.getServiceIsReady()
             .pipe(filter((isReady) => { return isReady; }))
             .pipe(take(1))
@@ -82,10 +77,12 @@ export function APP_INITIALIZER_FACTORY(
               return state;
             }))
 
+          console.log(`registered common events`);
           return firstValueFrom(isServiceReadyObs);
         }),
         mergeMap((app_loaded, index) => {
           // console.log('APP_INITIALIZER (google maps) - admit one', googleMapsService);
+          console.log(`resolving app_init`, { app_loaded });
           resolve(app_loaded);
           return of(true);
         }),
