@@ -21,7 +21,9 @@ export class NavbarComponent implements OnInit {
   you: IUser | any;
   showMobileNav: boolean = false;
 
-  links: any;
+  links: any = [
+    { text: `Sign In`, clickFn: (event: any) => { this.signin(); } },
+  ];
 
   constructor(
     private socketEventsService: SocketEventsService,

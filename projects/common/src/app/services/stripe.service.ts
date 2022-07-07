@@ -64,8 +64,8 @@ export class StripeService {
     const is_subscription_active = this.is_subscription_active;
 
 
-    const stripePercentageFeeRate = 0.029;
-    const appPercentageFeeRate = 0.031;
+    const stripePercentageFeeRate = 0.0315;
+    const appPercentageFeeRate = 0.032;
     const stripeFixedFeeRate = 30; // 30 cents
 
     const total = isAmountAdjusted ? amount : parseInt(amount.toString() + '00');

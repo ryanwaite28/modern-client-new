@@ -194,24 +194,25 @@
         </fieldset>
 
         <div class="uk-margin">
-          <p class="label-info">
+          <p *ngIf="chargeFeeData" class="label-info">
             Delivery payout: {{ chargeFeeData ? '$' + (chargeFeeData.total | stripeAmountFormatter) : '' }} <span class="text-sm">(Goes to carrier)</span><br/>
-            Application fee: {{ chargeFeeData ? '$' + (chargeFeeData.app_fee | stripeAmountFormatter) : '' }} <span class="text-sm" *ngIf="!is_subscription_active">(Subscribe to avoid paying application fees)</span><br/>
+            Application fee: {{ chargeFeeData ? '$' + (chargeFeeData.app_fee | stripeAmountFormatter) : '' }} <span class="text-sm" *ngIf="!is_subscription_active">(Platform's profit. Subscribe to avoid paying application fees)</span><br/>
             Processing fee: {{ chargeFeeData ? '$' + (chargeFeeData.stripe_processing_fee | stripeAmountFormatter) : '' }} <span class="text-sm">(Non refundable)</span><br/>
             Refund/Cancelation: {{ chargeFeeData ? '$' + (chargeFeeData.refund_amount | stripeAmountFormatter) : '' }} <span class="text-sm">(Amount if you cancel/delete listing)</span><br/>
             <span class="font-bold">Final total</span>: {{ chargeFeeData ? '$' + (chargeFeeData.final_total | stripeAmountFormatter) : '' }}<br/>
           </p>
 
-          <span class="label-info">
-            Acknowledge final price and terms:
-          </span>
-          <br/>
-          <input
-            class="uk-checkbox"
-            type="checkbox"
-            [ngModelOptions]="{standalone: true}"
-            [(ngModel)]="acknowledgement_checked" 
-          />
+          <div class="my-3">
+            <span class="label-info ">
+              Acknowledge final price and terms: 
+            </span>
+            <input
+              class=""
+              type="checkbox"
+              [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="acknowledgement_checked" 
+            />
+          </div>
         </div>
 
         <button
