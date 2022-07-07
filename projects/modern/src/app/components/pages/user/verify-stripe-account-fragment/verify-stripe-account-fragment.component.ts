@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
@@ -16,6 +16,8 @@ import { UserStoreService } from 'projects/common/src/app/stores/user-store.serv
 export class UserVerifyStripeAccountFragmentComponent implements OnInit {
   you: any;
   results: any;
+  continue_onboarding: boolean = false;
+  onboarding_url: string = '';
 
   constructor(
     private userStore: UserStoreService,
@@ -49,6 +51,10 @@ export class UserVerifyStripeAccountFragmentComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         console.log(error);
         this.results = error.error;
+        if (error.status === HttpStatusCode.PreconditionFailed) {
+          this.continue_onboarding = true;
+          this.onboarding_url = error.error.data.onboarding_url;
+        }
       },
       complete: () => {
         

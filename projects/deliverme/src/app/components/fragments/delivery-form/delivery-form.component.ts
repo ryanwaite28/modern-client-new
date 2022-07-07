@@ -73,6 +73,7 @@ export class DeliveryFormComponent implements AfterViewInit, OnDestroy {
   payout_min = payout_min;
   acknowledgement_checked = false;
   payment_methods: PaymentMethod[] | null = null;
+  is_subscription_active: boolean = false;
 
   deliveryForm: FormGroup | null = null;
 
@@ -80,6 +81,7 @@ export class DeliveryFormComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private userStore: UserStoreService,
+    private usersService: UsersService,
     private stripeService: StripeService,
     private alertService: AlertService,
     private googleMapsService: GoogleMapsService,
@@ -106,6 +108,7 @@ export class DeliveryFormComponent implements AfterViewInit, OnDestroy {
     
     this.userStore.getChangesObs().subscribe((you: IUser | null) => {
       this.you = you;
+      this.is_subscription_active = this.usersService.getHasPlatformSubscription();
 
       
 

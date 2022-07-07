@@ -70,6 +70,8 @@ export class SocketEventsService {
       return;
     }
 
+    console.log(`registerAppEventListenerStreams:`, { app, event_types_map });
+
     if (!this.appEventStreamsMap[app]) {
       this.appEventStreamsMap[app] = {};
     }
@@ -78,6 +80,15 @@ export class SocketEventsService {
 
     for (const event_type of event_types) {
       const event_type_error = `${event_type}-error`;
+
+      if (this.appEventStreamsMap[app][event_type]) {
+        console.warn(`event stream ${event_type} already defined under app ${app}; ignoring...`);
+        continue;
+      }
+      if (this.appEventStreamsMap[app][event_type_error]) {
+        console.warn(`event stream ${event_type_error} already defined under app ${app}; ignoring...`);
+        continue;
+      }
 
       this.appEventStreamsMap[app][event_type] = new Subject<any>();
       this.appEventStreamsMap[app][event_type_error] = new Subject<any>();

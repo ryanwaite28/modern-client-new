@@ -3,6 +3,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { GoogleMapsService } from 'projects/common/src/app/services/google-maps.service';
+import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { DeliveryService } from 'projects/deliverme/src/app/services/delivery.service';
 
@@ -15,9 +16,11 @@ import { DeliveryService } from 'projects/deliverme/src/app/services/delivery.se
 export class DeliverMeUserCreateDeliveryFragmentComponent implements OnInit, OnDestroy {
   you: any;
   loading: boolean = false;
+  is_subscription_active: boolean = false;
 
   constructor(
     private userStore: UserStoreService,
+    private usersService: UsersService,
     private alertService: AlertService,
     private deliveryService: DeliveryService,
     private googleMapsService: GoogleMapsService,
@@ -27,6 +30,7 @@ export class DeliverMeUserCreateDeliveryFragmentComponent implements OnInit, OnD
   ngOnInit(): void {
     this.userStore.getChangesObs().subscribe((you: IUser | null) => {
       this.you = you;
+      this.is_subscription_active = this.usersService.getHasPlatformSubscription();
     });
   }
 
@@ -35,7 +39,7 @@ export class DeliverMeUserCreateDeliveryFragmentComponent implements OnInit, OnD
 
   onSubmitNewDelivery(params: any) {
     const msg =
-      `Are all input values correct? The delivery cannot be edited later.`;
+      `Are all input values correct?`;
     const ask = window.confirm(msg);
     if (!ask) {
       return;

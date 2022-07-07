@@ -163,7 +163,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_ASSIGNED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -178,7 +178,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_UNASSIGNED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -193,7 +193,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_MARKED_AS_PICKED_UP,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -208,7 +208,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_MARKED_AS_DROPPED_OFF,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -223,7 +223,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.DELIVERY_NEW_TRACKING_UPDATE,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -240,7 +240,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.DELIVERY_COMPLETED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -256,7 +256,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.DELIVERY_RETURNED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -272,7 +272,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.DELIVERY_NEW_MESSAGE,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -289,7 +289,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_REQUESTED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -305,7 +305,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_REQUEST_ACCEPTED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -321,7 +321,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_REQUEST_DECLINED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -337,7 +337,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_SHARED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -353,7 +353,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_UNSHARED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message
@@ -369,7 +369,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         DELIVERME_EVENT_TYPES.CARRIER_LOCATION_UPDATED,
       ).subscribe({
         next: (event: any) => {
-          if (event.data.delivery_id === this.delivery.id) {
+          if (event.delivery_id === this.delivery.id) {
             console.log(event);
             this.alertService.handleResponseSuccessGeneric({
               message: event.message

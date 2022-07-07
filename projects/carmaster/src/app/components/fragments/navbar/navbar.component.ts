@@ -5,9 +5,10 @@ import { EnvironmentService } from 'projects/common/src/app/services/environment
 import { AppSocketEventsStateService } from 'projects/common/src/app/services/app-socket-events-state.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
-import { combineLatest, map } from 'rxjs';
+import { combineLatest, filter, map, mergeMap, take } from 'rxjs';
 import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { CARMASTER_EVENT_TYPES } from '../../../enums/car-master.enum';
+import { SocketEventsService } from 'projects/common/src/app/services/socket-events.service';
 
 
 
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit {
   links: any;
 
   constructor(
+    private socketEventsService: SocketEventsService,
     private appSocketEventsStateService: AppSocketEventsStateService,
     private usersService: UsersService,
     private userStore: UserStoreService,
@@ -31,13 +33,21 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const eventsObs = combineLatest([
-      this.appSocketEventsStateService.getAppEventStateChanges(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES.NEW_CARMASTER_MESSAGE),
-    ])
+    const eventsObs = this.socketEventsService.getServiceIsReady()
+      .pipe(filter((state) => state))
+      .pipe(take(1))
+      .pipe(
+        mergeMap(() => {
+          console.log(`NavbarComponent - listening:`);
+          return combineLatest([
+            this.appSocketEventsStateService.getAppEventStateChanges(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES.NEW_CARMASTER_MESSAGE),
+          ])
+        })
+      )
     .pipe(
       map((values) => {
         return {
-          messages: values[0]
+          messages: values[0],
         };
       })
     );

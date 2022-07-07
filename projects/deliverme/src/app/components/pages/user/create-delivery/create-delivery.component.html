@@ -7,11 +7,21 @@
         <a [routerLink]="['/', 'modern', 'users', you.id, 'settings']">Settings</a>
       </div>
     </div>
-  
+
     <deliverme-delivery-form
       *ngSwitchCase="true"
       [isEditing]="false"
       (deliveryFormSubmit)="onSubmitNewDelivery($event)"
     ></deliverme-delivery-form>
+    
+    <!-- <ng-container *ngSwitchCase="true" [ngSwitch]="is_subscription_active">
+       <div class="uk-card-body" *ngSwitch="false">
+        You need a subscription to the platform to create deliveries. 
+        Go back to setting to subscribe. <br/>
+        <a [routerLink]="['/', 'modern', 'users', you.id, 'settings']">Settings</a>
+      </div>
+
+    </ng-container> -->
+  
   </div>
 </div>

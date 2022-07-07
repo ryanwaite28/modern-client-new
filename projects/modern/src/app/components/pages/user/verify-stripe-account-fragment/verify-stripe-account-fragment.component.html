@@ -1,11 +1,11 @@
 <div class="card-box-1">
   <div class="uk-card-body">
     <div *ngIf="results">
-      <p>{{ results.message }}</p>
+      <p class="text-lead mb-3">{{ results.message }}</p>
 
-      <div *ngIf="results.error">
-        Go back to setting to finish connecting your stripe account. <br/>
-        <a [routerLink]="['/', 'users', you.id, 'settings']">Settings</a>
+      <div *ngIf="continue_onboarding">
+        <p class="mb-2">Finish onboarding your stripe account</p>
+        <a class="btn-primary-1" [href]="onboarding_url">Finish Onboarding</a>
       </div>
     </div>
   </div>
