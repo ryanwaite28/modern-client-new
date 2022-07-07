@@ -25,6 +25,7 @@
     "serve-deliverme": "ng serve --project=deliverme --port=4200",
     "serve-carmaster": "ng serve --project=carmaster --port=6200",
     "deploy-cloudfront-dev": "node deploy-cloudfront-all.js dev",
+    "deploy-cloudfront-production": "node deploy-cloudfront-all.js production",
     "deploy-cloudfront-modern-dev": "node deploy-cloudfront.js modern dev",
     "deploy-cloudfront-modern-production": "node deploy-cloudfront.js modern production",
     "deploy-cloudfront-deliverme-dev": "node deploy-cloudfront.js deliverme dev",
