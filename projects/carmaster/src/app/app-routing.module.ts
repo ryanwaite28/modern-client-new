@@ -16,6 +16,7 @@ import { UserPageComponent } from './components/pages/user-page/user-page.compon
 import { WelcomeComponent } from './components/pages/welcome/welcome.component';
 import { MechanicProfileResolver } from './resolvers/mechanic-profile.resolver';
 import { ServiceRequestSearchComponent } from './components/pages/search-page/service-request-search/service-request-search.component';
+import { IsMechanicGuard } from './guards/is-mechanic.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
@@ -34,6 +35,7 @@ const routes: Routes = [
         path: 'service-requests',
         pathMatch: 'full',
         component: ServiceRequestSearchComponent,
+        canActivate: [SignedInGuard, IsMechanicGuard]
       },
     ]
   },

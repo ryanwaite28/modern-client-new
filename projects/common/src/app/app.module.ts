@@ -50,6 +50,7 @@ import { CommonAlertsFragmentComponent } from './components/alerts-fragment/aler
 import { BackgroundImageCoverDirective } from './directives/background-image-cover.directive';
 import { UserProfileCardComponent } from './components/user-profile-card/user-profile-card.component';
 import { RouterModule } from '@angular/router';
+import { PayoutPipe } from './pipes/payout.pipe';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { RouterModule } from '@angular/router';
     CommonAlertsFragmentComponent,
     BackgroundImageCoverDirective,
     UserProfileCardComponent,
+    PayoutPipe,
   ],
   imports: [
     BrowserModule,
@@ -142,6 +144,7 @@ import { RouterModule } from '@angular/router';
     TimeAgoPipe,
     UserFullNamePipe,
     // DatePipe,
+    PayoutPipe,
 
     CommonAlertsFragmentComponent,
     UserProfileCardComponent,

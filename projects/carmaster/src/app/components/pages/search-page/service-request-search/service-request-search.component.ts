@@ -5,6 +5,7 @@ import { PlainObject } from 'projects/common/src/app/interfaces/json-object.inte
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { IFormSubmitEvent } from 'projects/common/src/app/interfaces/_common.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
+import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { finalize } from 'rxjs';
 import { IMechanicServiceRequest } from '../../../../interfaces/carmaster.interface';
@@ -19,12 +20,14 @@ export class ServiceRequestSearchComponent implements OnInit {
   you: IUser | null = null;
   loading = false;
   service_requests: IMechanicServiceRequest[] = [];
+  is_subscription_active = false;
 
   MSG_MAX_LENGTH = 1000;
   messageFormsByUserId: PlainObject<FormGroup> = {};
 
   constructor(
     private userStore: UserStoreService,
+    private userService: UsersService,
     private carmasterService: CarmasterService,
     private alertService: AlertService,
   ) { }
@@ -33,6 +36,7 @@ export class ServiceRequestSearchComponent implements OnInit {
     this.userStore.getChangesObs().subscribe({
       next: (you) => {
         this.you = you;
+        this.is_subscription_active = this.userService.getHasPlatformSubscription(); 
       }
     });
   }

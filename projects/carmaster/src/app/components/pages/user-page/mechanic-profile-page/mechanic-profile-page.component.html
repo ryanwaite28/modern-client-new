@@ -3,13 +3,13 @@
     <div class="">
       <h3 class="text-3xl mb-3">Mechanic Profile</h3>
 
-      <p *ngIf="!isUserActiveMember">
+      <!-- <p *ngIf="!isUserActiveMember">
         You must have an active membership subscription to create and use.
-      </p>
+      </p> -->
 
       <button
         type="button"
-        *ngIf="isUserActiveMember && !mechanic_profile"
+        *ngIf="!mechanic_profile"
         class=btn-primary-1
         [disabled]="loading"
         (click)="createMechanicProfile()"
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div *ngIf="isUserActiveMember && !!mechanic_profile">
+  <div *ngIf="!!mechanic_profile">
 
     <div class="card-box-1">
       <div class="">

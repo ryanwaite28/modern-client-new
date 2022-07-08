@@ -122,6 +122,9 @@ export interface IMechanicServiceRequest extends ICommonModel {
   mechanic_id: number | null,
   service_id: number | null,
   payment_method_id: string,
+  payment_intent_id: string,
+  image_link: string,
+  image_id: string,
   
   service_category: string,
   service_type: string,
@@ -138,6 +141,7 @@ export interface IMechanicServiceRequest extends ICommonModel {
   
   title: string,
   description: string,
+  payout: number,
   notes: string,
   deposit_paid: boolean,
   deposit_refunded: boolean,

@@ -30,10 +30,32 @@
           </div>
         </div>
 
-        <div>
-          <h1>Need</h1>
+        <div class="border border-gray-300 p-5 mt-3 mb-5">
+          <p class="text-4xl">{{ service_request.title }}</p>
+          <p class="text-2xl mb-3">{{ service_request.description }}</p>
 
-          
+          <p class="mb-3">
+            Make: {{ service_request.make }}<br/>
+            Model: {{ service_request.model }}<br/>
+            Year: {{ service_request.year }}<br/>
+            Type: {{ service_request.type }}<br/>
+            Trim: {{ service_request.trim }}
+          </p>
+
+          <p class="mb-3">
+            Service Category: {{ service_request.service_category }}<br/>
+            Service Type: {{ service_request.service_type }}<br/>
+            Service Action: {{ service_request.service_action }}
+          </p>
+
+          <p class="mb-3">
+            Payout: ${{ service_request.payout | number }}<br/>
+            You get: ${{ service_request.payout | payout | number }} <span *ngIf="is_subscription_active" class="text-sm">(You get the full amount by subscribing to the platform!)</span> <span *ngIf="!is_subscription_active" class="text-sm">(Subscribe to get the full payout on service requests!)</span>
+          </p>
+
+          <img *ngIf="service_request.image_link" class="" [src]="service_request.image_link" alt="Service Request Image">
+
+
         </div>
 
         <div>
