@@ -11,6 +11,7 @@ import { Subscription, Subject } from 'rxjs';
 
 
 const default_form_config = [
+  // info
   // expertise
   { field: 'make', defaultValue: '', validations: [] },
   { field: 'model', defaultValue: '', validations: [] },

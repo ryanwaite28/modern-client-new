@@ -1,1 +1,175 @@
-<p>service-request-form works!</p>
+<div class="border border-gray-300 bg-gray-100 p-3">
+  <form #formElm [formGroup]="form" (ngSubmit)="onSubmit(formElm)">
+    <div class="mb-2">
+      <span class="label-info">
+        Title ({{ form.value.title.length }}/255)
+      </span>
+      <input class="input-text-1" type="text" placeholder="Enter Credential Title" formControlName="title" >
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Description ({{ form.value.description.length }}/500)
+      </span>
+      <textarea type="text" class="input-text-1" placeholder="Enter Credential Description" rows="3" formControlName="description"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <span class="label-info">
+        Picture
+      </span>
+      <input #iconInput type="file" class="input-text-1" name="service_request_image" formControlName="file" />
+    </div>
+
+    <!-- expertise section -->
+    <div class="flex flex-col sm:flex-row gap-3 mb-2">
+      <div class="w-full sm:w-1/3">
+        <span class="label-info">
+          Make
+        </span>
+
+        <select class="input-text-1" formControlName="make">
+          <option *ngFor="let car of cars" [value]="car.brand">
+            {{ car.brand }}
+          </option>
+        </select>
+      </div>
+
+      <div class="w-full sm:w-1/3">
+        <span class="label-info">
+          Model
+        </span>
+
+        <select class="input-text-1" formControlName="model">
+          <option *ngFor="let model of make_models" [value]="model">
+            {{ model }}
+          </option>
+        </select>
+      </div>
+
+      <div class="w-full sm:w-1/3">
+        <span class="label-info">
+          Year
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Car Year" formControlName="year" />
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-5">
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Type ({{ form.value.type.length }}/255)
+        </span>
+        <input class="input-text-1" type="text" placeholder="Enter Type" formControlName="type" />
+      </div>
+
+      <div class="w-full sm:w-1/2">
+        <span class="label-info">
+          Trim ({{ form.value.trim.length }}/255)
+        </span>
+        <input class="input-text-1" type="text" placeholder="Enter Trim" formControlName="trim" />
+      </div>
+    </div>
+
+    <!-- Service section -->
+    <div class="flex flex-col sm:flex-row gap-3 mb-5">
+      <div class="w-full sm:w-1/3">
+        <span class="label-info">
+          Service Category
+        </span>
+  
+        <select class="input-text-1" formControlName="service_category">
+          <option *ngFor="let service_category of service_categories" [value]="service_category.key">
+            {{ service_category.display }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="w-full sm:w-1/3">
+        <span class="label-info">
+          Service Type
+        </span>
+  
+        <select class="input-text-1" formControlName="service_type">
+          <option *ngFor="let service_type of service_types" [value]="service_type">
+            {{ service_type }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="w-full sm:w-1/3">
+        <span class="label-info">
+          Service Action
+        </span>
+  
+        <select class="input-text-1" formControlName="service_action">
+          <option *ngFor="let service_action of service_actions" [value]="service_action">
+            {{ service_action }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-7">
+      <div class="w-full">
+        <span class="label-info">
+          Payout
+        </span>
+        <input class="input-text-1" type="number" placeholder="Enter Service Request Payout" formControlName="payout" />
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <span class="label-info">
+        Location (City and State)
+      </span>
+      <input #locationInput type="text" id="location-input" autocomplete="off" class="input-text-1" placeholder="Enter a Location" />
+    </div>
+
+    <div class="uk-margin">
+      <span class="label-info">
+        Payment Method
+      </span>
+      <p *ngIf="!!payment_methods && !payment_methods.length" class="font-bold">
+        You do not have any payment methods (debit/credit card) linked to your account. Please go to your setting and add one.
+      </p>
+      <select *ngIf="!!payment_methods && !!payment_methods.length" class="input-text-1" formControlName="payment_method_id">
+        <option *ngFor="let pm of payment_methods" [value]="pm.id">
+          {{ pm.card!.brand | uppercase }} ending in {{ pm.card!.last4 }} (expires: {{ pm.card!.exp_month }}/{{ pm.card!.exp_year }})
+        </option>
+      </select>
+    </div>
+
+    <div class="uk-margin">
+      <p *ngIf="chargeFeeData" class="label-info">
+        Delivery payout: {{ chargeFeeData ? '$' + (chargeFeeData.total | stripeAmountFormatter) : '' }} <span class="text-sm">(Goes to carrier)</span><br/>
+        Application fee: {{ chargeFeeData ? '$' + (chargeFeeData.app_fee | stripeAmountFormatter) : '' }} <span class="text-sm" *ngIf="!is_subscription_active">(Platform's profit. Subscribe to avoid paying application fees)</span><br/>
+        Processing fee: {{ chargeFeeData ? '$' + (chargeFeeData.stripe_processing_fee | stripeAmountFormatter) : '' }} <span class="text-sm">(Non refundable)</span><br/>
+        Refund/Cancelation: {{ chargeFeeData ? '$' + (chargeFeeData.refund_amount | stripeAmountFormatter) : '' }} <span class="text-sm">(Amount if you cancel/delete listing)</span><br/>
+        <span class="font-bold">Final total</span>: {{ chargeFeeData ? '$' + (chargeFeeData.final_total | stripeAmountFormatter) : '' }}<br/>
+      </p>
+
+      <div class="my-3">
+        <span class="label-info ">
+          Acknowledge final price and terms: 
+        </span>
+        <input
+          class=""
+          type="checkbox"
+          [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="acknowledgement_checked" 
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button
+        type="submit"
+        class=btn-primary-1
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

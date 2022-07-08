@@ -92,8 +92,63 @@ export class CarmasterService {
   }
 
 
+  // users
+
+  get_user_service_requests(you_id: number, service_request_id?: string, get_all: boolean = false) {
+    const endpoint = get_all
+      ? '/carmaster/users/' + you_id + '/service-requests/all'
+      : service_request_id
+        ? '/carmaster/users/' + you_id + '/service-requests/' + service_request_id
+        : '/carmaster/users/' + you_id + '/service-requests';
+    return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  create_service_request(you_id: number, data: any) {
+    const endpoint = `/carmaster/users/${you_id}/service-request`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`, data).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  update_service_request(you_id: number, service_request_id: number, data: any) {
+    const endpoint = `/carmaster/users/${you_id}/service-request/${service_request_id}`;
+    return this.clientService.sendRequest<any>(endpoint, `PUT`, data).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  deleteservice_request(you_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/users/${you_id}/service-request/${service_request_id}`;
+    return this.clientService.sendRequest<any>(endpoint, `DELETE`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
 
   // mechanic profile
+
+  get_mechanic_service_requests(mechanic_id: number, service_request_id?: string, get_all: boolean = false) {
+    const endpoint = get_all
+      ? '/carmaster/mechanics/' + mechanic_id + '/service-requests/all'
+      : service_request_id
+        ? '/carmaster/mechanics/' + mechanic_id + '/service-requests/' + service_request_id
+        : '/carmaster/mechanics/' + mechanic_id + '/service-requests';
+    return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
 
   get_mechanic_by_id(mechanic_id: number) {
     const endpoint = `/carmaster/mechanics/${mechanic_id}`;
@@ -141,7 +196,7 @@ export class CarmasterService {
   }
 
   search_service_requests(data: any) {
-    const endpoint = `/carmaster/mechanics/search-service-request`;
+    const endpoint = `/carmaster/mechanics/search-service-requests`;
     return this.clientService.sendRequest<any>(endpoint, `POST`, data).pipe(
       map((response) => {
         return response;

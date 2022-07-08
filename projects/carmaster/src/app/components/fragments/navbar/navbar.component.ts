@@ -36,10 +36,12 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     const eventsObs = this.socketEventsService.getServiceIsReady()
-      .pipe(filter((state) => state))
+      .pipe(filter((state: boolean) => {
+        return state;
+      }))
       .pipe(take(1))
       .pipe(
-        mergeMap(() => {
+        mergeMap((state: boolean) => {
           console.log(`NavbarComponent - listening:`);
           return combineLatest([
             this.appSocketEventsStateService.getAppEventStateChanges(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES.NEW_CARMASTER_MESSAGE),

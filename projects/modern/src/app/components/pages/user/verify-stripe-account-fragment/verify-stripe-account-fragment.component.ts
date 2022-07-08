@@ -43,8 +43,9 @@ export class UserVerifyStripeAccountFragmentComponent implements OnInit {
       next: (response: any) => {
         console.log(response);
         this.results = response;
-        if (response.token) {
-          window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
+        const token = response.token || response.data.token;
+        if (token) {
+          window.localStorage.setItem('rmw-modern-apps-jwt', token);
           this.userStore.setState(response.data.you);
         }
       },

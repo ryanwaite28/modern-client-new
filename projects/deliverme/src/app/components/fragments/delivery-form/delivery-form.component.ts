@@ -85,7 +85,6 @@ export class DeliveryFormComponent implements AfterViewInit, OnDestroy {
     private stripeService: StripeService,
     private alertService: AlertService,
     private googleMapsService: GoogleMapsService,
-    private userService: UsersService,
   ) {}
 
   ngOnInit() {
@@ -146,7 +145,7 @@ export class DeliveryFormComponent implements AfterViewInit, OnDestroy {
 
       
       
-      this.userService.get_user_customer_cards_payment_methods(this.you.id).subscribe({
+      this.usersService.get_user_customer_cards_payment_methods(this.you.id).subscribe({
         next: (response) => {
           this.payment_methods = response.data;
         }
