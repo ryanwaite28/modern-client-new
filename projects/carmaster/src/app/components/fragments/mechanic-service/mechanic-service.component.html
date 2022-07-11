@@ -6,11 +6,10 @@
           <p>{{ service_categories_display_by_key[service.service_category] }}</p>
           <p>{{ service.service_type }}</p>
           <p>{{ service.service_action }}</p>
+          <p>Cost: ${{ service.cost | number }}</p>
         </div>
       
         <div class="w-full sm:w-1/2">
-          <p>Cost: ${{ service.cost | number }}</p>
-          <p>Deposit: ${{ service.deposit | number }}</p>
         </div>
       </div>
     </div>

@@ -13,8 +13,9 @@
         <p class="text-3xl mb-3">Active Deliveries</p>
       </div>
     </div>
-    <div *ngFor="let delivery of current_deliverings" class="border-grey-1 card-box-1">
+    <div>
       <deliverme-delivery-card
+        *ngFor="let delivery of current_deliverings"
         [delivery]="delivery"
         [you]="you"
         [showEmbeddedContent]="true"
@@ -22,41 +23,35 @@
         (deliveryCompleted)="onCurrentDeliveryCompleted(delivery)"
       >
         <div>
-          <span class="margin-right-10">
-            <button
-              *ngIf="!delivery.datetime_picked_up && !delivery.datetime_delivered"
-              type="button"
-              class="btn-primary-1"
-              [disabled]="loading"
-              (click)="unassignDelivery(delivery)"
-            >
-              Cancel Delivery
-            </button>
-          </span>
+          <button
+            *ngIf="!delivery.datetime_picked_up && !delivery.datetime_delivered"
+            type="button"
+            class="btn-primary-1 mr-3"
+            [disabled]="loading"
+            (click)="unassignDelivery(delivery)"
+          >
+            Cancel Delivery
+          </button>
   
-          <span class="margin-right-10">
-            <button
-              *ngIf="!delivery.datetime_picked_up && !delivery.datetime_delivered"
-              type="button"
-              class="btn-primary-1"
-              [disabled]="loading"
-              (click)="markDeliveryAsPickedUp(delivery)"
-            >
-              Mark As Picked Up
-            </button>
-          </span>
+          <button
+            *ngIf="!delivery.datetime_picked_up && !delivery.datetime_delivered"
+            type="button"
+            class="btn-primary-1 mr-3"
+            [disabled]="loading"
+            (click)="markDeliveryAsPickedUp(delivery)"
+          >
+            Mark As Picked Up
+          </button>
   
-          <span class="margin-right-10">
-            <button
-              *ngIf="delivery.datetime_picked_up && !delivery.datetime_delivered"
-              type="button"
-              class="btn-primary-1"
-              [disabled]="loading"
-              (click)="markDeliveryAsDroppedOff(delivery)"
-            >
-              Mark As Dropped Off
-            </button>
-          </span>
+          <button
+            *ngIf="delivery.datetime_picked_up && !delivery.datetime_delivered"
+            type="button"
+            class="btn-primary-1 mr-3"
+            [disabled]="loading"
+            (click)="markDeliveryAsDroppedOff(delivery)"
+          >
+            Mark As Dropped Off
+          </button>
         </div>
       </deliverme-delivery-card>
     </div>

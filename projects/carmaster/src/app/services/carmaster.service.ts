@@ -5,17 +5,63 @@ import { HttpStatusCode } from 'projects/common/src/app/enums/http-codes.enum';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
 import { ServiceMethodResultsInfo } from 'projects/common/src/app/interfaces/_common.interface';
 import { ClientService } from 'projects/common/src/app/services/client.service';
+import { SocketEventsService } from 'projects/common/src/app/services/socket-events.service';
 import { get_user_records_endpoint } from 'projects/common/src/app/_misc/chamber';
-import { catchError, map, of } from 'rxjs';
+import { catchError, filter, map, of, Subject, Subscription, take } from 'rxjs';
+import { CARMASTER_EVENT_TYPES } from '../enums/car-master.enum';
 import { IMechanic } from '../interfaces/carmaster.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarmasterService {
+  private eventStreamByServiceRequestId: PlainObject<Subject<any>> = {};
+  private eventStreamSubByServiceRequestId: PlainObject<Subject<any>> = {};
+
+  isListeningToSocketEvents = false;
+
   constructor(
-    private clientService: ClientService
-  ) { }
+    private clientService: ClientService,
+    private socketEventsService: SocketEventsService,
+  ) { 
+    // this.socketEventsService.getServiceIsReady()
+    //   .pipe(filter((isReady) => isReady))
+    //   .pipe(take(1))
+    //   .subscribe({
+    //     next: () => {
+    //       this.initListeners();
+    //     }
+    //   });
+  }
+
+  private initListeners() {
+    // const sub: Subscription = this.socketEventsService.listenToObservableEventStream(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES.NEW_SERVICE_REQUEST_OFFER).subscribe({
+    //   next: (event: any) => {
+    //     const id = event.service_request_id || event.data.id
+    //   }
+    // });
+
+
+  }
+
+  /* 
+    Utility/Helper Methods
+  */
+
+  getServiceRequestEventStream(id: number) {
+    let stream = this.eventStreamByServiceRequestId[id];
+    if (!stream) {
+      console.log(`No previous stream for service request by id ${id}; registering...`);
+      stream = new Subject<any>();
+      this.eventStreamByServiceRequestId[id] = stream;
+    }
+    return stream.asObservable();
+  }
+
+
+  /*
+    Request methods
+  */
 
   // messagings
 
@@ -94,7 +140,7 @@ export class CarmasterService {
 
   // users
 
-  get_user_service_requests(you_id: number, service_request_id?: string, get_all: boolean = false) {
+  get_user_service_requests(you_id: number, service_request_id?: number | string, get_all: boolean = false) {
     const endpoint = get_all
       ? '/carmaster/users/' + you_id + '/service-requests/all'
       : service_request_id
@@ -137,7 +183,7 @@ export class CarmasterService {
 
   // mechanic profile
 
-  get_mechanic_service_requests(mechanic_id: number, service_request_id?: string, get_all: boolean = false) {
+  get_mechanic_service_requests(mechanic_id: number, service_request_id?: number | string, get_all: boolean = false) {
     const endpoint = get_all
       ? '/carmaster/mechanics/' + mechanic_id + '/service-requests/all'
       : service_request_id
@@ -415,6 +461,46 @@ export class CarmasterService {
   create_mechanic_rating_edit(mechanic_id: number, rating_id: number, data: any) {
     const endpoint = `/carmaster/mechanics/${mechanic_id}/rating/${rating_id}/edit`;
     return this.clientService.sendRequest<any>(endpoint, `POST`, data).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+
+
+  // service requests
+
+  send_service_request_message(you_id: number, service_request_id: number, data: any) {
+    const endpoint = `/carmaster/users/${you_id}/service-request/${service_request_id}/message`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`, data).pipe(
+      map((response) => {
+        return response;
+      }) 
+    );
+  }
+
+  pay_mechanic(you_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/users/${you_id}/service-request/${service_request_id}/pay-mechanic`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  mark_service_request_as_work_started(mechanic_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-request/${service_request_id}/work-started`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  mark_service_request_as_work_finished(mechanic_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-request/${service_request_id}/work-finished`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
       map((response) => {
         return response;
       })

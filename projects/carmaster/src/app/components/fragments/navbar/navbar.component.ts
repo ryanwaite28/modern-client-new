@@ -74,6 +74,8 @@ export class NavbarComponent implements OnInit {
               { text: `Messages`, href: ['/', 'users', you.id, 'messages'], badgeCount: eventsCounts.messages },
               { text: `Search`, href: ['/', 'search'] },
               { text: `Create Service Request`, href: ['/', 'create-service-request'] },
+              { text: `Your Service Requests`, href: ['/', 'users', you.id, 'user-service-requests'] },
+              { text: `Mechanic Service Requests`, href: ['/', 'users', you.id, 'mechanic-service-requests'] },
               // { text: `Settings`, href: ['/', 'users', you.id, 'settings'] },
 
               { text: `Sign Out`, clickFn: (event: any) => { this.signout(); } },

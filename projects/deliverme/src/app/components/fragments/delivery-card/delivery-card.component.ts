@@ -23,6 +23,7 @@ import { DeliveryService } from '../../../services/delivery.service';
 })
 export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('newDeliveryTrackingUpdateFormElm') newDeliveryTrackingUpdateFormElm: ElementRef<HTMLFormElement> | any;
+  @ViewChild('deliveredPictureFormElm') deliveredPictureFormElm: ElementRef<HTMLFormElement> | any;
   @ViewChild('paymentFormElm') paymentFormElm: ElementRef<HTMLFormElement> | any;
   
   @Input() you: IUser | any;
@@ -41,6 +42,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   showDetails: boolean = false;
   showMessages: boolean = false;
+  showDeliveredImageModal: boolean = false;
 
   deliveryEventsListeners: any[] = [];
   payment_client_secret: any;
@@ -282,6 +284,22 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
 
+      const deliveredPictureAddedListener = this.socketEventsService.listenToObservableEventStream(
+        MODERN_APPS.DELIVERME,
+        DELIVERME_EVENT_TYPES.DELIVERY_ADD_COMPLETED_PICTURE,
+      ).subscribe({
+        next: (event: any) => {
+          if (event.delivery_id === this.delivery.id) {
+            console.log(event);
+            event.message && this.alertService.handleResponseSuccessGeneric({
+              message: event.message
+            });
+            this.delivery.delivered_image_id = event.image_id;
+            this.delivery.delivered_image_link = event.image_link;
+          }
+        }
+      });
+
 
 
       const carrierLocationRequested_listener = this.socketEventsService.listenToObservableEventStream(
@@ -291,7 +309,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (event: any) => {
           if (event.delivery_id === this.delivery.id) {
             console.log(event);
-            this.alertService.handleResponseSuccessGeneric({
+            event.message && this.alertService.handleResponseSuccessGeneric({
               message: event.message
             });
             this.delivery.carrier_location_requested = true;
@@ -390,6 +408,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
         deliveryCompletedListener,
         deliveryReturnedListener,
         newDeliveryMessageListener,
+        deliveredPictureAddedListener,
 
         carrierLocationRequested_listener,
         carrierLocationRequestAccepted_listener,
@@ -436,6 +455,36 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     this.deliveryDelete.emit();
+  }
+
+  addDeliveredPicture(
+    deliveredPictureFormElm: HTMLFormElement,
+    deliveredPictureInput: HTMLInputElement
+  ) {
+    this.loading = true;
+    const formData = new FormData(deliveredPictureFormElm);
+    this.deliveryService.addDeliveredPicture(
+      this.you!.id,
+      this.delivery.id,
+      formData
+    ).subscribe({
+      next: (response: any) => {
+        this.alertService.handleResponseSuccessGeneric(response);
+        this.loading = false;
+        this.delivery.delivered_image_id = response.data.image_id;
+        this.delivery.delivered_image_link = response.data.image_link;
+
+        if (deliveredPictureInput) {
+          deliveredPictureInput.value = '';
+        }
+      },
+      error: (error: any) => {
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
   }
 
   onSubmitNewDeliveryTrackingUpdate(
@@ -515,7 +564,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   markDeliveryAsCompleted() {
-    const ask = window.confirm(`Is this delivery been successfully delivered?`);
+    const ask = window.confirm(`Has this delivery been successfully delivered?`);
     if (!ask) {
       return;
     }
@@ -554,7 +603,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
     }).subscribe({
       next: (response: any) => {
         this.alertService.showSuccessMessage(response.message);
-        this.delivery.delivery_messages?.unshift(response.data);
+        this.delivery.delivery_messages?.push(response.data);
         this.messageForm.setValue({ body: '' });
         this.messageForm.markAsPristine();
         this.messageForm.markAsUntouched();

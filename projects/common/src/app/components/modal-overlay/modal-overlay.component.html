@@ -1,0 +1,20 @@
+<!-- The Modal -->
+<div #myModal class="modal-container">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="flex flex-col md:flex-row gap-3 mb-3" [ngClass]="{ 'border-b': !!title }">
+      <div class="grow">
+        <h2 class="text-2xl ml-3">{{ title }}</h2>
+      </div>
+      <div class="w-24">
+        <p class="text-right mr-3">
+          <span #closeBtn class="close" title="Close Modal">&times;</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="modal-content-projection-container">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

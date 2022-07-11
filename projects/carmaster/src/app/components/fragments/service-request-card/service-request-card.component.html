@@ -1,0 +1,273 @@
+<div>
+  <div class="card-box-1 service-request-card">
+    <div class="mb-4">
+      <div class="flex flex-row gap-3">
+        <div class="w-16 h-16 rounded-full" [bgImgCover]="service_request.user!.icon_link || './assets/img/anon.png'"></div>
+        <div class="grow">
+          <h3 class="text-3xl">{{ service_request.user!.displayname }}</h3>
+          <p class="text-gray-400 italic">
+            <a [routerLink]="['/', 'users', service_request.user_id, 'home']">@{{ service_request.user!.username }}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="">
+      <h3 class="text-4xl mb-3">
+        <a [routerLink]="['/', 'service-requests', service_request.id]">{{ service_request.title }}</a>
+      </h3>
+      <p class="text-lg mb-3">{{ service_request.description }}</p>
+      <div
+        class="border px-4 py-3 mb-4 rounded relative"
+        [ngClass]="service_requestStatusClassBox"
+        role="alert"
+      >
+        <strong class="font-bold mr-3">
+          {{ service_request.status }}
+        </strong>
+      </div>
+      <button
+        *ngIf="isServiceRequestUserOrMechanic"
+        type="button"
+        class="btn-primary-1 mb-3"
+        [disabled]="loading"
+        (click)="showDetails = !showDetails"
+      >
+        {{ showDetails ? 'Hide' : 'Show' }} Details
+      </button>
+      
+      <div *ngIf="showDetails" class="border-t border-gray-300 py-3 my-3">
+        <p class="mb-3">
+          <strong>ServiceRequest Created</strong><br/>
+          {{ service_request.created_at | date : 'MMM d, y - h:mm a' }}<br/>
+          <small>{{ service_request.created_at | timeAgo }}</small>
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3 mb-4">
+          <div class="w-full sm:w-1/2">
+            <p class="mb-3">
+              <strong>Info</strong><br/>
+            </p>
+            <p class="mb-3">
+              <span class="text-sm">Make: {{ service_request.make }}</span><br/>
+              <span class="text-sm">Model: {{ service_request.model }}</span><br/>
+              <span class="text-sm">Year: {{ service_request.year }}</span><br/>
+              <span class="text-sm">Type: {{ service_request.type }}</span><br/>
+              <span class="text-sm">Trim: {{ service_request.trim }}</span>
+            </p>
+            <p class="mb-3">
+              <span class="text-sm">Service Category: {{ service_request.service_category }}</span><br/>
+              <span class="text-sm">Service Type: {{ service_request.service_type }}</span><br/>
+              <span class="text-sm">Service Action: {{ service_request.service_action }}</span>
+            </p>
+          </div>
+
+          <div class="w-full sm:w-1/2">
+            <p class="mb-3">
+              Payout: ${{ service_request.payout | number }}<br/>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="" *ngIf="isServiceRequestUser && !service_request.mechanic_id">
+      <button
+        type="button"
+        class="btn-danger-1 mr-3"
+        (click)="deleteServiceRequest()"
+        [disabled]="loading"
+      >
+        Delete
+      </button>
+
+      <button
+        type="button"
+        class="btn-primary-1"
+        (click)="isEditing = !isEditing"
+        [disabled]="loading"
+      >
+        {{ isEditing ? 'Cancel Edit' : 'Edit' }}
+      </button>
+    </div>
+  
+    <div class="border-t border-gray-300 py-3 my-3" *ngIf="service_request.mechanic && showDetails">
+      <p class="text-3xl mb-5">Mechanic</p>
+  
+      <div class="flex flex-row gap-3 mb-4">
+        <div class="w-12 h-12 rounded-full" [bgImgCover]="service_request.mechanic!.user!.icon_link || './assets/img/anon.png'"></div>
+        <div class="grow">
+          <h3 class="text-2xl">{{ service_request.mechanic!.user!.displayname }}</h3>
+          <p class="text-gray-400 italic">
+            <a [routerLink]="['/', 'users', service_request.mechanic_id, 'home']">@{{ service_request.mechanic!.user!.username }}</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <div class="w-full sm:w-1/2">
+          <p>
+            <strong>Status</strong>
+            <br/>
+            <small>
+              Work Started: 
+              {{
+                !service_request.datetime_work_started 
+                ? 'no' 
+                : 'yes, at: ' + (service_request.datetime_work_started | date : 'MMM d, y - h:mm a') + ' (' + (service_request.datetime_work_started | timeAgo) + ')'
+              }}
+            </small>
+            <br/>
+            <small>
+              Work Finished: 
+              {{
+                !service_request.datetime_work_finished 
+                ? 'no' 
+                : 'yes, at: ' + (service_request.datetime_work_finished | date : 'MMM d, y - h:mm a') + ' (' + (service_request.datetime_work_finished | timeAgo) + ')'
+              }}
+            </small>
+            <br/>
+          </p>
+        </div>
+      </div>
+  
+  
+    </div>
+  
+    <div class="border-t border-gray-300 py-3 my-3" *ngIf="isServiceRequestUser && !service_request.datetime_work_started && isEditing">
+      <div class="mt-4">
+        <carmaster-service-request-form
+          [isEditing]="isEditing"
+          [service_request]="service_request"
+          (formSubmit)="onSubmitEditServiceRequest($event)"
+        ></carmaster-service-request-form>
+      </div>
+    </div>
+  
+    <div class="border-t border-gray-300 py-3 my-3" *ngIf="showDetails && (isServiceRequestUserOrMechanic) && !!service_request.mechanic_id">
+      <div class="">
+        <p class="text-3xl mb-3">
+          Messages
+        </p>
+
+        <button
+          type="button"
+          class="btn-primary-1 inline-block mb-3"
+          (click)="showMessages = !showMessages"
+        >
+          {{ showMessages ? 'Hide Messages' : 'Show Messages' }}
+        </button>
+      </div>
+  
+      <div *ngIf="showMessages">
+        <div>
+          <!-- <div class="messages-item transition" *ngIf="!messages_list_end">
+            <button
+              (click)="getMessages()"
+              title="Load more"
+              class="btn-primary-1 btn-primary-1-small btn-primary-1-primary"
+              [disabled]="loading"
+            >
+              <i class="fas fa-sync"></i>
+              Load More
+            </button>
+          </div> -->
+    
+          <div class="messages-item transition" *ngFor="let m of service_request.mechanic_service_request_messages">
+            <div class="messages-item-inner">
+              <div class="user-icon-container-{{ m.user!.id === you!.id ? 'right' : 'left' }}">
+                <img
+                  class="user-icon-circle"
+                  [src]="(m.user!.icon_link) || './assets/img/anon.png'"
+                />
+              </div>
+              <div class="message-text-{{ m.user!.id === you!.id ? 'right' : 'left' }}">
+                <p>
+                  <a [routerLink]="['/', 'modern', 'users', m.user!.id, 'home']">
+                   {{ m.user!.firstname + ' ' + m.user!.lastname }}
+                  </a>
+                  <br/>
+                  <span class="lead" [innerHTML]="m.body"></span>
+                  <br/>
+                  <small class="text-grey">
+                    <em>{{ m.created_at | date : 'MMM d, y (h:mm a)' }}</em>
+                  </small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <form *ngIf="!service_request.datetime_completed && isServiceRequestUserOrMechanic" class="well" [formGroup]="messageForm" (ngSubmit)="sendServiceRequestMessage()">
+          <div class="uk-margin">
+            <span class="label-info">
+              Body ({{ messageForm.value.body.length }}/{{ MSG_MAX_LENGTH }})
+            </span>
+            <textarea
+              type="text"
+              class="input-text-1"
+              placeholder="Enter message..."
+              rows="3"
+              formControlName="body"
+            ></textarea>
+          </div>
+          <div>
+            <button
+              type="submit"
+              title="Message this user"
+              class="btn-primary-1"
+              [disabled]="loading || messageForm.invalid"
+            >
+              <i class="fas fa-paper-plane"></i>
+              Submit
+            </button>
+          </div>
+        </form>
+
+        <button
+          type="button"
+          class="btn-primary-1 inline-block mt-3"
+          (click)="showMessages = !showMessages"
+        >
+          {{ showMessages ? 'Hide Messages' : 'Show Messages' }}
+        </button>
+      </div>
+    </div>
+  
+    <div class="border-t border-gray-300 py-3 my-3" *ngIf="showDetails && isServiceRequestUserOrMechanic && !service_request.datetime_completed && !!service_request.datetime_work_finished">
+      <!-- <a class="btn-primary-1 btn-primary-1-text" (click)="payMechanic()">Pay Mechanic</a> -->
+  
+      <!-- <button
+        type="button"
+        class="btn-primary-1"
+        [disabled]="loading"
+        (click)="markServiceRequestAsCompleted()"
+      >
+        Mark as Paid and Complete
+      </button> -->
+  
+      <button
+        type="button"
+        class="btn-primary-1"
+        [disabled]="loading"
+        (click)="payMechanic()"
+      >
+        Pay Mechanic
+      </button>
+  
+      
+    </div>
+
+    <!--  
+      https://stackoverflow.com/questions/38816157/content-projection-with-ngif-not-work-fine
+    -->
+    <!-- <div *ngIf="showEmbeddedContent" class="border-t border-gray-300 py-3 my-3 embedded-content">
+      <ng-content></ng-content>
+    </div> -->
+
+    <div *ngIf="showEmbeddedContent" class="border-t border-gray-300 py-3 my-3 embedded-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+</div>

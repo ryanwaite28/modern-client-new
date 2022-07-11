@@ -111,7 +111,6 @@ export interface IMechanicService extends ICommonModel {
   service_action: string,
   description: string,
   cost: number,
-  deposit: number,
 
   mechanic?: IMechanic,
   expertise?: IMechanicExpertise,
@@ -143,22 +142,21 @@ export interface IMechanicServiceRequest extends ICommonModel {
   description: string,
   payout: number,
   notes: string,
-  deposit_paid: boolean,
-  deposit_refunded: boolean,
-  deposit_payment_intent_id: string,
-  deposit_refund_id: string,
 
   datetime_needed: string,
   datetime_canceled: string,
   datetime_accepted: string,
   datetime_declined: string,
   datetime_completed: string,
+  datetime_work_started: string,
+  datetime_work_finished: string,
   status: string,
   
   user?: IUser,
   mechanic?: IMechanic,
   service?: IMechanicService,
-  mechanic_service_request_offers?: IMechanicServiceRequestOffer[];
+  mechanic_service_request_offers?: IMechanicServiceRequestOffer[],
+  mechanic_service_request_messages?: IMechanicServiceRequestMessage[],
 }
 
 export interface IMechanicServiceRequestOffer {

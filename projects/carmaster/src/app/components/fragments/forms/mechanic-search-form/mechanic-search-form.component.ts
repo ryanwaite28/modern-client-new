@@ -24,7 +24,6 @@ const default_form_config = [
   { field: 'service_type', defaultValue: '', validations: [] },
   { field: 'service_action', defaultValue: '', validations: [] },
   { field: 'cost', defaultValue: 0, validations: [] },
-  { field: 'deposit', defaultValue: 0, validations: [] },
   
   // location radius
   { field: 'radius', defaultValue: 20, validations: [] },

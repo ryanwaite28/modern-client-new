@@ -1,0 +1,16 @@
+<div>
+  <div class="card-box-1">
+    <div class="">
+      <h3 class="text-3xl">Your Service Requests</h3>
+    </div>
+  </div>
+
+
+  <div>
+    <carmaster-service-request-card
+      *ngFor="let service_request of service_requests"
+      [service_request]="service_request"
+    >
+    </carmaster-service-request-card>
+  </div>
+</div>

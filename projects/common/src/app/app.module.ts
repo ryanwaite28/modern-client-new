@@ -46,6 +46,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModalOverlayComponent } from './components/modal-overlay/modal-overlay.component';
 import { CommonAlertsFragmentComponent } from './components/alerts-fragment/alerts-fragment.component';
 import { BackgroundImageCoverDirective } from './directives/background-image-cover.directive';
 import { UserProfileCardComponent } from './components/user-profile-card/user-profile-card.component';
@@ -59,11 +60,12 @@ import { PayoutPipe } from './pipes/payout.pipe';
     StripeAmountFormatterPipe,
     TimeAgoPipe,
     UserFullNamePipe,
+    PayoutPipe,
 
     CommonAlertsFragmentComponent,
     BackgroundImageCoverDirective,
     UserProfileCardComponent,
-    PayoutPipe,
+    CommonModalOverlayComponent
   ],
   imports: [
     BrowserModule,
@@ -148,6 +150,7 @@ import { PayoutPipe } from './pipes/payout.pipe';
 
     CommonAlertsFragmentComponent,
     UserProfileCardComponent,
+    CommonModalOverlayComponent,
     BackgroundImageCoverDirective,
   ],
   providers: [

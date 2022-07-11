@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import { IUserField } from 'projects/common/src/app/interfaces/user-field.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { IUserSubscriptionInfo } from 'projects/common/src/app/interfaces/_common.interface';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
+import { CarmasterService } from '../../../services/carmaster.service';
 
 @Component({
   selector: 'carmaster-user-page',
@@ -28,6 +29,7 @@ export class UserPageComponent implements OnInit {
 
   constructor(
     private userStore: UserStoreService,
+    private carmasterService: CarmasterService,
     private userService: UsersService,
     private router: Router,
     private route: ActivatedRoute,
@@ -39,9 +41,17 @@ export class UserPageComponent implements OnInit {
     });
 
     this.route.data.subscribe((data) => {
-      console.log(data);
-      this.user = data['user'];
-      this.user_subscription_info = data['user_subscription_info'];
+      this.handleRouteData(data);
     });
+  }
+  
+  handleRouteData(data: Data) {
+    console.log(data);
+    this.user = data['user'];
+    this.user_subscription_info = data['user_subscription_info'];
+
+    if (!this.user) {
+      return;
+    }
   }
 }

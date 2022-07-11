@@ -108,6 +108,10 @@ export class DeliveryService {
     return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/mark-delivery-as-dropped-off/${delivery_id}`, `POST`);
   }
 
+  add_delivered_picture<T = any>(you_id: number, delivery_id: number, data: FormData) {
+    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/add-delivered-picture/${delivery_id}`, `POST`, data);
+  }
+
   markDeliveryAsReturned<T = any>(you_id: number, delivery_id: number) {
     return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/mark-delivery-as-returned/${delivery_id}`, `POST`);
   }

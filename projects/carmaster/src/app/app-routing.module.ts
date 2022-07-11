@@ -17,6 +17,8 @@ import { WelcomeComponent } from './components/pages/welcome/welcome.component';
 import { MechanicProfileResolver } from './resolvers/mechanic-profile.resolver';
 import { ServiceRequestSearchComponent } from './components/pages/search-page/service-request-search/service-request-search.component';
 import { IsMechanicGuard } from './guards/is-mechanic.guard';
+import { UserServiceRequestsComponent } from './components/pages/user-page/user-service-requests/user-service-requests.component';
+import { MechanicServiceRequestsComponent } from './components/pages/user-page/mechanic-service-requests/mechanic-service-requests.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
@@ -46,6 +48,7 @@ const routes: Routes = [
     component: CreateServiceRequestComponent,
     canActivate: [SignedInGuard]
   },
+  
   {
     path: 'users/:user_id',
     component: UserPageComponent,
@@ -56,13 +59,17 @@ const routes: Routes = [
     },
     data: { authParamsProp: 'user_id' },
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'mechanic-profile' },
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
   
       { path: 'home', component: HomePageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
       { path: 'mechanic-profile', component: MechanicProfilePageComponent },
+
       // { path: 'settings', component: SettingsPageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
+
       { path: 'notifications', component: UserNotificationsFragmentComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
       { path: 'messages', component: UserMessagesFragmentComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
+      { path: 'user-service-requests', component: UserServiceRequestsComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
+      { path: 'mechanic-service-requests', component: MechanicServiceRequestsComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
     ]
   }
 ];

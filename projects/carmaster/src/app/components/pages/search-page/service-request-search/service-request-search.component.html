@@ -13,11 +13,90 @@
     </div>
 
 
-    <div class="flex flex-col sm:flex-row gap-3 card-box" *ngFor="let service_request of service_requests">
+    <div  >
 
-      <div class="h-auto w-full sm:w-96" [bgImgCover]="service_request.user!.icon_link || './assets/img/anon.png'" [height]="'400px'"></div>
+      <carmaster-service-request-card
+        *ngFor="let service_request of service_requests"
+        [service_request]="service_request"
+        [showEmbeddedContent]="true"
+      >
+        <div>
+          <div class="flex flex-col sm:flex-row gap-3 mb-4">
+            <div class="w-full sm:w-1/2">
+              <p class="mb-3 text-xl">
+                <strong>Info</strong><br/>
+              </p>
+
+              <div class="flex flex-col sm:flex-row gap-3">
+                <div class="w-full md:w-1/2">
+                  <p class="mb-3">
+                    <span class="text-sm"><span class="font-bold">Make:</span> {{ service_request.make }}</span><br/>
+                    <span class="text-sm"><span class="font-bold">Model:</span> {{ service_request.model }}</span><br/>
+                    <span class="text-sm"><span class="font-bold">Year:</span> {{ service_request.year }}</span><br/>
+                    <span class="text-sm"><span class="font-bold">Type:</span> {{ service_request.type }}</span><br/>
+                    <span class="text-sm"><span class="font-bold">Trim:</span> {{ service_request.trim }}</span>
+                  </p>
+                </div>
+
+                <div class="w-full md:w-1/2">
+                  <p class="mb-3">
+                    <span class="text-sm"><span class="font-bold">Service Category:</span> {{ service_request.service_category }}</span><br/>
+                    <span class="text-sm"><span class="font-bold">Service Type:</span> {{ service_request.service_type }}</span><br/>
+                    <span class="text-sm"><span class="font-bold">Service Action:</span> {{ service_request.service_action }}</span>
+                  </p>
+                  <p class="mb-3">
+                    <span class="font-bold">Payout:</span> ${{ service_request.payout | number }}<br/>
+                  </p>
+                </div>
+              </div>
+            </div>
+  
+            <div class="w-full sm:w-1/2">
+              <form class="mb-3" *ngIf="!!you" [formGroup]="messageFormsByUserId[service_request.user_id]" (ngSubmit)="sendMessageToUser(service_request.user!)">
+                <p class="text-2xl">Send a message</p>
+                <div class="uk-margin">
+                  <span class="label-info">
+                    Body ({{ messageFormsByUserId[service_request.user_id].controls['body'].value.length }}/{{ MSG_MAX_LENGTH }})
+                  </span>
+                  <textarea
+                    type="text"
+                    class="input-text-1"
+                    placeholder="Enter message..."
+                    rows="3"
+                    formControlName="body"
+                  ></textarea>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    title="Message this user"
+                    class="btn-primary-1"
+                    [disabled]="loading || messageFormsByUserId[service_request.user_id].invalid"
+                  >
+                    <i class="fas fa-paper-plane"></i>
+                    Submit
+                  </button>
+                </div>
+              </form>
+
+              <div>
+                <!-- <button
+                  type="submit"
+                  title="Message this user"
+                  class="btn-primary-1"
+                  [disabled]="loading || messageFormsByUserId[service_request.user_id].invalid"
+                >
+                  <i class="fas fa-paper-plane"></i>
+                  Submit
+                </button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </carmaster-service-request-card>
       
-      <div class="p-4 h-auto grow flex flex-col justify-between">
+      <!-- <div class="p-4 h-auto grow flex flex-col justify-between">
         <div class="flex flex-col sm:flex-row gap-3">
           <div class="w-full sm:w-1/2">
             <h1 class="text-gray-900 font-bold text-4xl leading-8 my-1">{{ service_request.user!.displayname }}</h1>
@@ -59,34 +138,9 @@
         </div>
 
         <div>
-          <form *ngIf="!!you" [formGroup]="messageFormsByUserId[service_request.user_id]" (ngSubmit)="sendMessageToUser(service_request.user!)">
-            <p class="text-2xl">Send a message</p>
-            <div class="uk-margin">
-              <span class="label-info">
-                Body ({{ messageFormsByUserId[service_request.user_id].controls['body'].value.length }}/{{ MSG_MAX_LENGTH }})
-              </span>
-              <textarea
-                type="text"
-                class="input-text-1"
-                placeholder="Enter message..."
-                rows="3"
-                formControlName="body"
-              ></textarea>
-            </div>
-            <div>
-              <button
-                type="submit"
-                title="Message this user"
-                class="btn-primary-1"
-                [disabled]="loading || messageFormsByUserId[service_request.user_id].invalid"
-              >
-                <i class="fas fa-paper-plane"></i>
-                Submit
-              </button>
-            </div>
-          </form>
+          
         </div>
-      </div>
+      </div> -->
 
     </div>
   </div>

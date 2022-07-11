@@ -37,6 +37,9 @@ import { SearchPageComponent } from './components/pages/search-page/search-page.
 import { ServiceRequestSearchComponent } from './components/pages/search-page/service-request-search/service-request-search.component';
 import { ServiceRequestSearchFormComponent } from './components/fragments/forms/service-request-search-form/service-request-search-form.component';
 import { ServiceRequestFormComponent } from './components/fragments/forms/service-request-form/service-request-form.component';
+import { UserServiceRequestsComponent } from './components/pages/user-page/user-service-requests/user-service-requests.component';
+import { MechanicServiceRequestsComponent } from './components/pages/user-page/mechanic-service-requests/mechanic-service-requests.component';
+import { ServiceRequestCardComponent } from './components/fragments/service-request-card/service-request-card.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +74,9 @@ import { ServiceRequestFormComponent } from './components/fragments/forms/servic
     SearchPageComponent,
     ServiceRequestSearchComponent,
     ServiceRequestFormComponent,
+    UserServiceRequestsComponent,
+    MechanicServiceRequestsComponent,
+    ServiceRequestCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,7 +11,6 @@ const default_form_config = [
   { field: 'service_action', defaultValue: '', validations: [Validators.required] },
   { field: 'description', defaultValue: '', validations: [] },
   { field: 'cost', defaultValue: 0, validations: [] },
-  { field: 'deposit', defaultValue: 0, validations: [] },
 ];
 
 @Component({
