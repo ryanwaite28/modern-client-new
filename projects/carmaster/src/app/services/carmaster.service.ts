@@ -9,7 +9,7 @@ import { SocketEventsService } from 'projects/common/src/app/services/socket-eve
 import { get_user_records_endpoint } from 'projects/common/src/app/_misc/chamber';
 import { catchError, filter, map, of, Subject, Subscription, take } from 'rxjs';
 import { CARMASTER_EVENT_TYPES } from '../enums/car-master.enum';
-import { IMechanic } from '../interfaces/carmaster.interface';
+import { IMechanic, IMechanicServiceRequestOffer } from '../interfaces/carmaster.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -163,7 +163,7 @@ export class CarmasterService {
   }
 
   update_service_request(you_id: number, service_request_id: number, data: any) {
-    const endpoint = `/carmaster/users/${you_id}/service-request/${service_request_id}`;
+    const endpoint = `/carmaster/users/${you_id}/service-requests/${service_request_id}`;
     return this.clientService.sendRequest<any>(endpoint, `PUT`, data).pipe(
       map((response) => {
         return response;
@@ -172,7 +172,7 @@ export class CarmasterService {
   }
 
   deleteservice_request(you_id: number, service_request_id: number) {
-    const endpoint = `/carmaster/users/${you_id}/service-request/${service_request_id}`;
+    const endpoint = `/carmaster/users/${you_id}/service-requests/${service_request_id}`;
     return this.clientService.sendRequest<any>(endpoint, `DELETE`).pipe(
       map((response) => {
         return response;
@@ -198,7 +198,7 @@ export class CarmasterService {
 
   get_mechanic_by_id(mechanic_id: number) {
     const endpoint = `/carmaster/mechanics/${mechanic_id}`;
-    return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
+    return this.clientService.sendRequest<IMechanic | null>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
       })
@@ -207,7 +207,7 @@ export class CarmasterService {
 
   get_mechanic_by_user_id(user_id: number) {
     const endpoint = `/carmaster/mechanics/by-user-id/${user_id}`;
-    return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
+    return this.clientService.sendRequest<IMechanic | null>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
       })
@@ -471,8 +471,76 @@ export class CarmasterService {
 
   // service requests
 
+  mechanic_check_service_request_offer(mechanic_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-requests/${service_request_id}/check-offer`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
+      map((response) => {
+        return response;
+      }) 
+    );
+  }
+
+  send_service_request_offer(mechanic_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-requests/${service_request_id}/send-offer`;
+    return this.clientService.sendRequest<IMechanicServiceRequestOffer>(endpoint, `POST`).pipe(
+      map((response) => {
+        return response;
+      }) 
+    );
+  }
+
+  cancel_service_request_offer(mechanic_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-requests/${service_request_id}/cancel-offer`;
+    return this.clientService.sendRequest<any>(endpoint, `DELETE`).pipe(
+      map((response) => {
+        return response;
+      }) 
+    );
+  }
+
+  decline_service_request_offer(you_id: number, service_request_id: number, service_request_offer_id: number) {
+    const endpoint = `/carmaster/users/${you_id}/service-requests/${service_request_id}/offer/${service_request_offer_id}/decline`;
+    return this.clientService.sendRequest<any>(endpoint, `DELETE`).pipe(
+      map((response) => {
+        return response;
+      }) 
+    );
+  }
+
+  accept_service_request_offer(you_id: number, service_request_id: number, service_request_offer_id: number) {
+    const endpoint = `/carmaster/users/${you_id}/service-requests/${service_request_id}/offer/${service_request_offer_id}/accept`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
+      map((response) => {
+        return response;
+      }) 
+    );
+  }
+
+
+
+  service_request_user_canceled(you_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/users/${you_id}/service-requests/${service_request_id}/cancel`;
+    return this.clientService.sendRequest<any>(endpoint, `DELETE`).pipe(
+      map((response) => {
+        return response;
+      }) 
+    );
+  }
+
+  service_request_mechanic_canceled(mechanic_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-requests/${service_request_id}/cancel`;
+    return this.clientService.sendRequest<any>(endpoint, `DELETE`).pipe(
+      map((response) => {
+        return response;
+      }) 
+    );
+  }
+
+
+
+
   send_service_request_message(you_id: number, service_request_id: number, data: any) {
-    const endpoint = `/carmaster/users/${you_id}/service-request/${service_request_id}/message`;
+    const endpoint = `/carmaster/users/${you_id}/service-requests/${service_request_id}/message`;
     return this.clientService.sendRequest<any>(endpoint, `POST`, data).pipe(
       map((response) => {
         return response;
@@ -480,18 +548,9 @@ export class CarmasterService {
     );
   }
 
-  pay_mechanic(you_id: number, service_request_id: number) {
-    const endpoint = `/carmaster/users/${you_id}/service-request/${service_request_id}/pay-mechanic`;
-    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
-      map((response) => {
-        return response;
-      })
-    );
-  }
-
   mark_service_request_as_work_started(mechanic_id: number, service_request_id: number) {
-    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-request/${service_request_id}/work-started`;
-    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-requests/${service_request_id}/work-started`;
+    return this.clientService.sendRequest<any>(endpoint, `PUT`).pipe(
       map((response) => {
         return response;
       })
@@ -499,7 +558,34 @@ export class CarmasterService {
   }
 
   mark_service_request_as_work_finished(mechanic_id: number, service_request_id: number) {
-    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-request/${service_request_id}/work-finished`;
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-requests/${service_request_id}/work-finished`;
+    return this.clientService.sendRequest<any>(endpoint, `PUT`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  add_work_finished_picture(mechanic_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-requests/${service_request_id}/add-work-finished-picture`;
+    return this.clientService.sendRequest<any>(endpoint, `PUT`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  pay_mechanic(you_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/users/${you_id}/service-requests/${service_request_id}/pay-mechanic`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  mechanic_self_pay(mechanic_id: number, service_request_id: number) {
+    const endpoint = `/carmaster/mechanics/${mechanic_id}/service-requests/${service_request_id}/self-pay`;
     return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
       map((response) => {
         return response;

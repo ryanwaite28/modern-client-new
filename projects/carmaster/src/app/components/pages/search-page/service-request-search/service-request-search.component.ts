@@ -1,14 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { COMMON_STATUSES } from 'projects/common/src/app/enums/all.enums';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { IFormSubmitEvent } from 'projects/common/src/app/interfaces/_common.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
-import { finalize } from 'rxjs';
-import { IMechanicServiceRequest } from '../../../../interfaces/carmaster.interface';
+import { combineLatest, finalize, map, mergeMap } from 'rxjs';
+import { IMechanic, IMechanicServiceRequest, IMechanicServiceRequestOffer } from '../../../../interfaces/carmaster.interface';
 import { CarmasterService } from '../../../../services/carmaster.service';
 
 @Component({
@@ -18,6 +20,7 @@ import { CarmasterService } from '../../../../services/carmaster.service';
 })
 export class ServiceRequestSearchComponent implements OnInit {
   you: IUser | null = null;
+  mechanic_profile: IMechanic | null = null;
   loading = false;
   service_requests: IMechanicServiceRequest[] = [];
   is_subscription_active = false;
@@ -25,18 +28,31 @@ export class ServiceRequestSearchComponent implements OnInit {
   MSG_MAX_LENGTH = 1000;
   messageFormsByUserId: PlainObject<FormGroup> = {};
 
+  offerByServiceRequestId: PlainObject<IMechanicServiceRequestOffer | undefined> = {};
+
   constructor(
     private userStore: UserStoreService,
     private userService: UsersService,
     private carmasterService: CarmasterService,
     private alertService: AlertService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.userStore.getChangesObs().subscribe({
-      next: (you) => {
-        this.you = you;
-        this.is_subscription_active = this.userService.getHasPlatformSubscription(); 
+    combineLatest([
+      this.userStore.getChangesObs()
+    ])
+    .pipe(mergeMap((values) => {
+      this.you = values[0];
+      this.is_subscription_active = this.userService.getHasPlatformSubscription(); 
+      return this.carmasterService.get_mechanic_by_user_id(this.you!.id)
+    }))
+    .pipe(map((response) => {
+      this.mechanic_profile = response.data || null;
+    }))
+    .subscribe({
+      next: () => {
+        console.log(this);
       }
     });
   }
@@ -53,9 +69,11 @@ export class ServiceRequestSearchComponent implements OnInit {
           return;
         }
 
-        this.messageFormsByUserId = {};
+        const messageFormsByUserId: PlainObject<FormGroup> = {};
         for (const service_request of this.service_requests) {
-          this.messageFormsByUserId[service_request.user_id] = new FormGroup({
+          const yourOffer = service_request.service_request_offers!.find(offer => offer.mechanic!.user_id === this.you!.id && offer.status === COMMON_STATUSES.PENDING);
+          this.offerByServiceRequestId[service_request.id] = yourOffer;
+          messageFormsByUserId[service_request.user_id] = new FormGroup({
             sendText: new FormControl(false, []),
             body: new FormControl('', [
               Validators.required,
@@ -64,6 +82,10 @@ export class ServiceRequestSearchComponent implements OnInit {
             ])
           });
         }
+
+        this.messageFormsByUserId = messageFormsByUserId;
+
+        console.log(response, this);
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.handleResponseErrorGeneric(error);
@@ -84,6 +106,37 @@ export class ServiceRequestSearchComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.alertService.handleResponseErrorGeneric(error);
+      }
+    });
+  }
+
+  sendOffer(service_request: IMechanicServiceRequest) {
+    this.loading = true;
+    this.carmasterService.send_service_request_offer(this.mechanic_profile!.id, service_request.id)
+    .pipe(finalize(() => { this.loading = false; }))
+    .subscribe({
+      next: (response) => {
+        this.alertService.handleResponseSuccessGeneric(response);
+        if (response.data) {
+          service_request.service_request_offers!.push(response.data);
+          this.offerByServiceRequestId[service_request.id] = response.data;
+        }
+      }
+    });
+  }
+
+  cancelOffer(service_request: IMechanicServiceRequest) {
+    this.loading = true;
+    this.carmasterService.cancel_service_request_offer(this.mechanic_profile!.id, service_request.id)
+    .pipe(finalize(() => { this.loading = false; }))
+    .subscribe({
+      next: (response) => {
+        this.alertService.handleResponseSuccessGeneric(response);
+        if (response.data) {
+          const yourOffer = service_request.service_request_offers!.find(offer => offer.mechanic!.user_id === this.you!.id && offer.status === COMMON_STATUSES.PENDING);
+          yourOffer && (yourOffer.status = COMMON_STATUSES.CANCELED);
+          this.offerByServiceRequestId[service_request.id] = undefined;
+        }
       }
     });
   }

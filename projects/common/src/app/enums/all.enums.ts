@@ -249,3 +249,11 @@ export enum ReplyModel {
   LINK = 'LINK',
   RECIPE = 'RECIPE',
 }
+
+export const COMMON_STATUSES =  Object.freeze({
+  PENDING: `PENDING`,
+  CANCELED: `CANCELED`,
+  ACCEPTED: `ACCEPTED`,
+  DECLINED: `DECLINED`,
+  OPEN: `OPEN`,
+});

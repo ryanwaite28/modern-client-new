@@ -52,7 +52,7 @@
             </div>
   
             <div class="w-full sm:w-1/2">
-              <form class="mb-3" *ngIf="!!you" [formGroup]="messageFormsByUserId[service_request.user_id]" (ngSubmit)="sendMessageToUser(service_request.user!)">
+              <form class="mb-3" *ngIf="!!you && !!messageFormsByUserId[service_request.user_id]" [formGroup]="messageFormsByUserId[service_request.user_id]" (ngSubmit)="sendMessageToUser(service_request.user!)">
                 <p class="text-2xl">Send a message</p>
                 <div class="uk-margin">
                   <span class="label-info">
@@ -80,15 +80,29 @@
               </form>
 
               <div>
-                <!-- <button
-                  type="submit"
+                <button
+                  *ngIf="!offerByServiceRequestId[service_request.id]"
+                  type="button"
                   title="Message this user"
                   class="btn-primary-1"
-                  [disabled]="loading || messageFormsByUserId[service_request.user_id].invalid"
+                  [disabled]="loading"
+                  (click)="sendOffer(service_request)"
                 >
-                  <i class="fas fa-paper-plane"></i>
-                  Submit
-                </button> -->
+                  <!-- <i class="fas fa-paper-plane"></i> -->
+                  Send offer for job
+                </button>
+
+                <button
+                  *ngIf="!!offerByServiceRequestId[service_request.id]"
+                  type="button"
+                  title="Message this user"
+                  class="btn-primary-1"
+                  [disabled]="loading"
+                  (click)="cancelOffer(service_request)"
+                >
+                  <!-- <i class="fas fa-paper-plane"></i> -->
+                  Cancel offer for job
+                </button>
               </div>
             </div>
           </div>

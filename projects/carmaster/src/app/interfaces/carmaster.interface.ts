@@ -147,23 +147,27 @@ export interface IMechanicServiceRequest extends ICommonModel {
   datetime_canceled: string,
   datetime_accepted: string,
   datetime_declined: string,
-  datetime_completed: string,
   datetime_work_started: string,
   datetime_work_finished: string,
+  datetime_completed: string,
   status: string,
   
   user?: IUser,
   mechanic?: IMechanic,
   service?: IMechanicService,
-  mechanic_service_request_offers?: IMechanicServiceRequestOffer[],
-  mechanic_service_request_messages?: IMechanicServiceRequestMessage[],
+  service_request_offers?: IMechanicServiceRequestOffer[];
+  mechanic_service_request_messages?: IMechanicServiceRequestMessage[];
 }
 
-export interface IMechanicServiceRequestOffer {
+export interface IMechanicServiceRequestOffer extends ICommonModel {
   service_request_id: number,
+  service_request_user_id: number,
   mechanic_id: number,
   notes: string,
   status: string,
+
+  user?: IUser,
+  mechanic?: IMechanic,
 }
 
 export interface IMechanicServiceRequestMessage extends ICommonModel {
