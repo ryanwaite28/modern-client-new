@@ -34,7 +34,7 @@ export class IsMechanicGuard implements CanActivate {
                 const isMechanic = !!response.data;
                 console.log({ isMechanic });
                 if (!isMechanic) {
-                  this.alertService.showSuccessMessage(`Only mechanics can search for service requests. You can become a mechanic by creating a mechanic profile.`);
+                  this.alertService.showSuccessMessage(`Mechanic restricted. You can become a mechanic by creating a mechanic profile.`);
                 }
                 return isMechanic;
               })

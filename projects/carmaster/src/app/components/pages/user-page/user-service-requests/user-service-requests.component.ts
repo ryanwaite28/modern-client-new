@@ -1,16 +1,19 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CARMASTER_EVENT_TYPES } from 'projects/carmaster/src/app/enums/car-master.enum';
 import { IMechanicServiceRequest } from 'projects/carmaster/src/app/interfaces/carmaster.interface';
 import { CarmasterService } from 'projects/carmaster/src/app/services/carmaster.service';
+import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { IUserSubscriptionInfo } from 'projects/common/src/app/interfaces/_common.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { EnvironmentService } from 'projects/common/src/app/services/environment.service';
 import { GoogleMapsService } from 'projects/common/src/app/services/google-maps.service';
+import { SocketEventsService } from 'projects/common/src/app/services/socket-events.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
-import { combineLatest } from 'rxjs';
+import { combineLatest, finalize, Subscription } from 'rxjs';
 
 @Component({
   selector: 'carmaster-user-service-requests',
@@ -25,6 +28,7 @@ export class UserServiceRequestsComponent implements OnInit {
   service_requests: IMechanicServiceRequest[] = [];
   end_reached: boolean = false;
   initialized: boolean = false;
+  subsList: Subscription[] = [];
 
   get isYou(): boolean {
     const isYours = (
@@ -49,6 +53,7 @@ export class UserServiceRequestsComponent implements OnInit {
     private googleService: GoogleMapsService,
     private envService: EnvironmentService,
     private carmasterService: CarmasterService,
+    private socketEventsService: SocketEventsService,
   ) { }
 
   ngOnInit(): void {
@@ -67,10 +72,26 @@ export class UserServiceRequestsComponent implements OnInit {
         this.user_subscription_info = data['user_subscription_info'];
         if (!this.initialized) {
           this.initialized = true;
-          this.getServiceRequests();
+          this.init();
         }
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subsList.forEach(sub => sub.unsubscribe());
+  }
+  
+  init() {
+    this.subsList = [
+      this.socketEventsService.listenToObservableEventStream(MODERN_APPS.CARMASTER, CARMASTER_EVENT_TYPES.SERVICE_REQUEST_MECHANIC_CANCELED).subscribe({
+        next: (event) => {
+          const index = event.service_request_id ? this.service_requests.findIndex(service_request => service_request.id === event.service_request_id) : -1;
+          (index > -1) && this.service_requests.splice(index, 1);
+        }
+      }),
+    ];
+    this.getServiceRequests();
   }
 
   getServiceRequests() {
@@ -93,20 +114,26 @@ export class UserServiceRequestsComponent implements OnInit {
     });
   }
 
-  onDeleteServiceRequest(delivery: any) {
-    // this.loading = true;
-    // this.deliveryService.delete_delivery(delivery.id).subscribe({
-    //   next: (response: any) => {
-    //     this.alertService.handleResponseSuccessGeneric(response);
-    //     const index = this.deliveries.indexOf(delivery);
-    //     this.deliveries.splice(index, 1);
-    //     this.loading = false;
-    //     this.changeDetectorRef.detectChanges();
-    //   },
-    //   error: (error: HttpErrorResponse) => {
-    //     this.loading = false;
-    //     this.changeDetectorRef.detectChanges();
-    //   },
-    // });
+  onDeleteServiceRequest(service_request: IMechanicServiceRequest) {
+    const ask = window.confirm(
+      `Are you sure you want to delete this service request? This action cannot be undone.`
+    );
+    if (!ask) {
+      return;
+    }
+    
+    this.loading = true;
+    this.carmasterService.delete_service_request(this.you!.id, service_request.id)
+    .pipe(finalize(() => { this.loading = false; }))
+    .subscribe({
+      next: (response: any) => {
+        this.alertService.handleResponseSuccessGeneric(response);
+        const index = this.service_requests.indexOf(service_request);
+        this.service_requests.splice(index, 1);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.alertService.handleResponseErrorGeneric(error);
+      },
+    });
   }
 }

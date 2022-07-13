@@ -40,6 +40,9 @@ import { ServiceRequestFormComponent } from './components/fragments/forms/servic
 import { UserServiceRequestsComponent } from './components/pages/user-page/user-service-requests/user-service-requests.component';
 import { MechanicServiceRequestsComponent } from './components/pages/user-page/mechanic-service-requests/mechanic-service-requests.component';
 import { ServiceRequestCardComponent } from './components/fragments/service-request-card/service-request-card.component';
+import { MechanicPageComponent } from './components/pages/user-page/mechanic-page/mechanic-page.component';
+import { MechanicServiceRequestOffersPageComponent } from './components/pages/user-page/mechanic-service-request-offers-page/mechanic-service-request-offers-page.component';
+import { NotificationsPageComponent } from './components/pages/user-page/notifications-page/notifications-page.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +80,9 @@ import { ServiceRequestCardComponent } from './components/fragments/service-requ
     UserServiceRequestsComponent,
     MechanicServiceRequestsComponent,
     ServiceRequestCardComponent,
+    MechanicPageComponent,
+    MechanicServiceRequestOffersPageComponent,
+    NotificationsPageComponent,
   ],
   imports: [
     BrowserModule,

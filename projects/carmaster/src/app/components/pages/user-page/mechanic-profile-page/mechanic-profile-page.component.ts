@@ -50,6 +50,15 @@ export class MechanicProfilePageComponent implements OnInit, AfterViewInit {
     email: new FormControl('', []),
   });
 
+  showSectionsMap: PlainObject<boolean> = {
+    info: true,
+    fields: true,
+    credentials: true,
+    expertises: true,
+    services: true,
+    ratings: true,
+  };
+
   get isYou(): boolean {
     const isYours = (
       this.you && 
@@ -78,18 +87,19 @@ export class MechanicProfilePageComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     combineLatest([
       this.userStore.getChangesObs(),
-      this.route.parent!.data
+      this.route.parent!.parent!.data,
+      this.route.parent!.data,
     ]).subscribe({
       next: (values) => {
         console.log(values);
 
-        const [you, data] = values;
+        const [you, userParentData, mechanicParentData] = values;
         
         this.you = you;
 
-        this.user = data['user'];
-        this.user_subscription_info = data['user_subscription_info'];
-        this.mechanic_profile = data['mechanic_profile'];
+        this.user = userParentData['user'];
+        this.user_subscription_info = userParentData['user_subscription_info'];
+        this.mechanic_profile = mechanicParentData['mechanic_profile'];
 
         if (this.isYou && !!this.mechanic_profile) {
           this.profileForm.setValue({

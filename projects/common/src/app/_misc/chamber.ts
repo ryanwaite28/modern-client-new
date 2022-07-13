@@ -102,17 +102,37 @@ export function clone<T>  (obj: any): T  {
 
 export function get_user_records_endpoint(
   user_id: number,
-  app: MODERN_APPS,
-  path: USER_RECORDS,
+  micro_app: MODERN_APPS | string,
+  path: USER_RECORDS | string,
   min_id?: number,
   get_all: boolean = false,
   is_public: boolean = true
 ) {
+  const app = micro_app.toLowerCase();
   const partial_prefix = is_public ? '/get-' : '/';
   const endpoint = get_all
     ? '/' + app + '/users/' + user_id + partial_prefix + path + '/all'
     : min_id
       ? '/' + app + '/users/' + user_id + `${partial_prefix}` + path + '/' + min_id
       : '/' + app + '/users/' + user_id + `${partial_prefix}` + path;
+  return endpoint;
+}
+
+export function get_user_app_notifications_endpoint(
+  user_id: number,
+  micro_app: MODERN_APPS | string,
+  path: USER_RECORDS | string,
+  min_id?: number,
+  get_all: boolean = false,
+  is_public: boolean = true
+) {
+  const app = micro_app.toLowerCase();
+  const partial_prefix = is_public ? '/get-' : '/';
+  
+  const endpoint = get_all
+    ? '/common/users/' + user_id + partial_prefix + path + '/app/' + app + '/all'
+    : min_id
+      ? '/common/users/' + user_id + partial_prefix + path + '/app/' + app + '/' + min_id
+      : '/common/users/' + user_id + partial_prefix + path + '/app/' + app;
   return endpoint;
 }

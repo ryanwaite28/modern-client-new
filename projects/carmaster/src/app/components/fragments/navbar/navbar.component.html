@@ -14,7 +14,7 @@
     <div class="hidden lg:relative flex-grow lg:flex lg:items-center lg:w-auto text-[color:white]">
       <div class="text-sm lg:flex-grow">
         <ng-container *ngFor="let link of links">
-          <a *ngIf="link.href" [routerLink]="link.href" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 cursor-pointer">
+          <a *ngIf="link.href" [routerLink]="link.href" routerLinkActive="active-link" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 cursor-pointer">
             {{ link.text }}
           </a>
 
@@ -28,7 +28,7 @@
     <div class="w-full block flex-grow lg:hidden text-[color:white]" *ngIf="showMobileNav">
       <div class="text-sm lg:flex-grow">
         <ng-container *ngFor="let link of links">
-          <a *ngIf="link.href" [routerLink]="link.href" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 cursor-pointer">
+          <a *ngIf="link.href" [routerLink]="link.href" routerLinkActive="active-link" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 cursor-pointer">
             {{ link.text }}
           </a>
 

@@ -1,0 +1,101 @@
+<div>
+  <div class="card-box-1 mb-3" *ngIf="!service_request_offers.length">
+    <div class="">
+      <h3 class="text-3xl">None</h3>
+    </div>
+  </div>
+  
+  <div>
+    <carmaster-service-request-card
+      *ngFor="let service_request_offer of service_request_offers"
+      [service_request]="service_request_offer.service_request!"
+      [showEmbeddedContent]="true"
+    >
+      <div>
+        <div class="flex flex-col sm:flex-row gap-3 mb-4">
+          <div class="w-full sm:w-1/2">
+            <p class="mb-3 text-xl">
+              <strong>Info</strong><br/>
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <div class="w-full md:w-1/2">
+                <p class="mb-3">
+                  <span class="text-sm"><span class="font-bold">Make:</span> {{ service_request_offer.service_request!.make }}</span><br/>
+                  <span class="text-sm"><span class="font-bold">Model:</span> {{ service_request_offer.service_request!.model }}</span><br/>
+                  <span class="text-sm"><span class="font-bold">Year:</span> {{ service_request_offer.service_request!.year }}</span><br/>
+                  <span class="text-sm"><span class="font-bold">Type:</span> {{ service_request_offer.service_request!.type }}</span><br/>
+                  <span class="text-sm"><span class="font-bold">Trim:</span> {{ service_request_offer.service_request!.trim }}</span>
+                </p>
+              </div>
+
+              <div class="w-full md:w-1/2">
+                <p class="mb-3">
+                  <span class="text-sm"><span class="font-bold">Service Category:</span> {{ service_categories_display_by_key[service_request_offer.service_request!.service_category] }}</span><br/>
+                  <span class="text-sm"><span class="font-bold">Service Type:</span> {{ service_request_offer.service_request!.service_type }}</span><br/>
+                  <span class="text-sm"><span class="font-bold">Service Action:</span> {{ service_request_offer.service_request!.service_action }}</span>
+                </p>
+                <p class="mb-3">
+                  <span class="font-bold">Payout:</span> ${{ service_request_offer.service_request!.payout | number }}<br/>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full sm:w-1/2">
+            <form class="mb-3" *ngIf="!!you && !!messageFormsByUserId[service_request_offer.service_request_user_id]" [formGroup]="messageFormsByUserId[service_request_offer.service_request_user_id]" (ngSubmit)="sendMessageToUser(service_request_offer.service_request!.user!)">
+              <p class="text-2xl">Send a message</p>
+              <div class="uk-margin">
+                <span class="label-info">
+                  Body ({{ messageFormsByUserId[service_request_offer.service_request_user_id].controls['body'].value.length }}/{{ MSG_MAX_LENGTH }})
+                </span>
+                <textarea
+                  type="text"
+                  class="input-text-1"
+                  placeholder="Enter message..."
+                  rows="3"
+                  formControlName="body"
+                ></textarea>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  title="Message this user"
+                  class="btn-info-1"
+                  [disabled]="loading || messageFormsByUserId[service_request_offer.service_request_user_id].invalid"
+                >
+                  <i class="fas fa-paper-plane"></i>
+                  Submit
+                </button>
+              </div>
+            </form>
+
+            <div>
+              <button
+                type="button"
+                title="Message this user"
+                class="btn-primary-1"
+                [disabled]="loading"
+                (click)="cancelOffer(service_request_offer)"
+              >
+                <!-- <i class="fas fa-paper-plane"></i> -->
+                Cancel offer for job
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </carmaster-service-request-card>
+
+    <div class="transition mt-3" *ngIf="!end_reached">
+      <button
+        (click)="getServiceRequestOffers()"
+        title="Load more"
+        class="btn-primary-1"
+        [disabled]="loading"
+      >
+        <i class="fas fa-sync"></i> Load More
+      </button>
+    </div>
+  </div>
+</div>

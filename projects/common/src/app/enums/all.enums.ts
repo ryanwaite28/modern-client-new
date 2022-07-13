@@ -84,6 +84,18 @@ export enum USER_RECORDS {
   RECIPES = 'recipes',
 }
 
+export enum MODERN_APP_NAMES {
+  COMMON = 'COMMON',
+  CHEFCITY = 'CHEFCITY',
+  DELIVERME = 'DELIVERME',
+  MYFAVORS = 'MYFAVORS',
+  CONTENDER = 'CONTENDER',
+  TRAVELLRS = 'TRAVELLRS',
+  HOTSPOT = 'HOTSPOT',
+  WORLDNEWS = 'WORLDNEWS',
+  CARMASTER = 'CARMASTER',
+}
+
 export enum MODERN_APPS {
   COMMON = 'common',
   HOTSPOT = 'hotspot',

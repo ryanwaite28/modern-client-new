@@ -21,7 +21,7 @@
           <div class="w-full sm:w-1/2">
             <h1 class="text-gray-900 font-bold text-4xl leading-8 my-1">{{ mechanic.user!.displayname }}</h1>
             <h3 class="text-gray-600 font-lg text-semibold leading-6">
-              <a [routerLink]="['/', 'users', mechanic.user!.id, 'mechanic-profile']">@{{ mechanic.user!.username }}</a>
+              <a [routerLink]="['/', 'users', mechanic.user!.id, 'mechanic']">@{{ mechanic.user!.username }}</a>
             </h3>
           </div>
           <div class="w-full sm:w-1/2">
@@ -48,7 +48,7 @@
               <button
                 type="submit"
                 title="Message this user"
-                class="btn-primary-1"
+                class="btn-info-1"
                 [disabled]="loading || messageFormsByMechanicId[mechanic.id].invalid"
               >
                 <i class="fas fa-paper-plane"></i>

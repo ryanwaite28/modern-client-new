@@ -2,14 +2,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { COMMON_STATUSES } from 'projects/common/src/app/enums/all.enums';
+import { CARMASTER_EVENT_TYPES } from 'projects/carmaster/src/app/enums/car-master.enum';
+import { service_categories_display_by_key } from 'projects/carmaster/src/app/utils/car-services.chamber';
+import { COMMON_STATUSES, MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { IFormSubmitEvent } from 'projects/common/src/app/interfaces/_common.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
+import { SocketEventsService } from 'projects/common/src/app/services/socket-events.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
-import { combineLatest, finalize, map, mergeMap } from 'rxjs';
+import { combineLatest, finalize, map, mergeMap, Subscription } from 'rxjs';
 import { IMechanic, IMechanicServiceRequest, IMechanicServiceRequestOffer } from '../../../../interfaces/carmaster.interface';
 import { CarmasterService } from '../../../../services/carmaster.service';
 
@@ -27,14 +30,16 @@ export class ServiceRequestSearchComponent implements OnInit {
 
   MSG_MAX_LENGTH = 1000;
   messageFormsByUserId: PlainObject<FormGroup> = {};
-
+  service_categories_display_by_key = service_categories_display_by_key;
   offerByServiceRequestId: PlainObject<IMechanicServiceRequestOffer | undefined> = {};
+  subsList: Subscription[] = [];
 
   constructor(
     private userStore: UserStoreService,
     private userService: UsersService,
     private carmasterService: CarmasterService,
     private alertService: AlertService,
+    private socketEventsService: SocketEventsService,
     private route: ActivatedRoute,
   ) { }
 
@@ -55,6 +60,10 @@ export class ServiceRequestSearchComponent implements OnInit {
         console.log(this);
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subsList.forEach(sub => sub.unsubscribe());
   }
 
   searchServiceRequests($event: IFormSubmitEvent) {

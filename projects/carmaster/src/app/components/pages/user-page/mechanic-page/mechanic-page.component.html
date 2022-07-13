@@ -1,0 +1,22 @@
+<div>
+  <div class="card-box-1 mb-7">
+    <div class="">
+      <h3 class="text-3xl mb-3">Mechanic</h3>
+      <ul class="plain-links-list">
+        <li>
+          <a [routerLink]="['profile']" routerLinkActive="active">Profile</a>
+        </li>
+        <li>
+          <a [routerLink]="['service-requests']" routerLinkActive="active">Service Requests</a>
+        </li>
+        <li>
+          <a [routerLink]="['service-request-offers']" routerLinkActive="active">Service Request Offers</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

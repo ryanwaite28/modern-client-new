@@ -1,1 +1,27 @@
-<p>mechanic-service-requests works!</p>
+<div>
+  <div class="card-box-1 mb-3" *ngIf="!service_requests.length">
+    <div class="">
+      <h3 class="text-3xl">None</h3>
+    </div>
+  </div>
+  
+  <div>
+    <carmaster-service-request-card
+      *ngFor="let service_request of service_requests"
+      [service_request]="service_request"
+      [showEmbeddedContent]="!service_request.datetime_work_finished"
+    >
+      <div>
+        <button
+          *ngIf="!service_request.datetime_work_finished"
+          type="button"
+          class="btn-danger-1 mr-3"
+          (click)="mechanicCancelJob(service_request)"
+          [disabled]="loading"
+        >
+          Cancel job
+        </button>
+      </div>
+    </carmaster-service-request-card>
+  </div>
+</div>

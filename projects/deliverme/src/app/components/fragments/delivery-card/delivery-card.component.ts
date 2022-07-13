@@ -422,27 +422,27 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  onSubmitEditDelivery(params: any) {
-    // const msg = `Are all input values correct? The delivery cannot be edited later.`;
-    // const ask = window.confirm(msg);
-    // if (!ask) {
-    //   return;
-    // }
-    this.loading = true;
-    this.deliveryService.update_delivery(params.formData, this.delivery.id).subscribe({
-      next: (response: any) => {
-        this.alertService.handleResponseSuccessGeneric(response);
-        params.resetForm && params.resetForm();
-        this.loading = false;
-        this.delivery = response.data.delivery;
-        this.isEditing = false;
-      },
-      error: (error: any) => {
-        this.alertService.handleResponseErrorGeneric(error);
-        this.loading = false;
-      },
-    });
-  }
+  // onSubmitEditDelivery(params: any) {
+  //   // const msg = `Are all input values correct? The delivery cannot be edited later.`;
+  //   // const ask = window.confirm(msg);
+  //   // if (!ask) {
+  //   //   return;
+  //   // }
+  //   this.loading = true;
+  //   this.deliveryService.update_delivery(params.formData, this.delivery.id).subscribe({
+  //     next: (response: any) => {
+  //       this.alertService.handleResponseSuccessGeneric(response);
+  //       params.resetForm && params.resetForm();
+  //       this.loading = false;
+  //       this.delivery = response.data.delivery;
+  //       this.isEditing = false;
+  //     },
+  //     error: (error: any) => {
+  //       this.alertService.handleResponseErrorGeneric(error);
+  //       this.loading = false;
+  //     },
+  //   });
+  // }
 
   deleteDelivery() {
     const chargeFeeData = this.stripeService.add_on_stripe_processing_fee(this.delivery.payout);

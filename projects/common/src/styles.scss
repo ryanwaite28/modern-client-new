@@ -207,3 +207,101 @@ $md-accent: (
 .btn-info-1 {
   @apply bg-blue-500 hover:bg-blue-700 text-[color:white] cursor-pointer font-bold py-2 px-4 rounded;
 }
+
+.plain-links-list {
+  @apply my-4 pl-4;
+
+  li {
+    list-style: disc;
+    a {
+
+    }
+
+    a.active {
+      @apply font-bold text-blue-500 text-lg;
+    }
+  }
+}
+
+
+.box-list {
+  border-right: 1px solid lightgrey;
+}
+
+.box-container {
+  border: 1px solid lightgrey;
+}
+
+.box-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  .box-item-inner {
+    overflow: hidden;
+
+    .user-icon-square {
+      float: left;
+      margin-right: 10px;
+    }
+  }
+}
+
+.box-item:hover {
+  background: #fbfbfb;
+  cursor: pointer;
+}
+
+.box-item:last-child {
+  border-bottom: none;
+}
+
+
+
+.messagings-list {
+  border-right: 1px solid lightgrey;
+}
+
+.messagings-container {
+  border: 1px solid lightgrey;
+}
+
+.messagings-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  .messagings-item-inner {
+    overflow: hidden;
+
+    .user-icon-square {
+      float: left;
+      margin-right: 10px;
+    }
+  }
+}
+
+.messagings-item:hover {
+  background: #fbfbfb;
+  cursor: pointer;
+}
+
+.messages-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  .messages-item-inner {
+    overflow: hidden;
+
+    .user-icon-square {
+      float: left;
+      margin-right: 10px;
+    }
+
+    .message-text {
+      margin-left: 60px;
+      padding: 5px;
+      white-space: pre-wrap;
+    }
+  }
+}
+
+.messages-item:last-child,
+.messagings-item:last-child {
+  border-bottom: none;
+}

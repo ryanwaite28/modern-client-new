@@ -19,9 +19,9 @@ import { IUserField } from '../interfaces/user-field.interface';
 import { MODERN_APPS, USER_RECORDS } from '../enums/all.enums';
 import { HttpStatusCode } from '../enums/http-codes.enum';
 import { UtilityService } from './utility.service';
-import { IApiKey, IUserSubscriptionInfo } from '../interfaces/_common.interface';
+import { IApiKey, IUserNotificationsLastOpenedByApp, IUserSubscriptionInfo } from '../interfaces/_common.interface';
 import { EnvironmentService } from './environment.service';
-import { get_user_records_endpoint } from '../_misc/chamber';
+import { clone, get_user_app_notifications_endpoint, get_user_records_endpoint } from '../_misc/chamber';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,7 @@ export class UsersService {
   sessionChecked: boolean = false;
   private is_subscription_active: boolean = false;
   private is_subscription_active_stream = new BehaviorSubject<boolean>(this.is_subscription_active);
+  private notificationsLastOpenedByApp: PlainObject<IUserNotificationsLastOpenedByApp> = {};
 
   private isFirstCall = true;
 
@@ -41,6 +42,10 @@ export class UsersService {
     private utilityService: UtilityService,
     private envService: EnvironmentService,
   ) {}
+
+  getNotificationsLastOpenedByAppObj() {
+    return { ...this.notificationsLastOpenedByApp };
+  }
 
   getHasPlatformSubscription(): boolean {
     return this.is_subscription_active;
@@ -326,6 +331,48 @@ export class UsersService {
       min_id,
       false,
       false
+    );
+  }
+
+  getUserAppNotificationsAll<T = any>(user_id: number, micro_app: MODERN_APPS) {
+    const endpoint = get_user_app_notifications_endpoint(
+      user_id,
+      micro_app,
+      USER_RECORDS.NOTIFICATIONS,
+      undefined,
+      true,
+      false
+    );
+    return this.clientService.sendRequest<any>(endpoint, `GET`);
+  }
+
+  getUserAppNotifications<T = any>(user_id: number, micro_app: MODERN_APPS, min_id?: number) {
+    const endpoint = get_user_app_notifications_endpoint(
+      user_id,
+      micro_app,
+      USER_RECORDS.NOTIFICATIONS,
+      min_id,
+      false,
+      false
+    );
+    return this.clientService.sendRequest<any>(endpoint, `GET`);
+  }
+
+  getUserAppNotificationsLastOpened(you_id: number, micro_app: MODERN_APPS) {
+    return this.clientService.sendRequest<IUserNotificationsLastOpenedByApp>(`/common/users/${you_id}/notifications/app/${micro_app}/app-notifications-last-opened`, `GET`).pipe(
+      map((response) => {
+        this.notificationsLastOpenedByApp[micro_app] = response.data!;
+        return response;
+      })
+    );
+  }
+
+  updateUserAppNotificationsLastOpened(you_id: number, micro_app: MODERN_APPS) {
+    return this.clientService.sendRequest<IUserNotificationsLastOpenedByApp>(`/common/users/${you_id}/notifications/app/${micro_app}/update-app-notifications-last-opened`, `POST`).pipe(
+      map((response) => {
+        this.notificationsLastOpenedByApp[micro_app] = response.data!;
+        return response;
+      })
     );
   }
 

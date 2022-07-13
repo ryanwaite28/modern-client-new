@@ -10,7 +10,18 @@
     <carmaster-service-request-card
       *ngFor="let service_request of service_requests"
       [service_request]="service_request"
+      (delete)="onDeleteServiceRequest(service_request)"
     >
     </carmaster-service-request-card>
+
+    <button
+      *ngIf="!end_reached"
+      (click)="getServiceRequests()"
+      title="Load more"
+      class="btn-primary-1"
+      [disabled]="loading"
+    >
+      <i class="fas fa-sync"></i> Load More
+    </button>
   </div>
 </div>

@@ -8,6 +8,7 @@ import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { combineLatest, take } from 'rxjs';
 import { CARMASTER_EVENT_TYPES } from './enums/car-master.enum';
+import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 
 @Component({
   selector: 'carmaster-root',
@@ -15,6 +16,8 @@ import { CARMASTER_EVENT_TYPES } from './enums/car-master.enum';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  you: IUser | null = null;
+
   constructor(
     private userService: UsersService,
     private userStore: UserStoreService,
@@ -45,6 +48,7 @@ export class AppComponent {
 
         // console.log(you);
         // console.log(jwt);
+        this.you = you;
 
         if (you) {
           // this.router.navigate(['/']);
@@ -80,6 +84,11 @@ export class AppComponent {
         { event: CARMASTER_EVENT_TYPES.CREDENTIAL_REPORTED, tag: 'notification' },
       ];
       this.appSocketEventsStateService.assignTagToAppEvents(MODERN_APPS.CARMASTER, assignments);
+      
+      this.userService.getUserAppNotificationsLastOpened(this.you!.id, MODERN_APPS.CARMASTER).subscribe({
+        next: (response) => {
+        }
+      });
     }
   }
 }

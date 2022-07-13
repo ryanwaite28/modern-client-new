@@ -192,14 +192,14 @@
           Delete
         </button>
 
-        <button
+        <!-- <button
           type="button"
           class="btn-primary-1"
           (click)="isEditing = !isEditing"
           [disabled]="loading"
         >
           {{ isEditing ? 'Cancel Edit' : 'Edit' }}
-        </button>
+        </button> -->
       </div>
     
       <div class="border-t border-gray-300 py-3 my-3" *ngIf="delivery.carrier && showDetails">
@@ -257,7 +257,7 @@
     
       </div>
     
-      <div class="border-t border-gray-300 py-3 my-3" *ngIf="isDeliveryOwner && !delivery.carrier_id && isEditing">
+      <!-- <div class="border-t border-gray-300 py-3 my-3" *ngIf="isDeliveryOwner && !delivery.carrier_id && isEditing">
         <div class="mt-4">
           <deliverme-delivery-form
             [isEditing]="isEditing"
@@ -265,7 +265,7 @@
             (deliveryFormSubmit)="onSubmitEditDelivery($event)"
           ></deliverme-delivery-form>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class="border-t border-gray-300 py-3 my-3" *ngIf="showDetails">
         <p class="uk-text-large">

@@ -5,10 +5,13 @@ import { EnvironmentService } from 'projects/common/src/app/services/environment
 import { AppSocketEventsStateService } from 'projects/common/src/app/services/app-socket-events-state.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
-import { combineLatest, filter, map, mergeMap, take } from 'rxjs';
+import { combineLatest, filter, map, mergeMap, of, take } from 'rxjs';
 import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { CARMASTER_EVENT_TYPES } from '../../../enums/car-master.enum';
 import { SocketEventsService } from 'projects/common/src/app/services/socket-events.service';
+import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
+import { CarmasterService } from '../../../services/carmaster.service';
+import { IMechanic } from '../../../interfaces/carmaster.interface';
 
 
 
@@ -20,7 +23,8 @@ import { SocketEventsService } from 'projects/common/src/app/services/socket-eve
 export class NavbarComponent implements OnInit {
   you: IUser | any;
   showMobileNav: boolean = false;
-
+  eventsCounts: PlainObject<number> = {};
+  mechanic_profile: IMechanic | null = null;
   links: any = [
     { text: `Sign In`, clickFn: (event: any) => { this.signin(); } },
   ];
@@ -28,6 +32,7 @@ export class NavbarComponent implements OnInit {
   constructor(
     private socketEventsService: SocketEventsService,
     private appSocketEventsStateService: AppSocketEventsStateService,
+    private carmasterService: CarmasterService,
     private usersService: UsersService,
     private userStore: UserStoreService,
     private router: Router,
@@ -50,32 +55,43 @@ export class NavbarComponent implements OnInit {
       )
     .pipe(
       map((values) => {
-        return {
+        const eventsCounts: PlainObject<number> = {
           messages: values[0],
         };
+        this.eventsCounts = eventsCounts;
+        return eventsCounts;
       })
     );
 
     combineLatest([
       eventsObs,
-      this.userStore.getChangesObs(),
+      this.userStore.getChangesObs().pipe(
+        mergeMap((you) => {
+          this.you = you;
+          return !you 
+            ? of(null)
+            : this.carmasterService.get_mechanic_by_user_id(you.id).pipe(
+              map((response) => {
+                this.mechanic_profile = response.data || null;
+                return;
+              })
+            )
+        })
+      )
     ])
     .subscribe({
       next: (values) => {
-        const [eventsCounts, you] = values;
         console.log(`NavbarComponent - values`, values);
-
-        this.you = you;
-        
-        this.links = !!you
+        const you = this.you;
+        const links = !!you
           ? [
               { text: `Home`, href: ['/', 'users', you.id, 'home'] },
-              { text: `Mechanic Profile`, href: ['/', 'users', you.id, 'mechanic-profile'] },
-              { text: `Messages`, href: ['/', 'users', you.id, 'messages'], badgeCount: eventsCounts.messages },
+              { text: `Mechanic`, href: ['/', 'users', you.id, 'mechanic'] },
+              { text: `Messages`, href: ['/', 'users', you.id, 'messages'], badgeCount: this.eventsCounts['messages'] },
               { text: `Search`, href: ['/', 'search'] },
               { text: `Create Service Request`, href: ['/', 'create-service-request'] },
               { text: `Your Service Requests`, href: ['/', 'users', you.id, 'user-service-requests'] },
-              { text: `Mechanic Service Requests`, href: ['/', 'users', you.id, 'mechanic-service-requests'] },
+              { text: `Notifications`, href: ['/', 'users', you.id, 'notifications'] },
               // { text: `Settings`, href: ['/', 'users', you.id, 'settings'] },
 
               { text: `Sign Out`, clickFn: (event: any) => { this.signout(); } },
@@ -83,6 +99,11 @@ export class NavbarComponent implements OnInit {
           : [
               { text: `Sign In`, clickFn: (event: any) => { this.signin(); } },
             ];
+        
+        // if (this.mechanic_profile) {
+        //   links.splice(1, 0, { text: `Mechanic`, href: ['/', 'users', you.id, 'mechanic'] });
+        // }
+        this.links = links;
       }
     });
   }

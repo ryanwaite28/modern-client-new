@@ -7,6 +7,12 @@ import { IUser } from './user.interface';
 
 
 
+export interface IUserNotificationsLastOpenedByApp extends ICommonModel {
+  user_id:                             number,
+  micro_app:                           string,
+  notifications_last_opened:           string,
+}
+
 export interface IFormSubmitEvent {
   formData: FormData,
   payload: PlainObject,

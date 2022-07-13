@@ -1,15 +1,9 @@
 <div>
-  <div class="card-box-1 mb-7">
+  <div class="card-box-1 mb-7" *ngIf="!mechanic_profile">
     <div class="">
-      <h3 class="text-3xl mb-3">Mechanic Profile</h3>
-
-      <!-- <p *ngIf="!isUserActiveMember">
-        You must have an active membership subscription to create and use.
-      </p> -->
-
       <button
         type="button"
-        *ngIf="!mechanic_profile"
+        
         class=btn-primary-1
         [disabled]="loading"
         (click)="createMechanicProfile()"
@@ -22,11 +16,20 @@
   <div *ngIf="!!mechanic_profile">
 
     <div class="card-box-1">
-      <div class="">
-        <h3 class="text-3xl mb-3">Info</h3>
+      <div class="flex flex-row gap-2 justify-between">
+        <div class="w-3/4">
+          <h3 class="text-3xl mb-3">Info</h3>
+        </div>
+
+        <div class="w-1/4">
+          <ng-container [ngSwitch]="showSectionsMap['info']">
+            <p *ngSwitchCase="false" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-down" (click)="showSectionsMap['info'] = !showSectionsMap['info']"></i></p>
+            <p *ngSwitchCase="true" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-up" (click)="showSectionsMap['info'] = !showSectionsMap['info']"></i></p>
+          </ng-container>
+        </div>
       </div>
       
-      <ng-container [ngSwitch]="isYou">
+      <ng-container *ngIf="showSectionsMap['info']" [ngSwitch]="isYou">
         <div *ngSwitchCase="false">
           <div *ngIf="!!mechanic_profile">
             <p>{{ mechanic_profile.bio }}</p>
@@ -86,102 +89,157 @@
     </div>
 
     <div class="card-box-1">
-      <div class="">
-        <h3 class="text-3xl mb-2">Fields</h3>
-        <h3 class="text-lg mb-3">Additional information about you</h3>
+      <div class="flex flex-row gap-2 justify-between">
+        <div class="w-3/4">
+          <h3 class="text-3xl mb-3">Fields</h3>
+          <h3 class="text-lg mb-3">Additional information</h3>
+        </div>
+
+        <div class="w-1/4">
+          <ng-container [ngSwitch]="showSectionsMap['fields']">
+            <p *ngSwitchCase="false" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-down" (click)="showSectionsMap['fields'] = !showSectionsMap['fields']"></i></p>
+            <p *ngSwitchCase="true" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-up" (click)="showSectionsMap['fields'] = !showSectionsMap['fields']"></i></p>
+          </ng-container>
+        </div>
       </div>
 
-      <div *ngIf="isYou" class="pb-3 mb-3">
-        <carmaster-mechanic-field-form
-          (formSubmit)="createField($event)"
-        ></carmaster-mechanic-field-form>
-      </div>
-
-      <div *ngIf="mechanic_profile?.mechanic_fields?.length" class="pt-3">
-        <carmaster-mechanic-field *ngFor="let field of mechanic_profile?.mechanic_fields!"
-          [field]="field"
-          [mechanic_profile]="mechanic_profile"
-          (onDelete)="deleteField(field)"
-        ></carmaster-mechanic-field>
-      </div>
-    </div>
-
-    <div class="card-box-1">
-      <div class="">
-        <h3 class="text-3xl mb-3">Credentials</h3>
-      </div>
-
-      <div *ngIf="isYou" class="pb-3 mb-3">
-        <carmaster-mechanic-credential-form
-          (formSubmit)="createCredential($event)"
-        ></carmaster-mechanic-credential-form>
-      </div>
-
-      <div *ngIf="mechanic_profile?.mechanic_credentials?.length" class="pt-3">
-        <carmaster-mechanic-credential *ngFor="let credential of mechanic_profile?.mechanic_credentials!"
-          [credential]="credential"
-          [mechanic_profile]="mechanic_profile"
-          (onDelete)="deleteCredential(credential)"
-        ></carmaster-mechanic-credential>
+      <div *ngIf="showSectionsMap['fields']">
+        <div *ngIf="isYou" class="pb-3 mb-3">
+          <carmaster-mechanic-field-form
+            (formSubmit)="createField($event)"
+          ></carmaster-mechanic-field-form>
+        </div>
+  
+        <div *ngIf="mechanic_profile?.mechanic_fields?.length" class="pt-3">
+          <carmaster-mechanic-field *ngFor="let field of mechanic_profile?.mechanic_fields!"
+            [field]="field"
+            [mechanic_profile]="mechanic_profile"
+            (onDelete)="deleteField(field)"
+          ></carmaster-mechanic-field>
+        </div>
       </div>
     </div>
 
     <div class="card-box-1">
-      <div class="">
-        <h3 class="text-3xl mb-3">Expertises</h3>
+      <div class="flex flex-row gap-2 justify-between">
+        <div class="w-3/4">
+          <h3 class="text-3xl mb-3">Credentials</h3>
+        </div>
+
+        <div class="w-1/4">
+          <ng-container [ngSwitch]="showSectionsMap['credentials']">
+            <p *ngSwitchCase="false" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-down" (click)="showSectionsMap['credentials'] = !showSectionsMap['credentials']"></i></p>
+            <p *ngSwitchCase="true" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-up" (click)="showSectionsMap['credentials'] = !showSectionsMap['credentials']"></i></p>
+          </ng-container>
+        </div>
       </div>
 
-      <div *ngIf="isYou" class="pb-3 mb-3">
-        <carmaster-mechanic-expertise-form
-          (formSubmit)="createExpertise($event)"
-        ></carmaster-mechanic-expertise-form>
-      </div>
-
-      <div *ngIf="mechanic_profile?.mechanic_expertises?.length" class="pt-3">
-        <carmaster-mechanic-expertise *ngFor="let expertise of mechanic_profile?.mechanic_expertises!"
-          [expertise]="expertise"
-          [mechanic_profile]="mechanic_profile"
-          (onDelete)="deleteExpertise(expertise)"
-        ></carmaster-mechanic-expertise>
-      </div>
-    </div>
-
-    <div class="card-box-1">
-      <div class="">
-        <h3 class="text-3xl mb-3">Services</h3>
-      </div>
-
-      <div *ngIf="isYou" class="pb-3 mb-3">
-        <carmaster-mechanic-service-form
-          (formSubmit)="createService($event)"
-        ></carmaster-mechanic-service-form>
-      </div>
-
-      <div *ngIf="mechanic_profile?.mechanic_services?.length" class="pt-3">
-        <carmaster-mechanic-service *ngFor="let service of mechanic_profile?.mechanic_services!"
-          [service]="service"
-          [mechanic_profile]="mechanic_profile"
-          (onDelete)="deleteService(service)"
-        ></carmaster-mechanic-service>
+      <div *ngIf="showSectionsMap['credentials']">
+        <div *ngIf="isYou" class="pb-3 mb-3">
+          <carmaster-mechanic-credential-form
+            (formSubmit)="createCredential($event)"
+          ></carmaster-mechanic-credential-form>
+        </div>
+  
+        <div *ngIf="mechanic_profile?.mechanic_credentials?.length" class="pt-3">
+          <carmaster-mechanic-credential *ngFor="let credential of mechanic_profile?.mechanic_credentials!"
+            [credential]="credential"
+            [mechanic_profile]="mechanic_profile"
+            (onDelete)="deleteCredential(credential)"
+          ></carmaster-mechanic-credential>
+        </div>
       </div>
     </div>
 
     <div class="card-box-1">
-      <div class="">
-        <h3 class="text-3xl mb-3">Ratings</h3>
+      <div class="flex flex-row gap-2 justify-between">
+        <div class="w-3/4">
+          <h3 class="text-3xl mb-3">Expertises</h3>
+        </div>
+
+        <div class="w-1/4">
+          <ng-container [ngSwitch]="showSectionsMap['expertises']">
+            <p *ngSwitchCase="false" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-down" (click)="showSectionsMap['expertises'] = !showSectionsMap['expertises']"></i></p>
+            <p *ngSwitchCase="true" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-up" (click)="showSectionsMap['expertises'] = !showSectionsMap['expertises']"></i></p>
+          </ng-container>
+        </div>
       </div>
 
-      <div *ngIf="!isYou" class="pb-3 mb-3">
-        <carmaster-mechanic-rating-form
-          (formSubmit)="createRating($event)"
-        ></carmaster-mechanic-rating-form>
+      <div *ngIf="showSectionsMap['expertises']">
+        <div *ngIf="isYou" class="pb-3 mb-3">
+          <carmaster-mechanic-expertise-form
+            (formSubmit)="createExpertise($event)"
+          ></carmaster-mechanic-expertise-form>
+        </div>
+  
+        <div *ngIf="mechanic_profile?.mechanic_expertises?.length" class="pt-3">
+          <carmaster-mechanic-expertise *ngFor="let expertise of mechanic_profile?.mechanic_expertises!"
+            [expertise]="expertise"
+            [mechanic_profile]="mechanic_profile"
+            (onDelete)="deleteExpertise(expertise)"
+          ></carmaster-mechanic-expertise>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-box-1">
+      <div class="flex flex-row gap-2 justify-between">
+        <div class="w-3/4">
+          <h3 class="text-3xl mb-3">Services</h3>
+        </div>
+
+        <div class="w-1/4">
+          <ng-container [ngSwitch]="showSectionsMap['services']">
+            <p *ngSwitchCase="false" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-down" (click)="showSectionsMap['services'] = !showSectionsMap['services']"></i></p>
+            <p *ngSwitchCase="true" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-up" (click)="showSectionsMap['services'] = !showSectionsMap['services']"></i></p>
+          </ng-container>
+        </div>
       </div>
 
-      <div *ngIf="mechanic_profile?.mechanic_ratings?.length" class="pt-3">
-        <carmaster-mechanic-rating *ngFor="let rating of mechanic_profile?.mechanic_ratings!"
-          [rating]="rating"
-          [mechanic_profile]="mechanic_profile"
-        ></carmaster-mechanic-rating>
+      <div *ngIf="showSectionsMap['services']">
+        <div *ngIf="isYou" class="pb-3 mb-3">
+          <carmaster-mechanic-service-form
+            (formSubmit)="createService($event)"
+          ></carmaster-mechanic-service-form>
+        </div>
+  
+        <div *ngIf="mechanic_profile?.mechanic_services?.length" class="pt-3">
+          <carmaster-mechanic-service *ngFor="let service of mechanic_profile?.mechanic_services!"
+            [service]="service"
+            [mechanic_profile]="mechanic_profile"
+            (onDelete)="deleteService(service)"
+          ></carmaster-mechanic-service>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-box-1">
+      <div class="flex flex-row gap-2 justify-between">
+        <div class="w-3/4">
+          <h3 class="text-3xl mb-3">Ratings</h3>
+        </div>
+
+        <div class="w-1/4">
+          <ng-container [ngSwitch]="showSectionsMap['ratings']">
+            <p *ngSwitchCase="false" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-down" (click)="showSectionsMap['ratings'] = !showSectionsMap['ratings']"></i></p>
+            <p *ngSwitchCase="true" class="text-3xl mb-3 cursor-pointer text-right"><i class="fas fa-chevron-up" (click)="showSectionsMap['ratings'] = !showSectionsMap['ratings']"></i></p>
+          </ng-container>
+        </div>
+      </div>
+
+      <div *ngIf="showSectionsMap['ratings']">
+        <div *ngIf="!isYou" class="pb-3 mb-3">
+          <carmaster-mechanic-rating-form
+            (formSubmit)="createRating($event)"
+          ></carmaster-mechanic-rating-form>
+        </div>
+  
+        <div *ngIf="mechanic_profile?.mechanic_ratings?.length" class="pt-3">
+          <carmaster-mechanic-rating *ngFor="let rating of mechanic_profile?.mechanic_ratings!"
+            [rating]="rating"
+            [mechanic_profile]="mechanic_profile"
+          ></carmaster-mechanic-rating>
+        </div>
       </div>
     </div>
 

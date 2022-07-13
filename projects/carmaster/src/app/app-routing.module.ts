@@ -19,6 +19,9 @@ import { ServiceRequestSearchComponent } from './components/pages/search-page/se
 import { IsMechanicGuard } from './guards/is-mechanic.guard';
 import { UserServiceRequestsComponent } from './components/pages/user-page/user-service-requests/user-service-requests.component';
 import { MechanicServiceRequestsComponent } from './components/pages/user-page/mechanic-service-requests/mechanic-service-requests.component';
+import { MechanicPageComponent } from './components/pages/user-page/mechanic-page/mechanic-page.component';
+import { MechanicServiceRequestOffersPageComponent } from './components/pages/user-page/mechanic-service-request-offers-page/mechanic-service-request-offers-page.component';
+import { NotificationsPageComponent } from './components/pages/user-page/notifications-page/notifications-page.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
@@ -48,28 +51,39 @@ const routes: Routes = [
     component: CreateServiceRequestComponent,
     canActivate: [SignedInGuard]
   },
-  
+
   {
     path: 'users/:user_id',
     component: UserPageComponent,
     resolve: {
       user: UserResolver,
       user_subscription_info: UserSubscriptionInfoResolver,
-      mechanic_profile: MechanicProfileResolver,
     },
     data: { authParamsProp: 'user_id' },
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
-  
+      
       { path: 'home', component: HomePageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
-      { path: 'mechanic-profile', component: MechanicProfilePageComponent },
+      {
+        path: 'mechanic',
+        component: MechanicPageComponent,
+        resolve: {
+          mechanic_profile: MechanicProfileResolver,
+        },
+        data: { authParamsProp: 'user_id' },
+        children: [
+          { path: '', pathMatch: 'full', redirectTo: 'profile' },
+          { path: 'profile', component: MechanicProfilePageComponent },
+          { path: 'service-requests', component: MechanicServiceRequestsComponent, canActivate: [UserAuthGuard, IsMechanicGuard], data: { authParamsProp: 'user_id' } },
+          { path: 'service-request-offers', component: MechanicServiceRequestOffersPageComponent, canActivate: [UserAuthGuard, IsMechanicGuard], data: { authParamsProp: 'user_id' } },
+        ]
+      },
 
       // { path: 'settings', component: SettingsPageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
 
-      { path: 'notifications', component: UserNotificationsFragmentComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
+      { path: 'notifications', component: NotificationsPageComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
       { path: 'messages', component: UserMessagesFragmentComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
       { path: 'user-service-requests', component: UserServiceRequestsComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
-      { path: 'mechanic-service-requests', component: MechanicServiceRequestsComponent, canActivate: [UserAuthGuard], data: { authParamsProp: 'user_id' } },
     ]
   }
 ];
