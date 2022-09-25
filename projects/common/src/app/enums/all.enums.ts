@@ -268,4 +268,5 @@ export const COMMON_STATUSES =  Object.freeze({
   ACCEPTED: `ACCEPTED`,
   DECLINED: `DECLINED`,
   OPEN: `OPEN`,
+  RESCINDED: `RESCINDED`,
 });

@@ -236,6 +236,7 @@ export interface IDeliveryTrackingUpdate extends ICommonModel  {
   delivery_id:       number,
   user_id:           number,
   message:           string,
+  location:           string,
   carrier_lat:       number,
   carrier_lng:       number
   icon_link:         string,
