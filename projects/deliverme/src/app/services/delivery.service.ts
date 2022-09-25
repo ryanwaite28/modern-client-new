@@ -46,9 +46,9 @@ export class DeliveryService {
     return this.clientService.sendRequest<T>(`/deliverme/deliveries`, `POST`, data);
   }
 
-  // update_delivery<T = any>(data: FormData, delivery_id: number) {
-  //   return this.clientService.sendRequest<T>(`/deliverme/deliveries/${delivery_id}`, `PUT`, data);
-  // }
+  update_delivery<T = any>(data: FormData, delivery_id: number) {
+    return this.clientService.sendRequest<T>(`/deliverme/deliveries/${delivery_id}`, `PUT`, data);
+  }
 
   delete_delivery<T = any>(delivery_id: number) {
     return this.clientService.sendRequest<T>(`/deliverme/deliveries/${delivery_id}`, `DELETE`);

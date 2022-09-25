@@ -388,9 +388,9 @@
               <strong>{{ tracking_update.message }}</strong><br/>
               {{ tracking_update.created_at | date : 'MMM d, y - h:mm a' }}<br/>
               <small>{{ tracking_update.created_at | timeAgo }}</small>
-              <ng-container *ngIf="tracking_update.placeData">
+              <ng-container *ngIf="tracking_update.location">
                 <br/>
-                <small>{{ tracking_update.placeData.city }}, {{ tracking_update.placeData.state }} {{ tracking_update.placeData.zipcode }}</small>
+                <small>{{ tracking_update.location }}</small>
               </ng-container>
             </p>
             <img class="margin-bottom-10" *ngIf="tracking_update.icon_link" [src]="tracking_update.icon_link" [alt]="tracking_update.message">

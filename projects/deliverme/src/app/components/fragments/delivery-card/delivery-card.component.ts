@@ -114,7 +114,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.delivery.deliverme_delivery_tracking_updates) {
       for (const tracking_update of this.delivery.deliverme_delivery_tracking_updates) {
-        this.getLocationForTrackingUpdate(tracking_update);
+        // this.getLocationForTrackingUpdate(tracking_update);
       }
     }
     if (!this.delivery.completed && this.isDeliveryOwnerOrCarrier) {
@@ -232,7 +232,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
             });
             const tracking_update = event.data;
             this.delivery.deliverme_delivery_tracking_updates?.unshift(tracking_update);
-            this.getLocationForTrackingUpdate(tracking_update);
+            // this.getLocationForTrackingUpdate(tracking_update);
           }
         }
       });
@@ -518,7 +518,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
             this.loading = false;
             const tracking_update = response.data;
             this.delivery.deliverme_delivery_tracking_updates?.unshift(tracking_update);
-            this.getLocationForTrackingUpdate(tracking_update);
+            // this.getLocationForTrackingUpdate(tracking_update);
 
             if (iconInputElm) {
               iconInputElm.value = '';
