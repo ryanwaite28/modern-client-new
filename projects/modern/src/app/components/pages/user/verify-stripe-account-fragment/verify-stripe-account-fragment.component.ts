@@ -21,7 +21,7 @@ export class UserVerifyStripeAccountFragmentComponent implements OnInit {
 
   constructor(
     private userStore: UserStoreService,
-    private userService: UsersService,
+    private usersService: UsersService,
     private alertService: AlertService,
     private clientService: ClientService,
     private router: Router,
@@ -39,7 +39,7 @@ export class UserVerifyStripeAccountFragmentComponent implements OnInit {
   }
 
   checkStripeAccount() {
-    this.userService.verify_stripe_account(this.you.id).subscribe({
+    this.usersService.verify_stripe_account(this.you.id).subscribe({
       next: (response: any) => {
         console.log(response);
         this.results = response;

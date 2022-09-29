@@ -25,6 +25,7 @@ import { UserMessagesFragmentComponent } from './components/pages/user/messages/
 import { UserConversationsComponent } from './components/pages/user/conversations/conversations.component';
 import { UserFollowersComponent } from './components/pages/user/followers/followers.component';
 import { UserFollowingsComponent } from './components/pages/user/followings/followings.component';
+import { VerifyStripeAccountComponent } from './components/pages/verify-stripe-account/verify-stripe-account.component';
 
 
 
@@ -52,6 +53,7 @@ import { UserFollowingsComponent } from './components/pages/user/followings/foll
     UserConversationsComponent,
     UserFollowersComponent,
     UserFollowingsComponent,
+    VerifyStripeAccountComponent,
 
   ],
   imports: [

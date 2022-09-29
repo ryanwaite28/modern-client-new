@@ -462,6 +462,16 @@ export class UsersService {
     );
   }
 
+  verify_stripe_account_via_uuid<T = any>(user_uuid: string) {
+    return this.clientService.sendRequest<GenericApiResponse<T>>(
+      `/common/users/${user_uuid}/verify-stripe-account-by-uuid`, `PUT`
+    ).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
   sign_in(data: PlainObject) {
     return this.clientService.sendRequest<any>('/common/users', `PUT`, data).pipe(
       map((response) => {

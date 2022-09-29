@@ -18,6 +18,7 @@ import { UserNotificationsFragmentComponent } from './components/pages/user/noti
 import { UserSettingsFragmentComponent } from './components/pages/user/settings/settings.component';
 import { UserPageComponent } from './components/pages/user/user-page.component';
 import { UserVerifyStripeAccountFragmentComponent } from './components/pages/user/verify-stripe-account-fragment/verify-stripe-account-fragment.component';
+import { VerifyStripeAccountComponent } from './components/pages/verify-stripe-account/verify-stripe-account.component';
 import { WelcomeComponent } from './components/pages/welcome/welcome.component';
 
 
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'signup', pathMatch: 'full', component: SignupComponent, canActivate: [SignedOutGuard] },
   { path: 'signin', pathMatch: 'full', component: SigninComponent, canActivate: [SignedOutGuard] },
   { path: 'signout', pathMatch: 'full', component: SignoutComponent, canActivate: [SignedInGuard] },
+  { path: 'verify-stripe-account/:user_uuid', pathMatch: 'full', component: VerifyStripeAccountComponent },
 
   {
     path: 'users/:user_id',
