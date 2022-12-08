@@ -170,7 +170,7 @@ export class UsersService {
   /** */
 
   get_user_by_id(id: number) {
-    const endpoint = '/users/id/' + id;
+    const endpoint = '/users/' + id;
     return this.clientService.sendRequest<IUser>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
