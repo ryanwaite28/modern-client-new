@@ -379,7 +379,7 @@ export class UsersService {
   /** POST */
 
   sign_up(data: PlainObject) {
-    return this.clientService.sendRequest<any>('/common/users', `POST`, data).pipe(
+    return this.clientService.sendRequest<any>('/users', `POST`, data).pipe(
       map((response) => {
         window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
         this.userStore.setState(response.data.you);
@@ -473,7 +473,7 @@ export class UsersService {
   }
 
   sign_in(data: PlainObject) {
-    return this.clientService.sendRequest<any>('/common/users', `PUT`, data).pipe(
+    return this.clientService.sendRequest<any>('/users', `PUT`, data).pipe(
       map((response) => {
         window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
         this.userStore.setState(response.data.you);

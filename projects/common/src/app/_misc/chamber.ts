@@ -130,9 +130,9 @@ export function get_user_app_notifications_endpoint(
   const partial_prefix = is_public ? '/get-' : '/';
   
   const endpoint = get_all
-    ? '/common/users/' + user_id + partial_prefix + path + '/app/' + app + '/all'
+    ? '/users/' + user_id + partial_prefix + path + '/app/' + app + '/all'
     : min_id
-      ? '/common/users/' + user_id + partial_prefix + path + '/app/' + app + '/' + min_id
-      : '/common/users/' + user_id + partial_prefix + path + '/app/' + app;
+      ? '/users/' + user_id + partial_prefix + path + '/app/' + app + '/' + min_id
+      : '/users/' + user_id + partial_prefix + path + '/app/' + app;
   return endpoint;
 }
