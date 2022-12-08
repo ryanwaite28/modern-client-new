@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
@@ -19,18 +19,18 @@ export class SigninComponent implements OnInit {
     Validators.maxLength(this.TEXT_FORM_LIMIT)
   ];
 
-  signinForm = new FormGroup({
-    'email': new FormControl('', this.COMMON_TEXT_VALIDATOR),
-    'password': new FormControl('', this.COMMON_TEXT_VALIDATOR),
+  signinForm = new UntypedFormGroup({
+    'email': new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    'password': new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
   });
   error = false;
   errorMessage: string | any;
 
-  phoneForm = new FormGroup({
-    phone: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
+  phoneForm = new UntypedFormGroup({
+    phone: new UntypedFormControl('', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
   });
-  phoneVerifyForm = new FormGroup({
-    code: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]),
+  phoneVerifyForm = new UntypedFormGroup({
+    code: new UntypedFormControl('', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]),
   });
   phoneError = false;
   phoneErrorMessage: string | any;

@@ -1,5 +1,5 @@
 import { ElementRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { REACTION_TYPES } from '../enums/all.enums';
 import { HttpStatusCode } from '../enums/http-codes.enum';
 import { PlainObject } from './json-object.interface';
@@ -16,7 +16,7 @@ export interface IUserNotificationsLastOpenedByApp extends ICommonModel {
 export interface IFormSubmitEvent {
   formData: FormData,
   payload: PlainObject,
-  form: FormGroup,
+  form: UntypedFormGroup,
   formElm: HTMLFormElement,
   resetForm?: () => void,
 }

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertDivClass, MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
@@ -48,16 +48,16 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
   payment_client_secret: any;
   DeliveryCardDisplayMode = DeliveryCardDisplayMode;
 
-  newDeliveryTrackingUpdateForm = new FormGroup({
-    message: new FormControl('', [Validators.required]),
-    file: new FormControl(null)
+  newDeliveryTrackingUpdateForm = new UntypedFormGroup({
+    message: new UntypedFormControl('', [Validators.required]),
+    file: new UntypedFormControl(null)
   });
 
   messageFormIsOpen = false;
   messages_list_end = false;
   MSG_MAX_LENGTH = 1000;
-  messageForm = new FormGroup({
-    body: new FormControl('', [
+  messageForm = new UntypedFormGroup({
+    body: new UntypedFormControl('', [
       Validators.required,
       // Validators.pattern(/(.*)+/),
       Validators.minLength(1),
@@ -592,7 +592,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.loading) {
       return;
     }
-    if (!this.messageForm.value.body.trim()) {
+    if (!(this.messageForm.value.body!.trim())) {
       return window.alert(`Message form cannot be empty`);
     }
 

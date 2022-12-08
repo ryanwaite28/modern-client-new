@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { INavigatorGeoLocation } from 'projects/common/src/app/interfaces/_common.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
@@ -38,7 +38,7 @@ export class DeliverMeUserDeliveringFragmentComponent implements OnInit, OnDestr
   end_reached_past: boolean = true;
   loading: boolean = false;
 
-  searchCriteriaCtrl = new FormControl(searchCriterias[2].value, []);
+  searchCriteriaCtrl = new UntypedFormControl(searchCriterias[2].value, []);
   searchCriterias = searchCriterias;
 
   constructor(

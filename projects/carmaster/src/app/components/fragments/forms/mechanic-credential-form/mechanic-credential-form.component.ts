@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IMechanicCredential } from 'projects/carmaster/src/app/interfaces/carmaster.interface';
 import { IFormSubmitEvent } from 'projects/common/src/app/interfaces/_common.interface';
 
@@ -26,17 +26,17 @@ export class MechanicCredentialFormComponent implements OnInit {
 
   loading = false;
 
-  form = new FormGroup({});
+  form = new UntypedFormGroup({});
 
   constructor() { }
 
   ngOnInit() {
-    const formGroupConfig: { [key:string]: FormControl } = {};
+    const formGroupConfig: { [key:string]: UntypedFormControl } = {};
     for (const config of default_form_config) {
       const value = this.isEditing ? this.credential![config.field] : config.defaultValue
-      formGroupConfig[config.field] = new FormControl(value, config.validations)
+      formGroupConfig[config.field] = new UntypedFormControl(value, config.validations)
     }
-    this.form = new FormGroup(formGroupConfig);
+    this.form = new UntypedFormGroup(formGroupConfig);
   }
 
   resetForm(

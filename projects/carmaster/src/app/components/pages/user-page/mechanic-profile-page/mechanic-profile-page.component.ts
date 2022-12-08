@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IMechanic, IMechanicCredential, IMechanicExpertise, IMechanicField, IMechanicService } from 'projects/carmaster/src/app/interfaces/carmaster.interface';
 import { CarmasterService } from 'projects/carmaster/src/app/services/carmaster.service';
@@ -43,11 +43,11 @@ export class MechanicProfilePageComponent implements OnInit, AfterViewInit {
   loading: boolean = false;
   google: any;
 
-  profileForm = new FormGroup({
-    bio: new FormControl('', []),
-    website: new FormControl('', []),
-    phone: new FormControl('', []),
-    email: new FormControl('', []),
+  profileForm = new UntypedFormGroup({
+    bio: new UntypedFormControl('', []),
+    website: new UntypedFormControl('', []),
+    phone: new UntypedFormControl('', []),
+    email: new UntypedFormControl('', []),
   });
 
   showSectionsMap: PlainObject<boolean> = {

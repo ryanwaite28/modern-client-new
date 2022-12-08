@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CARMASTER_EVENT_TYPES } from 'projects/carmaster/src/app/enums/car-master.enum';
 import { service_categories_display_by_key } from 'projects/carmaster/src/app/utils/car-services.chamber';
@@ -29,7 +29,7 @@ export class ServiceRequestSearchComponent implements OnInit {
   is_subscription_active = false;
 
   MSG_MAX_LENGTH = 1000;
-  messageFormsByUserId: PlainObject<FormGroup> = {};
+  messageFormsByUserId: PlainObject<UntypedFormGroup> = {};
   service_categories_display_by_key = service_categories_display_by_key;
   offerByServiceRequestId: PlainObject<IMechanicServiceRequestOffer | undefined> = {};
   subsList: Subscription[] = [];
@@ -78,13 +78,13 @@ export class ServiceRequestSearchComponent implements OnInit {
           return;
         }
 
-        const messageFormsByUserId: PlainObject<FormGroup> = {};
+        const messageFormsByUserId: PlainObject<UntypedFormGroup> = {};
         for (const service_request of this.service_requests) {
           const yourOffer = service_request.service_request_offers!.find(offer => offer.mechanic!.user_id === this.you!.id && offer.status === COMMON_STATUSES.PENDING);
           this.offerByServiceRequestId[service_request.id] = yourOffer;
-          messageFormsByUserId[service_request.user_id] = new FormGroup({
-            sendText: new FormControl(false, []),
-            body: new FormControl('', [
+          messageFormsByUserId[service_request.user_id] = new UntypedFormGroup({
+            sendText: new UntypedFormControl(false, []),
+            body: new UntypedFormControl('', [
               Validators.required,
               Validators.minLength(1),
               Validators.maxLength(this.MSG_MAX_LENGTH)

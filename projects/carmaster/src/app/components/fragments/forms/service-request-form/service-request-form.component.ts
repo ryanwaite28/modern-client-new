@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { PaymentMethod } from '@stripe/stripe-js';
 import { IMechanicServiceRequest } from 'projects/carmaster/src/app/interfaces/carmaster.interface';
 import { service_categories, service_action_types, service_types_by_service_category } from 'projects/carmaster/src/app/utils/car-services.chamber';
@@ -66,7 +66,7 @@ export class ServiceRequestFormComponent implements OnInit, AfterViewInit {
   cars_map = CARS_MAP;
   make_models: string[] = [];
 
-  form = new FormGroup({});
+  form = new UntypedFormGroup({});
 
   autocomplete?: any;
   manage: PlainObject = {};
@@ -93,11 +93,11 @@ export class ServiceRequestFormComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    const formGroupConfig: { [key:string]: FormControl } = {};
+    const formGroupConfig: { [key:string]: UntypedFormControl } = {};
     for (const config of default_form_config) {
-      formGroupConfig[config.field] = new FormControl(config.defaultValue, config.validations)
+      formGroupConfig[config.field] = new UntypedFormControl(config.defaultValue, config.validations)
     }
-    this.form = new FormGroup(formGroupConfig);
+    this.form = new UntypedFormGroup(formGroupConfig);
 
     this.form.get('service_category')!.valueChanges.subscribe({
       next: (service_category: string) => {

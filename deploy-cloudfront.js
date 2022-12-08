@@ -276,7 +276,7 @@ async function deployProject(appName, env) {
     uploadResults = await uploadToS3(uploadItems, bucket, bucketUploadPath);
     logs.push(JSON.stringify({ uploadResults }));
   } catch (error) {
-    logs.push(String(err));
+    logs.push(String(error));
     savelogs();
     process.exit(1);
   }

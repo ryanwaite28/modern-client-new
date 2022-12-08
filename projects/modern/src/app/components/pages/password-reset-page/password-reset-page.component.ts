@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AlertService } from '../../../services/alert.service';
 import { UsersService } from '../../../services/users.service';
 
@@ -10,12 +10,12 @@ import { UsersService } from '../../../services/users.service';
   styleUrls: ['./password-reset-page.component.scss']
 })
 export class PasswordResetPageComponent implements OnInit {
-  sendResetForm = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+  sendResetForm = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required]),
   });
 
-  confirmCodeForm = new FormGroup({
-    code: new FormControl('', [Validators.required]),
+  confirmCodeForm = new UntypedFormGroup({
+    code: new UntypedFormControl('', [Validators.required]),
   });
 
   loading: boolean = false;

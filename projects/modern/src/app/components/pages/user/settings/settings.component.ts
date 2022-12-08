@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PaymentMethod, StripeCardElement, PaymentMethodResult } from '@stripe/stripe-js';
 import { AlertDivClass } from 'projects/common/src/app/enums/all.enums';
@@ -53,47 +53,47 @@ export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnD
 
   TEXT_INV_PRT_LIMIT = 500;
 
-  userInfoForm = new FormGroup({
-    email: new FormControl('', this.COMMON_TEXT_VALIDATOR),
-    // phone: new FormControl('', [Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]{10,11}$/g)]),
-    username: new FormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
-    displayname: new FormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
-    // city: new FormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
-    // state: new FormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
-    // zipcode: new FormControl(0, [Validators.maxLength(5)]),
-    // country: new FormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
-    location: new FormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
-    location_id: new FormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
-    location_json: new FormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
-    bio: new FormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
-    headline: new FormControl('', [Validators.maxLength(75)]),
-    // tags: new FormControl([], [Validators.maxLength(20)]),
-    can_message: new FormControl(false, []),
-    can_converse: new FormControl(false, []),
+  userInfoForm = new UntypedFormGroup({
+    email: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    // phone: new UntypedFormControl('', [Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]{10,11}$/g)]),
+    username: new UntypedFormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
+    displayname: new UntypedFormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
+    // city: new UntypedFormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
+    // state: new UntypedFormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
+    // zipcode: new UntypedFormControl(0, [Validators.maxLength(5)]),
+    // country: new UntypedFormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
+    location: new UntypedFormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
+    location_id: new UntypedFormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
+    location_json: new UntypedFormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
+    bio: new UntypedFormControl('', [Validators.maxLength(this.TEXT_FORM_LIMIT)]),
+    headline: new UntypedFormControl('', [Validators.maxLength(75)]),
+    // tags: new UntypedFormControl([], [Validators.maxLength(20)]),
+    can_message: new UntypedFormControl(false, []),
+    can_converse: new UntypedFormControl(false, []),
   });
 
-  userPasswordForm = new FormGroup({
-    oldPassword: new FormControl('', this.COMMON_TEXT_VALIDATOR),
-    password: new FormControl('', this.COMMON_TEXT_VALIDATOR),
-    confirmPassword: new FormControl('', this.COMMON_TEXT_VALIDATOR),
+  userPasswordForm = new UntypedFormGroup({
+    oldPassword: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    password: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    confirmPassword: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
   });
 
-  phoneForm = new FormGroup({
-    phone: new FormControl('', [Validators.pattern(/^[\d]+$/), Validators.minLength(10), Validators.maxLength(10)]),
+  phoneForm = new UntypedFormGroup({
+    phone: new UntypedFormControl('', [Validators.pattern(/^[\d]+$/), Validators.minLength(10), Validators.maxLength(10)]),
   });
-  phoneVerifyForm = new FormGroup({
-    code: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]),
-  });
-
-  userIconForm = new FormGroup({
-    file: new FormControl(null),
+  phoneVerifyForm = new UntypedFormGroup({
+    code: new UntypedFormControl('', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]),
   });
 
-  userWallpaperForm = new FormGroup({
-    file: new FormControl(null),
+  userIconForm = new UntypedFormGroup({
+    file: new UntypedFormControl(null),
   });
 
-  membershipPaymentMethodControl = new FormControl(null, [Validators.required]);
+  userWallpaperForm = new UntypedFormGroup({
+    file: new UntypedFormControl(null),
+  });
+
+  membershipPaymentMethodControl = new UntypedFormControl(null, [Validators.required]);
 
   locationInput?: HTMLInputElement;
   googleIsReadySub?: Subscription;
@@ -479,7 +479,7 @@ export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnD
     this.loading = true;
     this.usersService.verify_sms_code({
       request_id: this.sms_request_id!,
-      code: this.phoneVerifyForm.value.code,
+      code: this.phoneVerifyForm.value.code!,
     }).subscribe(
       (response: any) => {
         this.loading = false;
@@ -582,7 +582,7 @@ export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnD
     }
 
     this.loading = true;
-    this.usersService.create_subscription(this.you!.id, this.membershipPaymentMethodControl.value).subscribe({
+    this.usersService.create_subscription(this.you!.id, this.membershipPaymentMethodControl.value!).subscribe({
       next: (response: any) => {
         this.loading = false;
         this.alertService.handleResponseSuccessGeneric({ message: response.message || '' });

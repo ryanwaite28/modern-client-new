@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IMechanicExpertise } from 'projects/carmaster/src/app/interfaces/carmaster.interface';
 import { CARS_MAKES_MODELS, CARS_MAP } from 'projects/carmaster/src/app/utils/cars.chamber';
 import { COMMON_CURRENT_DATE } from 'projects/common/src/app/_misc/vault';
@@ -33,17 +33,17 @@ export class MechanicExpertiseFormComponent implements OnInit {
   cars_map = CARS_MAP;
   make_models: string[] = [];
 
-  form = new FormGroup({});
+  form = new UntypedFormGroup({});
 
   constructor() { }
 
   ngOnInit() {
-    const formGroupConfig: { [key:string]: FormControl } = {};
+    const formGroupConfig: { [key:string]: UntypedFormControl } = {};
     for (const config of default_form_config) {
       const value = this.isEditing ? this.expertise![config.field] : config.defaultValue
-      formGroupConfig[config.field] = new FormControl(value, config.validations)
+      formGroupConfig[config.field] = new UntypedFormControl(value, config.validations)
     }
-    this.form = new FormGroup(formGroupConfig);
+    this.form = new UntypedFormGroup(formGroupConfig);
 
     this.form.get('make')!.valueChanges.subscribe({
       next: (make: string) => {

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Params, ActivatedRoute } from '@angular/router';
 import { CARMASTER_EVENT_TYPES } from 'projects/carmaster/src/app/enums/car-master.enum';
 import { CarmasterService } from 'projects/carmaster/src/app/services/carmaster.service';
@@ -33,8 +33,8 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
   userIsTyping = false;
 
   MSG_MAX_LENGTH = 500;
-  messageForm = new FormGroup({
-    body: new FormControl('', [Validators.pattern(/[^\s]+/gi), Validators.maxLength(this.MSG_MAX_LENGTH)])
+  messageForm = new UntypedFormGroup({
+    body: new UntypedFormControl('', [Validators.pattern(/[^\s]+/gi), Validators.maxLength(this.MSG_MAX_LENGTH)])
   });
 
   // socketCurrentMessagingEmitter?: any;

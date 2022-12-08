@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, EventEmitter, Output, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { PaymentMethod } from '@stripe/stripe-js';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
@@ -75,7 +75,7 @@ export class DeliveryFormComponent implements AfterViewInit, OnDestroy {
   payment_methods: PaymentMethod[] | null = null;
   is_subscription_active: boolean = false;
 
-  deliveryForm: FormGroup | null = null;
+  deliveryForm: UntypedFormGroup | null = null;
 
   chargeFeeData: any;
 
@@ -88,12 +88,12 @@ export class DeliveryFormComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const formGroupConfig: { [key:string]: FormControl } = {};
+    const formGroupConfig: { [key:string]: UntypedFormControl } = {};
     for (const config of delivery_form_config) {
       const value = this.isEditing ? this.delivery[config.field] : config.defaultValue
-      formGroupConfig[config.field] = new FormControl(value, config.validations)
+      formGroupConfig[config.field] = new UntypedFormControl(value, config.validations)
     }
-    this.deliveryForm = new FormGroup(formGroupConfig);
+    this.deliveryForm = new UntypedFormGroup(formGroupConfig);
     this.chargeFeeData = this.stripeService.add_on_stripe_processing_fee(this.deliveryForm.value.payout);
 
     this.deliveryForm.get('payout')?.valueChanges.subscribe((value) => {

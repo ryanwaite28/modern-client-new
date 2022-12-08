@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { ratingOptions } from 'projects/common/src/app/_misc/vault';
@@ -24,7 +24,7 @@ export class MechanicRatingFormComponent implements OnInit {
   loading = false;
   ratingOptions = ratingOptions;
   you: IUser | null = null;
-  form = new FormGroup({});
+  form = new UntypedFormGroup({});
 
   constructor(
     private userStore: UserStoreService,
@@ -37,12 +37,12 @@ export class MechanicRatingFormComponent implements OnInit {
       }
     });
 
-    const formGroupConfig: { [key:string]: FormControl } = {};
+    const formGroupConfig: { [key:string]: UntypedFormControl } = {};
     for (const config of default_form_config) {
       const value = config.defaultValue;
-      formGroupConfig[config.field] = new FormControl(value, config.validations)
+      formGroupConfig[config.field] = new UntypedFormControl(value, config.validations)
     }
-    this.form = new FormGroup(formGroupConfig);
+    this.form = new UntypedFormGroup(formGroupConfig);
   }
 
   resetForm(

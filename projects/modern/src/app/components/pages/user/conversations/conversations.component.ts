@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Params, ActivatedRoute } from '@angular/router';
 import { COMMON_EVENT_TYPES, MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
@@ -22,8 +22,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class UserConversationsComponent implements OnInit, OnDestroy {
   @ViewChild('conversationFormElm', { static: false }) conversationFormElm: ElementRef<HTMLFormElement> | any;
   
-  conversationForm = new FormGroup({
-    title: new FormControl('', [Validators.required])
+  conversationForm = new UntypedFormGroup({
+    title: new UntypedFormControl('', [Validators.required])
   });
 
   you: IUser | any;
@@ -65,11 +65,11 @@ export class UserConversationsComponent implements OnInit, OnDestroy {
   removedSub: Subscription | any;
 
   MSG_MAX_LENGTH = 1000;
-  messageForm = new FormGroup({
-    body: new FormControl('', [])
+  messageForm = new UntypedFormGroup({
+    body: new UntypedFormControl('', [])
   });
-  searchUsersForm = new FormGroup({
-    name: new FormControl('', [])
+  searchUsersForm = new UntypedFormGroup({
+    name: new UntypedFormControl('', [])
   });
   searchUsersInputChanged = new Subject();
 

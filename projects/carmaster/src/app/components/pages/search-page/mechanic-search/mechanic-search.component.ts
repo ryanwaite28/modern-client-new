@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { IFormSubmitEvent } from 'projects/common/src/app/interfaces/_common.interface';
@@ -21,7 +21,7 @@ export class MechanicSearchComponent implements OnInit {
   mechanics: IMechanic[] = [];
 
   MSG_MAX_LENGTH = 1000;
-  messageFormsByMechanicId: PlainObject<FormGroup> = {};
+  messageFormsByMechanicId: PlainObject<UntypedFormGroup> = {};
 
   constructor(
     private userStore: UserStoreService,
@@ -51,9 +51,9 @@ export class MechanicSearchComponent implements OnInit {
 
         this.messageFormsByMechanicId = {};
         for (const mechanic of this.mechanics) {
-          this.messageFormsByMechanicId[mechanic.id] = new FormGroup({
-            sendText: new FormControl(false, []),
-            body: new FormControl('', [
+          this.messageFormsByMechanicId[mechanic.id] = new UntypedFormGroup({
+            sendText: new UntypedFormControl(false, []),
+            body: new UntypedFormControl('', [
               Validators.required,
               Validators.minLength(1),
               Validators.maxLength(this.MSG_MAX_LENGTH)

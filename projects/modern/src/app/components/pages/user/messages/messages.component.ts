@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Params, ActivatedRoute } from '@angular/router';
 import { COMMON_EVENT_TYPES, MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
@@ -30,8 +30,8 @@ export class UserMessagesFragmentComponent implements OnInit, OnDestroy {
   userIsTyping = false;
 
   MSG_MAX_LENGTH = 1000;
-  messageForm = new FormGroup({
-    body: new FormControl('', [Validators.pattern(/[^\s]+/gi), Validators.maxLength(this.MSG_MAX_LENGTH)])
+  messageForm = new UntypedFormGroup({
+    body: new UntypedFormControl('', [Validators.pattern(/[^\s]+/gi), Validators.maxLength(this.MSG_MAX_LENGTH)])
   });
 
   socketCurrentMessagingEmitter?: any;

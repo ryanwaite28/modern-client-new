@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { UsersService } from 'projects/common/src/app/services/users.service';
@@ -23,24 +23,24 @@ export class SignupComponent implements OnInit {
     Validators.maxLength(this.TEXT_FORM_LIMIT)
   ];
 
-  phoneForm = new FormGroup({
-    phone: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
+  phoneForm = new UntypedFormGroup({
+    phone: new UntypedFormControl('', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
   });
-  phoneVerifyForm = new FormGroup({
-    code: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]),
+  phoneVerifyForm = new UntypedFormGroup({
+    code: new UntypedFormControl('', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]),
   });
 
   genderOptions = genderOptions;
-  signupForm = new FormGroup({
-    firstname: new FormControl('', this.COMMON_TEXT_VALIDATOR),
-    middlename: new FormControl('', Validators.maxLength(this.TEXT_FORM_LIMIT)),
-    lastname: new FormControl('', this.COMMON_TEXT_VALIDATOR),
-    username: new FormControl('', this.COMMON_TEXT_VALIDATOR),
-    displayname: new FormControl('', this.COMMON_TEXT_VALIDATOR),
+  signupForm = new UntypedFormGroup({
+    firstname: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    middlename: new UntypedFormControl('', Validators.maxLength(this.TEXT_FORM_LIMIT)),
+    lastname: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    username: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    displayname: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
 
-    email: new FormControl('', this.COMMON_TEXT_VALIDATOR),
-    password: new FormControl('', this.COMMON_TEXT_VALIDATOR),
-    confirmPassword: new FormControl('', this.COMMON_TEXT_VALIDATOR),
+    email: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    password: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    confirmPassword: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
   });
 
   error = false;

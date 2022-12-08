@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AlertDivClass, MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
@@ -42,8 +42,8 @@ export class ServiceRequestCardComponent implements OnInit, OnDestroy {
   messageFormIsOpen = false;
   messages_list_end = false;
   MSG_MAX_LENGTH = 1000;
-  messageForm = new FormGroup({
-    body: new FormControl('', [
+  messageForm = new UntypedFormGroup({
+    body: new UntypedFormControl('', [
       Validators.required,
       // Validators.pattern(/(.*)+/),
       Validators.minLength(1),

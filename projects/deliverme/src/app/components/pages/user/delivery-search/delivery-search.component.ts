@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
@@ -22,11 +22,11 @@ export class DeliverMeUserDeliverySearchFragmentComponent implements OnInit {
   loading: boolean = false;
   firstSearch: boolean = true;
   search_deliveries_results: any = [];
-  searchDeliveriesForm = new FormGroup({
-    from_city: new FormControl('', []),
-    from_state: new FormControl('', []),
-    to_city: new FormControl('', []),
-    to_state: new FormControl('', []),
+  searchDeliveriesForm = new UntypedFormGroup({
+    from_city: new UntypedFormControl('', []),
+    from_state: new UntypedFormControl('', []),
+    to_city: new UntypedFormControl('', []),
+    to_state: new UntypedFormControl('', []),
   });
 
   google: any;

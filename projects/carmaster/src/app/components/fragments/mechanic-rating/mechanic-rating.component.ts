@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { IUser } from 'projects/common/src/app/interfaces/user.interface';
 import { AlertService } from 'projects/common/src/app/services/alert.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
@@ -19,7 +19,7 @@ export class MechanicRatingComponent implements OnInit {
 
   you: IUser | null = null;
   loading = false;
-  summaryControl = new FormControl('', [Validators.required]);
+  summaryControl = new UntypedFormControl('', [Validators.required]);
 
   get isYou(): boolean {
     const isYours = (

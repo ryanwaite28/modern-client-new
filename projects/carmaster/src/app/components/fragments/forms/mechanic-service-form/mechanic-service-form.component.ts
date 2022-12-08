@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IMechanicService } from 'projects/carmaster/src/app/interfaces/carmaster.interface';
 import { service_categories, service_action_types, service_types_by_service_category } from 'projects/carmaster/src/app/utils/car-services.chamber';
 
@@ -32,17 +32,17 @@ export class MechanicServiceFormComponent implements OnInit {
   service_actions = service_action_types;
   make_models: string[] = [];
 
-  form = new FormGroup({});
+  form = new UntypedFormGroup({});
 
   constructor() { }
 
   ngOnInit() {
-    const formGroupConfig: { [key:string]: FormControl } = {};
+    const formGroupConfig: { [key:string]: UntypedFormControl } = {};
     for (const config of default_form_config) {
       const value = this.isEditing ? this.service![config.field] : config.defaultValue
-      formGroupConfig[config.field] = new FormControl(value, config.validations)
+      formGroupConfig[config.field] = new UntypedFormControl(value, config.validations)
     }
-    this.form = new FormGroup(formGroupConfig);
+    this.form = new UntypedFormGroup(formGroupConfig);
 
     this.form.get('service_category')!.valueChanges.subscribe({
       next: (service_category: string) => {
