@@ -86,7 +86,7 @@ export class UsersService {
       });
     }
     return this.clientService.sendRequest<any>(
-      '/common/users/check-session',
+      '/users/check-session',
       `GET`,
       null,
     ).pipe(
@@ -126,7 +126,7 @@ export class UsersService {
   }
 
   verify_email(uuid: string): Observable<GenericApiResponse> {
-    const endpoint = '/common/users/verify-email/' + uuid;
+    const endpoint = '/users/verify-email/' + uuid;
     return this.clientService.sendRequest<GenericApiResponse>(endpoint, `GET`).pipe(
       map((response) => {
         this.userStore.setState(null);
@@ -137,7 +137,7 @@ export class UsersService {
   }
 
   send_sms_verification(phone: string): Observable<GenericApiResponse> {
-    const endpoint = '/common/users/send-sms-verification/' + phone;
+    const endpoint = '/users/send-sms-verification/' + phone;
     return this.clientService.sendRequest<GenericApiResponse>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -150,7 +150,7 @@ export class UsersService {
     code: string,
   }): Observable<GetVerifySmsCode> {
     const { request_id, code } = params;
-    const endpoint = `/common/users/verify-sms-code/request_id/${request_id}/code/${code}`;
+    const endpoint = `/users/verify-sms-code/request_id/${request_id}/code/${code}`;
     return this.clientService.sendRequest<GetVerifySmsCode>(endpoint, `GET`).pipe(
       map((response: any) => {
         return response;
@@ -159,7 +159,7 @@ export class UsersService {
   }
 
   send_feedback(you_id: number, data: PlainObject) {
-    const endpoint = `/common/users/${you_id}/feedback`;
+    const endpoint = `/users/${you_id}/feedback`;
     return this.clientService.sendRequest<any>(endpoint, `POST`, data).pipe(
       map((response: any) => {
         return response;
@@ -170,7 +170,7 @@ export class UsersService {
   /** */
 
   get_user_by_id(id: number) {
-    const endpoint = '/common/users/id/' + id;
+    const endpoint = '/users/id/' + id;
     return this.clientService.sendRequest<IUser>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -179,7 +179,7 @@ export class UsersService {
   }
 
   get_user_by_phone(phone: string) {
-    const endpoint = '/common/users/phone/' + phone;
+    const endpoint = '/users/phone/' + phone;
     return this.clientService.sendRequest<IUser>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -188,7 +188,7 @@ export class UsersService {
   }
 
   check_user_follows(you_id: number, user_id: number) {
-    const endpoint = `/common/users/${you_id}/follows/${user_id}`;
+    const endpoint = `/users/${you_id}/follows/${user_id}`;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -197,7 +197,7 @@ export class UsersService {
   }
 
   get_user_followers_count(user_id: number) {
-    const endpoint = `/common/users/${user_id}/followers-count`;
+    const endpoint = `/users/${user_id}/followers-count`;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -206,7 +206,7 @@ export class UsersService {
   }
 
   get_user_followings_count(user_id: number) {
-    const endpoint = `/common/users/${user_id}/followings-count`;
+    const endpoint = `/users/${user_id}/followings-count`;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -216,10 +216,10 @@ export class UsersService {
 
   get_user_messagings(you_id: number, messagings_timestamp?: string, get_all: boolean = false) {
     const endpoint = get_all
-      ? '/common/users/' + you_id + '/messagings/all'
+      ? '/users/' + you_id + '/messagings/all'
       : messagings_timestamp
-        ? '/common/users/' + you_id + '/messagings/' + messagings_timestamp
-        : '/common/users/' + you_id + '/messagings';
+        ? '/users/' + you_id + '/messagings/' + messagings_timestamp
+        : '/users/' + you_id + '/messagings';
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -229,8 +229,8 @@ export class UsersService {
 
   get_user_messages(you_id: number, user_id: number, min_id?: number) {
     const endpoint = min_id
-      ? '/common/users/' + you_id + '/messages/' + user_id + '/' + min_id
-      : '/common/users/' + you_id + '/messages/' + user_id;
+      ? '/users/' + you_id + '/messages/' + user_id + '/' + min_id
+      : '/users/' + you_id + '/messages/' + user_id;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -239,7 +239,7 @@ export class UsersService {
   }
 
   get_unseen_counts(you_id: number) {
-    const endpoint = `/common/users/${you_id}/unseen-counts`;
+    const endpoint = `/users/${you_id}/unseen-counts`;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -248,7 +248,7 @@ export class UsersService {
   }
 
   get_user_api_key(you_id: number) {
-    const endpoint = `/common/users/${you_id}/api-key`;
+    const endpoint = `/users/${you_id}/api-key`;
     return this.clientService.sendRequest<IApiKey>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -257,7 +257,7 @@ export class UsersService {
   }
 
   get_user_customer_cards_payment_methods(you_id: number) {
-    const endpoint = `/common/users/${you_id}/customer-cards-payment-methods`;
+    const endpoint = `/users/${you_id}/customer-cards-payment-methods`;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -291,7 +291,7 @@ export class UsersService {
     pred_ref_profile: string = '',
     cause: string = '',
   ) {
-    const endpoint = `/common/users/${you_id}/random?model_name=${model_name}&industry=${industry}&gallup_strength=${gallup_strength}&pred_ref_profile=${pred_ref_profile}&cause=${cause}`;
+    const endpoint = `/users/${you_id}/random?model_name=${model_name}&industry=${industry}&gallup_strength=${gallup_strength}&pred_ref_profile=${pred_ref_profile}&cause=${cause}`;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -301,8 +301,8 @@ export class UsersService {
 
   get_user_feed(you_id: number, feed_type: string, min_id?: number) {
     const endpoint = min_id
-      ? `/common/users/${you_id}/feed/${min_id}?feed_type=${feed_type}`
-      : `/common/users/${you_id}/feed?feed_type=${feed_type}`;
+      ? `/users/${you_id}/feed/${min_id}?feed_type=${feed_type}`
+      : `/users/${you_id}/feed?feed_type=${feed_type}`;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -359,7 +359,7 @@ export class UsersService {
   }
 
   getUserAppNotificationsLastOpened(you_id: number, micro_app: MODERN_APPS) {
-    return this.clientService.sendRequest<IUserNotificationsLastOpenedByApp>(`/common/users/${you_id}/notifications/app/${micro_app}/app-notifications-last-opened`, `GET`).pipe(
+    return this.clientService.sendRequest<IUserNotificationsLastOpenedByApp>(`/users/${you_id}/notifications/app/${micro_app}/app-notifications-last-opened`, `GET`).pipe(
       map((response) => {
         this.notificationsLastOpenedByApp[micro_app] = response.data!;
         return response;
@@ -368,7 +368,7 @@ export class UsersService {
   }
 
   updateUserAppNotificationsLastOpened(you_id: number, micro_app: MODERN_APPS) {
-    return this.clientService.sendRequest<IUserNotificationsLastOpenedByApp>(`/common/users/${you_id}/notifications/app/${micro_app}/update-app-notifications-last-opened`, `POST`).pipe(
+    return this.clientService.sendRequest<IUserNotificationsLastOpenedByApp>(`/users/${you_id}/notifications/app/${micro_app}/update-app-notifications-last-opened`, `POST`).pipe(
       map((response) => {
         this.notificationsLastOpenedByApp[micro_app] = response.data!;
         return response;
@@ -389,7 +389,7 @@ export class UsersService {
   }
 
   create_user_field(id: number, data: PlainObject) {
-    return this.clientService.sendRequest<GenericApiResponse<IUserField>>(`/common/users/${id}/user-field`, `POST`, data).pipe(
+    return this.clientService.sendRequest<GenericApiResponse<IUserField>>(`/users/${id}/user-field`, `POST`, data).pipe(
       map((response) => {
         return response;
       })
@@ -397,7 +397,7 @@ export class UsersService {
   }
 
   follow_user(you_id: number, user_id: number) {
-    const endpoint = `/common/users/${you_id}/follows/${user_id}`;
+    const endpoint = `/users/${you_id}/follows/${user_id}`;
     return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
       map((response) => {
         return response;
@@ -406,7 +406,7 @@ export class UsersService {
   }
 
   send_user_message(you_id: number, user_id: number, data: PlainObject) {
-    return this.clientService.sendRequest<any>(`/common/users/${you_id}/send-message/${user_id}`, `POST`, data).pipe(
+    return this.clientService.sendRequest<any>(`/users/${you_id}/send-message/${user_id}`, `POST`, data).pipe(
       map((response) => {
         return response;
       })
@@ -414,7 +414,7 @@ export class UsersService {
   }
 
   update_user_last_opened(you_id: number) {
-    return this.clientService.sendRequest<any>(`/common/users/${you_id}/notifications/update-last-opened`, `POST`).pipe(
+    return this.clientService.sendRequest<any>(`/users/${you_id}/notifications/update-last-opened`, `POST`).pipe(
       map((response: any) => {
         window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
         this.userStore.setState(response.data.you);
@@ -424,7 +424,7 @@ export class UsersService {
   }
 
   update_conversation_last_opened(you_id: number, conversation_id: number) {
-    return this.clientService.sendRequest<any>(`/common/users/${you_id}/conversations/${conversation_id}/update-last-opened`, `PUT`).pipe(
+    return this.clientService.sendRequest<any>(`/users/${you_id}/conversations/${conversation_id}/update-last-opened`, `PUT`).pipe(
       map((response: any) => {
         return response;
       })
@@ -432,7 +432,7 @@ export class UsersService {
   }
 
   add_card_payment_method_to_user_customer(you_id: number, payment_method_id: string) {
-    const endpoint = `/common/users/${you_id}/customer-cards-payment-methods/${payment_method_id}`;
+    const endpoint = `/users/${you_id}/customer-cards-payment-methods/${payment_method_id}`;
     return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
       map((response) => {
         return response;
@@ -444,7 +444,7 @@ export class UsersService {
   
   create_stripe_account<T = any>(you_id: number) {
     return this.clientService.sendRequest<GenericApiResponse<T>>(
-      `/common/users/${you_id}/create-stripe-account`, `PUT`
+      `/users/${you_id}/create-stripe-account`, `PUT`
     ).pipe(
       map((response: any) => {
         return response;
@@ -454,7 +454,7 @@ export class UsersService {
 
   verify_stripe_account<T = any>(you_id: number) {
     return this.clientService.sendRequest<GenericApiResponse<T>>(
-      `/common/users/${you_id}/verify-stripe-account`, `PUT`
+      `/users/${you_id}/verify-stripe-account`, `PUT`
     ).pipe(
       map((response: any) => {
         return response;
@@ -464,7 +464,7 @@ export class UsersService {
 
   verify_stripe_account_via_uuid<T = any>(user_uuid: string) {
     return this.clientService.sendRequest<GenericApiResponse<T>>(
-      `/common/users/${user_uuid}/verify-stripe-account-by-uuid`, `PUT`
+      `/users/${user_uuid}/verify-stripe-account-by-uuid`, `PUT`
     ).pipe(
       map((response: any) => {
         return response;
@@ -483,7 +483,7 @@ export class UsersService {
   }
 
   update_info(id: number, data: PlainObject) {
-    const endpoint = `/common/users/${id}/info`;
+    const endpoint = `/users/${id}/info`;
     return this.clientService.sendRequest<any>(endpoint, `PUT`, data).pipe(
       map((response) => {
         window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
@@ -494,7 +494,7 @@ export class UsersService {
   }
 
   update_password(id: number, data: PlainObject) {
-    const endpoint = `/common/users/${id}/password`;
+    const endpoint = `/users/${id}/password`;
     return this.clientService.sendRequest<any>(endpoint, `PUT`, data).pipe(
       map((response) => {
         window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
@@ -505,7 +505,7 @@ export class UsersService {
   }
 
   update_phone(id: number, data: PlainObject) {
-    const endpoint = `/common/users/${id}/phone`;
+    const endpoint = `/users/${id}/phone`;
     return this.clientService.sendRequest<any>(endpoint, `PUT`, data).pipe(
       map((response) => {
         window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
@@ -516,7 +516,7 @@ export class UsersService {
   }
 
   update_icon(id: number, formData: FormData) {
-    const endpoint = `/common/users/${id}/icon`;
+    const endpoint = `/users/${id}/icon`;
     return this.clientService.sendRequest<any>(endpoint, `PUT`, formData).pipe(
       map((response) => {
         window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
@@ -527,7 +527,7 @@ export class UsersService {
   }
 
   update_wallpaper(id: number, formData: FormData) {
-    const endpoint = `/common/users/${id}/wallpaper`;
+    const endpoint = `/users/${id}/wallpaper`;
     return this.clientService.sendRequest<any>(endpoint, `PUT`, formData).pipe(
       map((response) => {
         window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
@@ -538,7 +538,7 @@ export class UsersService {
   }
 
   update_user_field(you_id: number, id: number, data: PlainObject) {
-    const endpoint = `/common/users/${you_id}/user-field/${id}`;
+    const endpoint = `/users/${you_id}/user-field/${id}`;
     return this.clientService.sendRequest<IUserField>(endpoint, `PUT`, data).pipe(
       map((response) => {
         return response;
@@ -547,7 +547,7 @@ export class UsersService {
   }
 
   submit_reset_password_request(email: string) {
-    const endpoint = `/common/users/${email}/password-reset`;
+    const endpoint = `/users/${email}/password-reset`;
     return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
       map((response) => {
         return response;
@@ -556,7 +556,7 @@ export class UsersService {
   }
 
   submit_password_reset_code(code: string) {
-    const endpoint = `/common/users/password-reset/${code}`;
+    const endpoint = `/users/password-reset/${code}`;
     return this.clientService.sendRequest<any>(endpoint, `PUT`).pipe(
       map((response) => {
         return response;
@@ -567,7 +567,7 @@ export class UsersService {
   /** DELETE */
 
   delete_user_field(you_id: number, id: number) {
-    const endpoint = `/common/users/${you_id}/user-field/${id}`;
+    const endpoint = `/users/${you_id}/user-field/${id}`;
     return this.clientService.sendRequest<GenericApiResponse>(endpoint, `DELETE`).pipe(
       map((response) => {
         return response;
@@ -576,7 +576,7 @@ export class UsersService {
   }
 
   unfollow_user(you_id: number, user_id: number) {
-    const endpoint = `/common/users/${you_id}/follows/${user_id}`;
+    const endpoint = `/users/${you_id}/follows/${user_id}`;
     return this.clientService.sendRequest<GenericApiResponse>(endpoint, `DELETE`).pipe(
       map((response) => {
         return response;
@@ -585,7 +585,7 @@ export class UsersService {
   }
 
   remove_card_payment_method_to_user_customer(you_id: number, payment_method_id: string) {
-    const endpoint = `/common/users/${you_id}/customer-cards-payment-methods/${payment_method_id}`;
+    const endpoint = `/users/${you_id}/customer-cards-payment-methods/${payment_method_id}`;
     return this.clientService.sendRequest<any>(endpoint, `DELETE`).pipe(
       map((response) => {
         return response;
@@ -596,7 +596,7 @@ export class UsersService {
 
 
   get_platform_subscription(you_id: number) {
-    const endpoint = `/common/users/${you_id}/get-subscription`;
+    const endpoint = `/users/${you_id}/get-subscription`;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -605,7 +605,7 @@ export class UsersService {
   }
 
   get_platform_subscription_info(user_id: number) {
-    const endpoint = `/common/users/${user_id}/get-subscription-info`;
+    const endpoint = `/users/${user_id}/get-subscription-info`;
     return this.clientService.sendRequest<IUserSubscriptionInfo | null>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -614,7 +614,7 @@ export class UsersService {
   }
 
   check_subscription_active(you_id: number) {
-    const endpoint = `/common/users/${you_id}/is-subscription-active`;
+    const endpoint = `/users/${you_id}/is-subscription-active`;
     return this.clientService.sendRequest<any>(endpoint, `GET`).pipe(
       map((response) => {
         return response;
@@ -623,7 +623,7 @@ export class UsersService {
   }
 
   create_subscription(you_id: number, payment_method_id: string) {
-    const endpoint = `/common/users/${you_id}/create-subscription/${payment_method_id}`;
+    const endpoint = `/users/${you_id}/create-subscription/${payment_method_id}`;
     return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
       map((response) => {
         window.localStorage.setItem('rmw-modern-apps-jwt', response.data.token);
@@ -636,7 +636,7 @@ export class UsersService {
   }
 
   cancel_subscription(you_id: number) {
-    const endpoint = `/common/users/${you_id}/cancel-subscription`;
+    const endpoint = `/users/${you_id}/cancel-subscription`;
     return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
       map((response) => {
         return response;

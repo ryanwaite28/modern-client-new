@@ -77,7 +77,7 @@ export class DeliveryService {
   }
 
   getUserDelivering<T = any>(user_id: number) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${user_id}/delivering`, `GET`);
+    return this.clientService.sendRequest<T>(`/users/${user_id}/delivering`, `GET`);
   }
 
   findAvailableDeliveryByFromCityAndState<T = any>(city: string, state: string) {
@@ -93,47 +93,47 @@ export class DeliveryService {
   }
 
   assignDelivery<T = any>(you_id: number, delivery_id: number) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/assign-delivery/${delivery_id}`, `POST`);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/assign-delivery/${delivery_id}`, `POST`);
   }
 
   unassignDelivery<T = any>(you_id: number, delivery_id: number) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/unassign-delivery/${delivery_id}`, `POST`);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/unassign-delivery/${delivery_id}`, `POST`);
   }
 
   markDeliveryAsPickedUp<T = any>(you_id: number, delivery_id: number) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/mark-delivery-as-picked-up/${delivery_id}`, `POST`);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/mark-delivery-as-picked-up/${delivery_id}`, `POST`);
   }
 
   markDeliveryAsDroppedOff<T = any>(you_id: number, delivery_id: number) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/mark-delivery-as-dropped-off/${delivery_id}`, `POST`);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/mark-delivery-as-dropped-off/${delivery_id}`, `POST`);
   }
 
   add_delivered_picture<T = any>(you_id: number, delivery_id: number, data: FormData) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/add-delivered-picture/${delivery_id}`, `POST`, data);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/add-delivered-picture/${delivery_id}`, `POST`, data);
   }
 
   markDeliveryAsReturned<T = any>(you_id: number, delivery_id: number) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/mark-delivery-as-returned/${delivery_id}`, `POST`);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/mark-delivery-as-returned/${delivery_id}`, `POST`);
   }
 
   markDeliveryAsCompleted<T = any>(you_id: number, delivery_id: number) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/mark-delivery-as-completed/${delivery_id}`, `POST`);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/mark-delivery-as-completed/${delivery_id}`, `POST`);
   }
 
   createTrackingUpdate<T = any>(you_id: number, delivery_id: number, data: FormData) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/create-tracking-update/${delivery_id}`, `POST`, data);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/create-tracking-update/${delivery_id}`, `POST`, data);
   }
 
   addDeliveredPicture<T = any>(you_id: number, delivery_id: number, data: FormData) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/add-delivered-picture/${delivery_id}`, `POST`, data);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/add-delivered-picture/${delivery_id}`, `POST`, data);
   }
   
   getUserDelivermeSettings<T = any>(you_id: number) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/settings`, `GET`);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/settings`, `GET`);
   }
   
   updateUserDelivermeSettings<T = any>(you_id: number, data: any) {
-    return this.clientService.sendRequest<T>(`/deliverme/users/${you_id}/settings`, `POST`, data);
+    return this.clientService.sendRequest<T>(`/users/${you_id}/settings`, `POST`, data);
   }
   
   searchDeliveries(data: any) {
@@ -172,7 +172,7 @@ export class DeliveryService {
     return this.clientService.sendRequest<{
       user_ratings_info: IModelRating | null,
       writer_ratings_info: IModelRating | null,
-    }>(`/deliverme/users/${user_id}/stats`, `GET`, null);
+    }>(`/users/${user_id}/stats`, `GET`, null);
   }
 
   request_carrier_location<T = any>(delivery_id: number) {
