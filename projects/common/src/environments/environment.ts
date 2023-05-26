@@ -4,7 +4,7 @@
 
 export const environment = {
   PRODUCTION: false,
-  API_DOMAIN: `http://localhost:6700`,
+  API_DOMAIN: `http://localhost:80`,
   MODERN_DOMAIN: `http://localhost:5200`,
 
   APPS: [

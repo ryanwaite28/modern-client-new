@@ -26,6 +26,8 @@ import { UserConversationsComponent } from './components/pages/user/conversation
 import { UserFollowersComponent } from './components/pages/user/followers/followers.component';
 import { UserFollowingsComponent } from './components/pages/user/followings/followings.component';
 import { VerifyStripeAccountComponent } from './components/pages/verify-stripe-account/verify-stripe-account.component';
+import { CsrfProvider } from 'projects/common/src/app/interceptors/csrf.interceptor';
+import { FaqPageComponent } from './components/pages/faq-page/faq-page.component';
 
 
 
@@ -54,6 +56,7 @@ import { VerifyStripeAccountComponent } from './components/pages/verify-stripe-a
     UserFollowersComponent,
     UserFollowingsComponent,
     VerifyStripeAccountComponent,
+    FaqPageComponent,
 
   ],
   imports: [
@@ -63,7 +66,7 @@ import { VerifyStripeAccountComponent } from './components/pages/verify-stripe-a
     BrowserAnimationsModule,
   ],
   providers: [
-    
+    CsrfProvider
   ],
   bootstrap: [AppComponent]
 })

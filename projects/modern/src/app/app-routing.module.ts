@@ -20,6 +20,8 @@ import { UserPageComponent } from './components/pages/user/user-page.component';
 import { UserVerifyStripeAccountFragmentComponent } from './components/pages/user/verify-stripe-account-fragment/verify-stripe-account-fragment.component';
 import { VerifyStripeAccountComponent } from './components/pages/verify-stripe-account/verify-stripe-account.component';
 import { WelcomeComponent } from './components/pages/welcome/welcome.component';
+import { FaqPageComponent } from './components/pages/faq-page/faq-page.component';
+import { CommonVerifyEmailComponent } from './components/pages/verify-email/verify-email.component';
 
 
 const routes: Routes = [
@@ -29,9 +31,11 @@ const routes: Routes = [
   { path: 'contact', pathMatch: 'full', component: ContactComponent },
   { path: 'terms-agreements', pathMatch: 'full', component: TermsAgreementsComponent },
   { path: 'privacy-policy', pathMatch: 'full', component: PrivacyPolicyComponent },
+  { path: 'faq', pathMatch: 'full', component: FaqPageComponent },
   { path: 'signup', pathMatch: 'full', component: SignupComponent, canActivate: [SignedOutGuard] },
   { path: 'signin', pathMatch: 'full', component: SigninComponent, canActivate: [SignedOutGuard] },
   { path: 'signout', pathMatch: 'full', component: SignoutComponent, canActivate: [SignedInGuard] },
+  { path: 'verify-email/:uuid', pathMatch: 'full', component: CommonVerifyEmailComponent },
   { path: 'verify-stripe-account/:user_uuid', pathMatch: 'full', component: VerifyStripeAccountComponent },
 
   {

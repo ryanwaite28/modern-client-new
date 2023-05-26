@@ -1,11 +1,29 @@
 <div class="bg-primary p-9">
   <div class="flex flex-col sm:flex-row">
     <div class="w-full sm:w-2/3 text-[color:white]">
-      <h1 class="">Modern</h1>
+      <h1 class="text-2xl mb-1">Modern</h1>
       <p>&reg; Copyright {{ currentYear }}</p>
     </div>
     <div class="grow">
+      <p class="text-xl mb-5 text-[color:white]">Privacy Policy</p>
 
+      <ul class="text-[color:white] list-disc">
+        <li>
+          <a [routerLink]="['/about']">About</a>
+        </li>
+        <li>
+          <a [routerLink]="['/contact']">Contact</a>
+        </li>
+        <li>
+          <a [routerLink]="['/terms-agreements']">Terms & Agreements</a>
+        </li>
+        <li>
+          <a [routerLink]="['/privacy-policy']">Privacy Policy</a>
+        </li>
+        <li>
+          <a [routerLink]="['/faq']">FAQs</a>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

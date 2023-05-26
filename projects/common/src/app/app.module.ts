@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { PhonePipe } from './pipes/phone.pipe';
@@ -52,7 +52,11 @@ import { BackgroundImageCoverDirective } from './directives/background-image-cov
 import { UserProfileCardComponent } from './components/user-profile-card/user-profile-card.component';
 import { RouterModule } from '@angular/router';
 import { PayoutPipe } from './pipes/payout.pipe';
+import { CsrfInterceptor } from './interceptors/csrf.interceptor';
 
+
+const CSRF_COOKIE_NAME = `CSRF-TOKEN`;
+const CSRF_HEADER_NAME = `X-CSRF-TOKEN`;
 
 @NgModule({
   declarations: [
@@ -71,6 +75,10 @@ import { PayoutPipe } from './pipes/payout.pipe';
     BrowserModule,
     CommonModule,
     HttpClientModule,
+    // HttpClientXsrfModule.withOptions({
+    //   cookieName: CSRF_COOKIE_NAME,
+    //   headerName: CSRF_HEADER_NAME
+    // }),
     RouterModule,
     
     FormsModule,
@@ -155,8 +163,10 @@ import { PayoutPipe } from './pipes/payout.pipe';
   ],
   providers: [
     APP_INIT_PROVIDER,
+    
 
     HttpClientModule,
+    HttpClientXsrfModule,
     MatIconRegistry,
 
     PhonePipe,

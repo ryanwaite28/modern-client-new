@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UsersService } from '../../../services/users.service';
+import { UsersService } from 'projects/common/src/app/services/users.service';
 
 @Component({
   selector: 'app-verify-email',
@@ -24,14 +24,14 @@ export class CommonVerifyEmailComponent implements OnInit {
   }
 
   check_verify_code(params: Params) {
-    this.userService.verify_email(params.uuid)
-      .subscribe(
-        (response: any) => {
+    this.userService.verify_email(params['uuid'])
+      .subscribe({
+        next: (response: any) => {
           this.message = response.message;
         },
-        (error: HttpErrorResponse) => {
+        error: (error: HttpErrorResponse) => {
           this.message = error.error.message || `Could not verify code; something went wrong...`;
         }
-      );
+      });
   }
 }
