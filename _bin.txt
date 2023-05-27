@@ -280,3 +280,36 @@ heroku config:set -a rmw-modern-apps PROCFILE=Procfiles/modern/Procfile
 NODE_BUILD_FLAGS
 
 https://github.com/heroku/heroku-buildpack-multi-procfile.git
+
+
+<div class="container mx-auto">
+      <div class="section-header">
+        <h2 class="text-4xl mb-10 text-center">Apps</h2>
+      </div>
+  
+      <div class="">
+        <div *ngFor="let app of apps" class="app-container">
+          
+          <!-- https://v1.tailwindcss.com/components/cards -->
+          <div class="w-full shadow-md border-gray-1 mb-3">
+            <!-- <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('/img/card-left.jpg')" title="Woman holding a mug"></div> -->
+            <div class="bg-white rounded-1 p-4 flex flex-col justify-between leading-normal">
+              <div class="mb-8">
+                <div class="text-gray-900 font-bold text-xl mb-2">{{ app.title }}</div>
+                <p class="text-gray-700 text-base">{{ app.description }}</p>
+              </div>
+              <div class="flex items-center">
+                <img *ngIf="!!app.img" class="w-10 h-10 rounded-full mr-4" [src]="app.img">
+                <div class="text-sm">
+                  <p class="text-gray-900 leading-none">
+                    <a [href]="app.link" target="_blank">Page</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+    </div>

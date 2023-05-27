@@ -108,13 +108,13 @@ export function get_user_records_endpoint(
   get_all: boolean = false,
   is_public: boolean = true
 ) {
-  const app = micro_app.toLowerCase();
+  const app = (!!micro_app ? '/' + micro_app : '/').toLowerCase();
   const partial_prefix = is_public ? '/get-' : '/';
   const endpoint = get_all
-    ? '/' + app + '/users/' + user_id + partial_prefix + path + '/all'
+    ? micro_app + '/users/' + user_id + partial_prefix + path + '/all'
     : min_id
-      ? '/' + app + '/users/' + user_id + `${partial_prefix}` + path + '/' + min_id
-      : '/' + app + '/users/' + user_id + `${partial_prefix}` + path;
+      ? micro_app + '/users/' + user_id + `${partial_prefix}` + path + '/' + min_id
+      : micro_app + '/users/' + user_id + `${partial_prefix}` + path;
   return endpoint;
 }
 

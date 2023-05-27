@@ -60,10 +60,7 @@ export class StripeService {
       : undefined;
   }
 
-  add_on_stripe_processing_fee(amount: number, isAmountAdjusted: boolean = false) {
-    const is_subscription_active = this.is_subscription_active;
-
-
+  add_on_stripe_processing_fee(amount: number, is_subscription_active: boolean, isAmountAdjusted: boolean = false) {
     const stripePercentageFeeRate = 0.0315;
     const appPercentageFeeRate = 0.0425;
     const stripeFixedFeeRate = 30; // 30 cents
@@ -79,11 +76,13 @@ export class StripeService {
     let new_total = Math.round(total + stripe_processing_fee);
     const difference = new_total - total;
     let app_fee = is_subscription_active ? 0 : (parseInt((total * 0.05).toString(), 10));
+    const deduction = Math.ceil(total * 0.1);
+    const useTotal = is_subscription_active ? total : total - deduction;
     // app_fee = Math.round(difference + app_fee);
     const final_total = Math.round(new_total + app_fee) + stripeFixedFeeRate;
     const refund_amount = final_total - (is_subscription_active ? stripe_processing_fee : app_processing_fee);
     // new_total = new_total + app_fee;
-    const data = { amount, final_total, app_fee, stripe_processing_fee, app_processing_fee, new_total, isAmountAdjusted, total, difference, refund_amount, is_subscription_active, stripe_final_processing_fee, app_final_processing_fee };
+    const data = { amount, final_total, app_fee, stripe_processing_fee, app_processing_fee, new_total, isAmountAdjusted, total: useTotal, difference, refund_amount, is_subscription_active, stripe_final_processing_fee, app_final_processing_fee };
     console.log(data);
     return data;
   }

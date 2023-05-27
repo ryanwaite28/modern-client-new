@@ -35,7 +35,7 @@ export class PayoutPipe implements PipeTransform {
       return value;
     }
 
-    const chargeFeeData = this.stripeService.add_on_stripe_processing_fee(useValue);
+    const chargeFeeData = this.stripeService.add_on_stripe_processing_fee(useValue, this.is_subscription_active);
     const userGets = this.is_subscription_active
       ? chargeFeeData.total
       : (chargeFeeData.total - chargeFeeData.app_fee);

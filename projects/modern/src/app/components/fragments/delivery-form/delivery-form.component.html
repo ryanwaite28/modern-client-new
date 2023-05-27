@@ -1,0 +1,228 @@
+<div class="card-box-1" *ngIf="!!deliveryForm">
+  <div class="uk-card-body">
+    <p class="text-3xl mb-3">{{ isEditing ? 'Editing' : 'Create a Delivery' }}</p>
+
+    <div>
+      <form
+        #deliveryFormElm
+        [formGroup]="deliveryForm"
+        (ngSubmit)="onSubmitDelivery(deliveryFormElm, iconInput)"
+      >
+        <fieldset class="uk-fieldset">
+          <div class="uk-margin">
+            <span class="label-info">
+              Title ({{ deliveryForm!.value.title.length }}/255)
+            </span>
+            <input class="input-text-1" type="text" placeholder="Enter Delivery Title" formControlName="title" >
+          </div>
+
+          <div class="uk-margin">
+            <span class="label-info">
+              Description ({{ deliveryForm!.value.description.length }}/500)
+            </span>
+            <textarea type="text" class="input-text-1" placeholder="Enter Delivery Description" rows="5" formControlName="description"></textarea>
+          </div>
+
+          <div class="uk-margin">
+            <span class="label-info">
+              Image
+            </span>
+            <br/>
+            <input
+              #iconInput
+              type="file"
+              class=""
+              name="delivery_image"
+              formControlName="file"
+            />
+          </div>
+
+          <div class="uk-margin">
+            <span class="label-info">
+              Size
+            </span>
+            <select class="input-text-1" formControlName="size">
+              <option *ngFor="let size of sizes" [value]="size">{{ size }}</option>
+            </select>
+          </div>
+
+          <div class="uk-margin">
+            <span class="label-info">
+              Weight <span><small>(lbs)</small></span>
+            </span>
+            <input class="input-text-1" type="number" placeholder="Enter Delivery Weight (lbs)" formControlName="weight" />
+          </div>
+
+          <div class="uk-margin">
+            <span class="label-info">
+              Payout <span><small>how much you are paying for the delivery (minimum = ${{ payout_min }})</small></span>
+            </span>
+            <input class="input-text-1" type="number" placeholder="Enter Delivery Payout" formControlName="payout" />
+          </div>
+
+          <div class="uk-margin">
+            <span class="label-info">
+              Penalty <span><small>how much you should be reimbursed in possible dispute</small></span>
+            </span>
+            <input class="input-text-1" type="number" placeholder="Enter Delivery Penalty" formControlName="penalty" />
+          </div>
+
+          <!-- <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+            <label>
+              <input formControlName="auto_accept_anyone" class="uk-checkbox" type="checkbox">
+              Auto-Accept Anyone 
+            </label>
+            <label>
+              <input formControlName="urgent" class="uk-checkbox" type="checkbox">
+              Urgent 
+            </label>
+          </div> -->
+
+          <div class="margin-top-50"></div>
+
+          <span class="uk-text-medium">
+            <strong>From</strong>
+          </span>
+          <div class="uk-margin">
+            <span class="label-info">
+              From Location <span *ngIf="isEditing" class="text-xs text-gray-700">(Currently: {{ delivery.from_location }})</span>
+            </span>
+            <input #fromLocationInput type="text" class="input-text-1" placeholder="Enter From Location" />
+          </div>
+          <div class="uk-margin">
+            <span class="label-info">
+              Pickup From
+            </span>
+            <input class="input-text-1" type="text" placeholder="Person to pickup from" formControlName="from_person" >
+          </div>
+          <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+            <label>
+              <input formControlName="from_person_id_required" class="uk-checkbox" type="checkbox">
+              ID Required 
+            </label>
+            <label>
+              <input formControlName="from_person_sig_required" class="uk-checkbox" type="checkbox">
+              Signature Required 
+            </label>
+          </div>
+          <div class="uk-margin">
+            <span class="label-info">
+              Phone <small>contact number for carrier to reach pickup person (optional)</small>
+            </span>
+            <input
+              class="input-text-1"
+              type="text"
+              placeholder="Enter Delivery From Person Phone"
+              formControlName="from_person_phone" 
+            />
+          </div>
+          <div class="uk-margin">
+            <span class="label-info">
+              Email <small>contact email for carrier to reach pickup person (optional)</small>
+            </span>
+            <input
+              class="input-text-1"
+              type="text"
+              placeholder="Enter Delivery From Person Email"
+              formControlName="from_person_email" 
+            />
+          </div>
+
+          <div class="margin-top-25"></div>
+
+          <span class="uk-text-medium">
+            <strong>To</strong>
+          </span>
+          <div class="uk-margin">
+            <span class="label-info">
+              To Location <span *ngIf="isEditing" class="text-xs text-gray-700">(Currently: {{ delivery.to_location }})</span>
+            </span>
+            <input #toLocationInput type="text" class="input-text-1" placeholder="Enter To Location" />
+          </div>
+          <div class="uk-margin">
+            <span class="label-info">
+              Dropoff To
+            </span>
+            <input class="input-text-1" type="text" placeholder="Person to dropoff to" formControlName="to_person" >
+          </div>
+          <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+            <label>
+              <input formControlName="to_person_id_required" class="uk-checkbox" type="checkbox">
+              ID Required 
+            </label>
+            <label>
+              <input formControlName="to_person_sig_required" class="uk-checkbox" type="checkbox">
+              Signature Required 
+            </label>
+          </div>
+          <div class="uk-margin">
+            <span class="label-info">
+              Phone <small>contact number for carrier to reach pickup person (optional)</small>
+            </span>
+            <input
+              class="input-text-1"
+              type="text"
+              placeholder="Enter Delivery To Person Phone"
+              formControlName="to_person_phone" 
+            />
+          </div>
+          <div class="uk-margin">
+            <span class="label-info">
+              Email <small>contact email for carrier to reach pickup person (optional)</small>
+            </span>
+            <input
+              class="input-text-1"
+              type="text"
+              placeholder="Enter Delivery To Person Email"
+              formControlName="to_person_email" 
+            />
+          </div>
+
+          <div class="uk-margin">
+            <span class="label-info">
+              Payment Method
+            </span>
+            <p *ngIf="!!payment_methods && !payment_methods.length" class="font-bold">
+              You do not have any payment methods (debit/credit card) linked to your account. Please go to your setting and add one.
+            </p>
+            <select *ngIf="!!payment_methods && !!payment_methods.length" class="input-text-1" formControlName="payment_method_id">
+              <option *ngFor="let pm of payment_methods" [value]="pm.id">
+                {{ pm.card!.brand | uppercase }} ending in {{ pm.card!.last4 }} (expires: {{ pm.card!.exp_month }}/{{ pm.card!.exp_year }})
+              </option>
+            </select>
+          </div>
+        </fieldset>
+
+        <div class="uk-margin">
+          <p *ngIf="chargeFeeData && deliveryForm.value.payout" class="label-info">
+            Delivery payout: {{ chargeFeeData ? '$' + (chargeFeeData.total | stripeAmountFormatter) : '' }} <span class="text-sm">(Goes to carrier)</span><br/>
+            Application fee: {{ chargeFeeData ? '$' + (chargeFeeData.app_fee | stripeAmountFormatter) : '' }} <span class="text-sm" *ngIf="!is_subscription_active">(Platform's profit. Subscribe to avoid paying application fees)</span><br/>
+            Processing fee: {{ chargeFeeData ? '$' + (chargeFeeData.stripe_final_processing_fee | stripeAmountFormatter) : '' }} <span class="text-sm">(Non refundable)</span><br/>
+            Refund/Cancelation: {{ chargeFeeData ? '$' + (chargeFeeData.refund_amount | stripeAmountFormatter) : '' }} <span class="text-sm">(Amount if you cancel/delete listing)</span><br/>
+            <span class="font-bold">Final total</span>: {{ chargeFeeData ? '$' + (chargeFeeData.final_total | stripeAmountFormatter) : '' }}<br/>
+          </p>
+
+          <div class="my-3">
+            <span class="label-info ">
+              Acknowledge final price and terms: 
+            </span>
+            <input
+              class=""
+              type="checkbox"
+              [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="acknowledgement_checked" 
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn-primary-1"
+          [disabled]="deliveryForm!.invalid || loading || !acknowledgement_checked"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

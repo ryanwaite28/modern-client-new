@@ -94,4 +94,38 @@ export class ClientService {
 
     return requestObservable;
   }
+
+  get<T = any>(
+    route: string,
+    customHeaders?: HttpHeaders,
+    report_progress: boolean = false
+  ) {
+    return this.sendRequest<T>(route, 'GET', null, customHeaders, report_progress);
+  }
+
+  post<T = any>(
+    route: string,
+    data?: object | FormData | null,
+    customHeaders?: HttpHeaders,
+    report_progress: boolean = false
+  ) {
+    return this.sendRequest<T>(route, 'POST', data, customHeaders, report_progress);
+  }
+
+  put<T = any>(
+    route: string,
+    data?: object | FormData | null,
+    customHeaders?: HttpHeaders,
+    report_progress: boolean = false
+  ) {
+    return this.sendRequest<T>(route, 'PUT', data, customHeaders, report_progress);
+  }
+
+  delete<T = any>(
+    route: string,
+    customHeaders?: HttpHeaders,
+    report_progress: boolean = false
+  ) {
+    return this.sendRequest<T>(route, 'DELETE', null, customHeaders, report_progress);
+  }
 }

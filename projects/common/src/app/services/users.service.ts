@@ -71,10 +71,10 @@ export class UsersService {
 
   private checkSession() {
     const jwt = window.localStorage.getItem('rmw-modern-apps-jwt');
-    const badJwt = !jwt || jwt === `undefined`;// || !this.utilityService.isJwtFormat(jwt);
-    console.log({ badJwt });
+    const badJwt = !jwt || jwt === `undefined`; // || !this.utilityService.isJwtFormat(jwt);
+    console.log({ badJwt, jwt });
     if (badJwt) {
-      window.localStorage.removeItem('rmw-modern-apps-jwt');
+      // window.localStorage.removeItem('rmw-modern-apps-jwt');
       this.userStore.setState(null);
       return of(<GenericApiResponse> {
         message: `no token found`,
@@ -85,11 +85,7 @@ export class UsersService {
         }
       });
     }
-    return this.clientService.sendRequest<any>(
-      '/users/check-session',
-      `GET`,
-      null,
-    ).pipe(
+    return this.clientService.get<any>('/users/check-session').pipe(
       map((response) => {
         this.session = response;
         this.sessionChecked = true;
@@ -269,7 +265,7 @@ export class UsersService {
 
   get_user_records<T>(
     user_id: number,
-    app: MODERN_APPS,
+    app: MODERN_APPS | string,
     path: USER_RECORDS,
     min_id?: number,
     get_all: boolean = false,

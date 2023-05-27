@@ -28,6 +28,26 @@ import { UserFollowingsComponent } from './components/pages/user/followings/foll
 import { VerifyStripeAccountComponent } from './components/pages/verify-stripe-account/verify-stripe-account.component';
 import { CsrfProvider } from 'projects/common/src/app/interceptors/csrf.interceptor';
 import { FaqPageComponent } from './components/pages/faq-page/faq-page.component';
+import { TechnicalDetailsPageComponent } from './components/pages/technical-details-page/technical-details-page.component';
+import { SecurityProtectionPageComponent } from './components/pages/security-protection-page/security-protection-page.component';
+import { DecimalPipe } from '@angular/common';
+import { CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER } from 'projects/common/src/app/_misc/app-init';
+import { MODERN_APPS } from 'projects/common/src/app/enums/all.enums';
+
+import { DeliverMeDeliveryBrowseFeaturedPageComponent } from './components/pages/delivery-browse-featured/delivery-browse-featured.component';
+import { DeliverMeDeliveryBrowseMapPageComponent } from './components/pages/delivery-browse-map/delivery-browse-map.component';
+import { DeliverMeDeliveryBrowseRecentPageComponent } from './components/pages/delivery-browse-recent/delivery-browse-recent.component';
+import { DeliverMeDeliveryContainerPageComponent } from './components/pages/delivery-container-page/delivery-container-page.component';
+import { DeliverMeDeliveryPageComponent } from './components/pages/delivery-container-page/delivery-page/delivery-page.component';
+import { DeliveryPaymentCancelPageComponent } from './components/pages/delivery-container-page/delivery-payment-cancel-page/delivery-payment-cancel-page.component';
+import { DeliveryPaymentSuccessPageComponent } from './components/pages/delivery-container-page/delivery-payment-success-page/delivery-payment-success-page.component';
+import { DeliverMeUserCreateDeliveryFragmentComponent } from './components/pages/user/create-delivery/create-delivery.component';
+import { DeliverMeUserDeliveriesFragmentComponent } from './components/pages/user/deliveries/deliveries.component';
+import { DeliverMeUserDeliveringFragmentComponent } from './components/pages/user/delivering/delivering.component';
+import { DeliverMeUserDeliverySearchFragmentComponent } from './components/pages/user/delivery-search/delivery-search.component';
+import { DeliveryCardComponent } from './components/fragments/delivery-card/delivery-card.component';
+import { DeliveryFormComponent } from './components/fragments/delivery-form/delivery-form.component';
+import { DELIVERME_EVENT_TYPES } from './enums/deliverme.enum';
 
 
 
@@ -57,7 +77,22 @@ import { FaqPageComponent } from './components/pages/faq-page/faq-page.component
     UserFollowingsComponent,
     VerifyStripeAccountComponent,
     FaqPageComponent,
+    TechnicalDetailsPageComponent,
+    SecurityProtectionPageComponent,
 
+    DeliverMeUserDeliveriesFragmentComponent,
+    DeliverMeUserDeliveringFragmentComponent,
+    DeliveryFormComponent,
+    DeliveryCardComponent,
+    DeliverMeUserCreateDeliveryFragmentComponent,
+    DeliverMeUserDeliverySearchFragmentComponent,
+    DeliverMeDeliveryContainerPageComponent,
+    DeliverMeDeliveryPageComponent,
+    DeliveryPaymentSuccessPageComponent,
+    DeliveryPaymentCancelPageComponent,
+    DeliverMeDeliveryBrowseRecentPageComponent,
+    DeliverMeDeliveryBrowseMapPageComponent,
+    DeliverMeDeliveryBrowseFeaturedPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +101,9 @@ import { FaqPageComponent } from './components/pages/faq-page/faq-page.component
     BrowserAnimationsModule,
   ],
   providers: [
-    CsrfProvider
+    CsrfProvider,
+    CREATE_APP_INIT_SOCKET_EVENTS_PROVIDER(MODERN_APPS.DELIVERME, DELIVERME_EVENT_TYPES),
+    DecimalPipe,
   ],
   bootstrap: [AppComponent]
 })

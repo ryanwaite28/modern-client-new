@@ -142,7 +142,7 @@ export class SocketEventsService {
   }
 
   emit(eventName: string, data: any) {
-    this.socket!.emit(eventName, data);
+    this.socket?.emit(eventName, data);
   }
 
   emitToRoom(params: {
@@ -150,7 +150,7 @@ export class SocketEventsService {
     event_name: string,
     data: PlainObject,
   }) {
-    this.socket!.emit(`EMIT_TO_ROOM`, params);
+    this.socket?.emit(`EMIT_TO_ROOM`, params);
   }
 
   emitToUser(params: {
@@ -167,12 +167,12 @@ export class SocketEventsService {
 
   joinRoom(room: string) {
     console.log(`socket id ${this.socket_id} joining room ${room}`, { room, socket_id: this.socket_id });
-    this.socket!.emit(COMMON_EVENT_TYPES.SOCKET_JOIN_ROOM, { room });
+    this.socket?.emit(COMMON_EVENT_TYPES.SOCKET_JOIN_ROOM, { room });
   }
 
   leaveRoom(room: string) {
     console.log(`socket id ${this.socket_id} leaving room ${room}`, { room, socket_id: this.socket_id });
-    this.socket!.emit(COMMON_EVENT_TYPES.SOCKET_LEAVE_ROOM, { room });
+    this.socket?.emit(COMMON_EVENT_TYPES.SOCKET_LEAVE_ROOM, { room });
   }
 
   listenSocketCustom(event_type: string, call_back: (arg?: any) => any) {

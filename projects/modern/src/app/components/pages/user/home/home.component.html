@@ -1,19 +1,11 @@
-<div class="card-box-1">
-  <div *ngIf="user" class="">
-    <p class="text-5xl mb-7">Home</p>
+<div>
+  <div class="card-box-1">
+    <div class="">
+      <h3 class="text-3xl mb-3">Stats</h3>
 
-    <p class="uk-text-default">
-      <strong>Bio</strong>:<br>
-      <em>{{ user.bio }}</em>
-    </p>
-
-    <p class="uk-text-default">
-      <strong>Location</strong><br>
-      <span class="uk-text-small">
-        City: {{ user.city }}<br/>
-        State: {{ user.state }}
-      </span>
-    </p>
-    
+      <p>Deliveries Created: {{ stats?.deliveries_count | number }}</p>
+      <p>Delivering Completed: {{ stats?.delivering_completed_count | number }}</p>
+      <p>Delivering In-Progress: {{ stats?.delivering_inprogress_count | number }}</p>
+    </div>
   </div>
 </div>

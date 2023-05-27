@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -174,6 +174,7 @@ const CSRF_HEADER_NAME = `X-CSRF-TOKEN`;
     TimeAgoPipe,
     UserFullNamePipe,
     DatePipe,
+    DecimalPipe,
 
     AlertService,
     ClientService,
