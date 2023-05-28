@@ -48,6 +48,7 @@ import { DeliverMeUserDeliverySearchFragmentComponent } from './components/pages
 import { DeliveryCardComponent } from './components/fragments/delivery-card/delivery-card.component';
 import { DeliveryFormComponent } from './components/fragments/delivery-form/delivery-form.component';
 import { DELIVERME_EVENT_TYPES } from './enums/deliverme.enum';
+import { TutorialsMainPageComponent } from './components/pages/tutorials-main-page/tutorials-main-page.component';
 
 
 
@@ -93,6 +94,7 @@ import { DELIVERME_EVENT_TYPES } from './enums/deliverme.enum';
     DeliverMeDeliveryBrowseRecentPageComponent,
     DeliverMeDeliveryBrowseMapPageComponent,
     DeliverMeDeliveryBrowseFeaturedPageComponent,
+    TutorialsMainPageComponent,
   ],
   imports: [
     BrowserModule,
