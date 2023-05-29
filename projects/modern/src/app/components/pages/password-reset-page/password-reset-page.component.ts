@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { AlertService } from '../../../services/alert.service';
-import { UsersService } from '../../../services/users.service';
+import { AlertService } from 'projects/common/src/app/services/alert.service';
+import { UsersService } from 'projects/common/src/app/services/users.service';
 
 @Component({
   selector: 'common-password-reset-page',
@@ -10,13 +10,8 @@ import { UsersService } from '../../../services/users.service';
   styleUrls: ['./password-reset-page.component.scss']
 })
 export class PasswordResetPageComponent implements OnInit {
-  sendResetForm = new UntypedFormGroup({
-    email: new UntypedFormControl('', [Validators.required]),
-  });
-
-  confirmCodeForm = new UntypedFormGroup({
-    code: new UntypedFormControl('', [Validators.required]),
-  });
+  emailInput: string = '';
+  verificationCodeInput: string = '';
 
   loading: boolean = false;
 
@@ -28,45 +23,23 @@ export class PasswordResetPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSendSubmit() {
-    if (this.sendResetForm.invalid) {
+  onSubmitEmail() {
+    if (!this.emailInput) {
       return;
     }
     this.loading = true;
-    this.usersService.submit_reset_password_request(this.sendResetForm.value.email)
-      .subscribe(
-        (response) => {
+    this.usersService.submit_reset_password_request(this.emailInput)
+      .subscribe({
+        next: (response) => {
           console.log(response);
           this.loading = false;
           this.alertService.handleResponseSuccessGeneric(response);
-          this.sendResetForm.reset();
-          this.sendResetForm.markAsPristine();
+          this.emailInput = "";
         },
-        (error: HttpErrorResponse) => {
+        error: (error: HttpErrorResponse) => {
           this.loading = false;
           this.alertService.handleResponseErrorGeneric(error);
         },
-      );
-  }
-
-  onConfirmSubmit() {
-    if (this.confirmCodeForm.invalid) {
-      return;
-    }
-    this.loading = true;
-    this.usersService.submit_password_reset_code(this.confirmCodeForm.value.code)
-      .subscribe(
-        (response) => {
-          this.loading = false;
-          console.log(response);
-          this.alertService.handleResponseSuccessGeneric(response);
-          this.confirmCodeForm.reset();
-          this.confirmCodeForm.markAsPristine();
-        },
-        (error: HttpErrorResponse) => {
-          this.loading = false;
-          this.alertService.handleResponseErrorGeneric(error);
-        },
-      );
+      });
   }
 }

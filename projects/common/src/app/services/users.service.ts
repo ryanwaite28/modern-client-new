@@ -543,8 +543,8 @@ export class UsersService {
   }
 
   submit_reset_password_request(email: string) {
-    const endpoint = `/users/${email}/password-reset`;
-    return this.clientService.sendRequest<any>(endpoint, `POST`).pipe(
+    const endpoint = `/users/password-reset`;
+    return this.clientService.sendRequest<any>(endpoint, `POST`, { email }).pipe(
       map((response) => {
         return response;
       })

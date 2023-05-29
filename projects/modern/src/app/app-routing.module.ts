@@ -45,6 +45,8 @@ import { TutorialStripeCustomerAccountPageComponent } from './components/pages/t
 import { TutorialCreateDeliveryListingPageComponent } from './components/pages/tutorials-main-page/tutorial-create-delivery-listing-page/tutorial-create-delivery-listing-page.component';
 import { TutorialSearchFulfillDeliveryListingPageComponent } from './components/pages/tutorials-main-page/tutorial-search-fulfill-delivery-listing-page/tutorial-search-fulfill-delivery-listing-page.component';
 import { TutorialViewStripeConnectedAccountProfilePageComponent } from './components/pages/tutorials-main-page/tutorial-view-stripe-connected-account-profile-page/tutorial-view-stripe-connected-account-profile-page.component';
+import { PasswordResetPageComponent } from './components/pages/password-reset-page/password-reset-page.component';
+import { VerifyPasswordResetPageComponent } from './components/pages/verify-password-reset-page/verify-password-reset-page.component';
 
 
 const routes: Routes = [
@@ -57,6 +59,8 @@ const routes: Routes = [
   { path: 'technical-details', pathMatch: 'full', component: TechnicalDetailsPageComponent },
   { path: 'security-protection', pathMatch: 'full', component: SecurityProtectionPageComponent },
   { path: 'faq', pathMatch: 'full', component: FaqPageComponent },
+  { path: 'password-reset', pathMatch: 'full', component: PasswordResetPageComponent },
+  { path: 'verify-password-reset', pathMatch: 'full', component: VerifyPasswordResetPageComponent },
   { path: 'signup', pathMatch: 'full', component: SignupComponent, canActivate: [SignedOutGuard] },
   { path: 'signin', pathMatch: 'full', component: SigninComponent, canActivate: [SignedOutGuard] },
   { path: 'signout', pathMatch: 'full', component: SignoutComponent, canActivate: [SignedInGuard] },

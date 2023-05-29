@@ -58,6 +58,9 @@ import { TutorialStripeCustomerAccountPageComponent } from './components/pages/t
 import { TutorialCreateDeliveryListingPageComponent } from './components/pages/tutorials-main-page/tutorial-create-delivery-listing-page/tutorial-create-delivery-listing-page.component';
 import { TutorialSearchFulfillDeliveryListingPageComponent } from './components/pages/tutorials-main-page/tutorial-search-fulfill-delivery-listing-page/tutorial-search-fulfill-delivery-listing-page.component';
 import { TutorialViewStripeConnectedAccountProfilePageComponent } from './components/pages/tutorials-main-page/tutorial-view-stripe-connected-account-profile-page/tutorial-view-stripe-connected-account-profile-page.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PasswordResetPageComponent } from './components/pages/password-reset-page/password-reset-page.component';
+import { VerifyPasswordResetPageComponent } from './components/pages/verify-password-reset-page/verify-password-reset-page.component';
 
 
 
@@ -74,6 +77,7 @@ import { TutorialViewStripeConnectedAccountProfilePageComponent } from './compon
     TermsAgreementsComponent,
     PrivacyPolicyComponent,
     SignoutComponent,
+    PasswordResetPageComponent,
 
     UserHomeFragmentComponent,
     UserSettingsFragmentComponent,
@@ -113,6 +117,7 @@ import { TutorialViewStripeConnectedAccountProfilePageComponent } from './compon
     TutorialCreateDeliveryListingPageComponent,
     TutorialSearchFulfillDeliveryListingPageComponent,
     TutorialViewStripeConnectedAccountProfilePageComponent,
+    VerifyPasswordResetPageComponent,
   ],
   imports: [
     BrowserModule,

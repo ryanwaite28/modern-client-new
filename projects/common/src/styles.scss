@@ -188,6 +188,10 @@ $md-accent: (
   min-height: 100vh;
 }
 
+.btn-disabled-1 {
+  @apply bg-gray-300 hover:bg-gray-200 text-[color:white] cursor-not-allowed font-bold py-2 px-4 rounded;
+}
+
 .btn-primary-1 {
   @apply bg-primary hover:bg-accent text-[color:white] cursor-pointer font-bold py-2 px-4 rounded;
 }
