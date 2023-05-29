@@ -49,6 +49,15 @@ import { DeliveryCardComponent } from './components/fragments/delivery-card/deli
 import { DeliveryFormComponent } from './components/fragments/delivery-form/delivery-form.component';
 import { DELIVERME_EVENT_TYPES } from './enums/deliverme.enum';
 import { TutorialsMainPageComponent } from './components/pages/tutorials-main-page/tutorials-main-page.component';
+import { TutorialInstallingAppPageComponent } from './components/pages/tutorials-main-page/tutorial-installing-app-page/tutorial-installing-app-page.component';
+import { TutorialSignupPageComponent } from './components/pages/tutorials-main-page/tutorial-signup-page/tutorial-signup-page.component';
+import { TutorialLoginPageComponent } from './components/pages/tutorials-main-page/tutorial-login-page/tutorial-login-page.component';
+import { TutorialInitialScreenPageComponent } from './components/pages/tutorials-main-page/tutorial-initial-screen-page/tutorial-initial-screen-page.component';
+import { TutorialSettingUpStripeConnectPageComponent } from './components/pages/tutorials-main-page/tutorial-setting-up-stripe-connect-page/tutorial-setting-up-stripe-connect-page.component';
+import { TutorialStripeCustomerAccountPageComponent } from './components/pages/tutorials-main-page/tutorial-stripe-customer-account-page/tutorial-stripe-customer-account-page.component';
+import { TutorialCreateDeliveryListingPageComponent } from './components/pages/tutorials-main-page/tutorial-create-delivery-listing-page/tutorial-create-delivery-listing-page.component';
+import { TutorialSearchFulfillDeliveryListingPageComponent } from './components/pages/tutorials-main-page/tutorial-search-fulfill-delivery-listing-page/tutorial-search-fulfill-delivery-listing-page.component';
+import { TutorialViewStripeConnectedAccountProfilePageComponent } from './components/pages/tutorials-main-page/tutorial-view-stripe-connected-account-profile-page/tutorial-view-stripe-connected-account-profile-page.component';
 
 
 
@@ -95,6 +104,15 @@ import { TutorialsMainPageComponent } from './components/pages/tutorials-main-pa
     DeliverMeDeliveryBrowseMapPageComponent,
     DeliverMeDeliveryBrowseFeaturedPageComponent,
     TutorialsMainPageComponent,
+    TutorialInstallingAppPageComponent,
+    TutorialSignupPageComponent,
+    TutorialLoginPageComponent,
+    TutorialInitialScreenPageComponent,
+    TutorialSettingUpStripeConnectPageComponent,
+    TutorialStripeCustomerAccountPageComponent,
+    TutorialCreateDeliveryListingPageComponent,
+    TutorialSearchFulfillDeliveryListingPageComponent,
+    TutorialViewStripeConnectedAccountProfilePageComponent,
   ],
   imports: [
     BrowserModule,

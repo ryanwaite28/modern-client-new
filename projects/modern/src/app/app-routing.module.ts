@@ -35,6 +35,16 @@ import { DeliverMeDeliveryPageComponent } from './components/pages/delivery-cont
 import { DeliveryPaymentCancelPageComponent } from './components/pages/delivery-container-page/delivery-payment-cancel-page/delivery-payment-cancel-page.component';
 import { DeliveryPaymentSuccessPageComponent } from './components/pages/delivery-container-page/delivery-payment-success-page/delivery-payment-success-page.component';
 import { DeliveryResolver } from './resolvers/delivery.resolver';
+import { TutorialsMainPageComponent } from './components/pages/tutorials-main-page/tutorials-main-page.component';
+import { TutorialInstallingAppPageComponent } from './components/pages/tutorials-main-page/tutorial-installing-app-page/tutorial-installing-app-page.component';
+import { TutorialInitialScreenPageComponent } from './components/pages/tutorials-main-page/tutorial-initial-screen-page/tutorial-initial-screen-page.component';
+import { TutorialSignupPageComponent } from './components/pages/tutorials-main-page/tutorial-signup-page/tutorial-signup-page.component';
+import { TutorialLoginPageComponent } from './components/pages/tutorials-main-page/tutorial-login-page/tutorial-login-page.component';
+import { TutorialSettingUpStripeConnectPageComponent } from './components/pages/tutorials-main-page/tutorial-setting-up-stripe-connect-page/tutorial-setting-up-stripe-connect-page.component';
+import { TutorialStripeCustomerAccountPageComponent } from './components/pages/tutorials-main-page/tutorial-stripe-customer-account-page/tutorial-stripe-customer-account-page.component';
+import { TutorialCreateDeliveryListingPageComponent } from './components/pages/tutorials-main-page/tutorial-create-delivery-listing-page/tutorial-create-delivery-listing-page.component';
+import { TutorialSearchFulfillDeliveryListingPageComponent } from './components/pages/tutorials-main-page/tutorial-search-fulfill-delivery-listing-page/tutorial-search-fulfill-delivery-listing-page.component';
+import { TutorialViewStripeConnectedAccountProfilePageComponent } from './components/pages/tutorials-main-page/tutorial-view-stripe-connected-account-profile-page/tutorial-view-stripe-connected-account-profile-page.component';
 
 
 const routes: Routes = [
@@ -50,6 +60,24 @@ const routes: Routes = [
   { path: 'signup', pathMatch: 'full', component: SignupComponent, canActivate: [SignedOutGuard] },
   { path: 'signin', pathMatch: 'full', component: SigninComponent, canActivate: [SignedOutGuard] },
   { path: 'signout', pathMatch: 'full', component: SignoutComponent, canActivate: [SignedInGuard] },
+
+  // Tutorial Pages
+  {
+    path: 'tutorials',
+    component: TutorialsMainPageComponent,
+    children: [
+      { path: 'installing', component: TutorialInstallingAppPageComponent },
+      { path: 'initial-screen', component: TutorialInitialScreenPageComponent },
+      { path: 'signup', component: TutorialSignupPageComponent },
+      { path: 'login', component: TutorialLoginPageComponent },
+      { path: 'setting-up-stripe-connect', component: TutorialSettingUpStripeConnectPageComponent },
+      { path: 'stripe-customer-account', component: TutorialStripeCustomerAccountPageComponent },
+      { path: 'create-manage-delivery-listing', component: TutorialCreateDeliveryListingPageComponent },
+      { path: 'search-fulfill-delivery-listing', component: TutorialSearchFulfillDeliveryListingPageComponent },
+      { path: 'stripe-connect-account-profile', component: TutorialViewStripeConnectedAccountProfilePageComponent },
+    ]
+  },
+  // END Tutorial Pages
   
   { path: 'verify-email/:uuid', pathMatch: 'full', component: CommonVerifyEmailComponent },
   { path: 'verify-stripe-account/:user_uuid', pathMatch: 'full', component: VerifyStripeAccountComponent },
@@ -101,6 +129,8 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
     ]
   },
+
+  { path: '**', redirectTo: 'welcome' }
 ];
 
 @NgModule({

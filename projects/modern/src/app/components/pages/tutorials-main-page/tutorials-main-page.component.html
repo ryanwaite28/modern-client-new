@@ -1,1 +1,31 @@
-<p>tutorials-main-page works!</p>
+<div>
+  <div class="container mx-auto">
+    <div class="background-white m-3 sm:m-16">
+      <section class="p-3 sm:p-16 border border-gray-300 shadow-sm">
+        
+        <div class="font-sans">
+          <p class="text-7xl mb-10">
+            <a [routerLink]="['/', 'tutorials']" [title]="'Tutorials'">Tutorials</a>
+          </p>
+  
+          <p class="text-xl mb-5">
+            Before installing and using the Carry App, it is highly recommended to first read each page of the tutorials below in the ordered sequence:
+          </p>
+  
+          <ol class="text-lg list-decimal mb-5">
+            <li *ngFor="let link of tutorial_pages" class="">
+              <a [routerLink]="link.href" routerLinkActive="tutorial-link-active" [title]="link.text">{{ link.text }}</a>
+            </li>
+          </ol>
+
+          <p class="text-xl mb-5">
+            For any questions or feedback, contact information can be found here: <a [routerLink]="['/contact']">Contact</a>
+          </p>
+        </div>
+  
+      </section>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

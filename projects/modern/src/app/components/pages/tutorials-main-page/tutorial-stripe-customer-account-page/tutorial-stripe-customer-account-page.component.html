@@ -1,0 +1,57 @@
+<div class="container mx-auto">
+  <div class="background-white m-3 sm:m-16">
+    <section class="p-3 sm:p-16 border border-gray-300 shadow-sm">
+      
+      <p class="text-5xl mb-10">Using Stripe Customer Account</p>
+      <p class="text-xl mb-5">
+        Carry also uses the <a href="https://stripe.com/docs/billing/customer" class="font-bold" target="_blank">Customers</a> feature from Stripe to manage paying for delivery listings and membership subscriptions. After creating an account, the platform automatically created a customer account for you.
+      </p>
+      <p class="text-xl mb-5">
+        On the settings screen, scroll down until you get to the "Stripe Customer Account" section.
+      </p>
+      <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-stripe-adding-payment-method.PNG'">
+
+      <p class="text-xl mb-5">
+        This is where you can add any card information to associate to your Stripe customer account. Again, this is managed by Stripe; Carry does not keep or know about any personal finance data. 
+        For those who are more familiar with the tech side of things, the mobile app for Carry was developed using frameworks called <a href="https://reactnative.dev/" class="font-bold" target="_blank">React Native</a> and <a href="https://expo.dev/" class="font-bold" target="_blank">Expo</a>. 
+        Stripe created SDKs (software development kit) for other platforms to use their services, one of which is the <a href="https://stripe.com/docs/libraries/react-native" class="font-bold" target="_blank">Stripe React Native SDK</a>. By using Stripe's SDK (and verification of Apple App Store/Google Play Store for compliance), 
+        user input is protected and secured.
+      </p>
+      <p class="text-xl mb-5">
+        After successfully submitting card information, you will see it as a payment option on your settings page.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-payment-method-submit.PNG'">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-payment-methods-list.PNG'">
+      </div>
+
+      <p class="text-xl mb-5">
+        With payment methods attached to your Stripe customer account, you can now pay for things on the platform, the 2 main things being listings and subscriptions. To enter a subscription with the platform, go to the "Membership" section, choose a payment method on file and tap "Subscribe".
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-membership-subscribe.PNG'">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-membership-subscribed.PNG'">
+      </div>
+      
+      <p class="text-xl mb-5">
+        The biggest perk of a membership with the platform is waived application fees:
+        <br/>
+        As a customer, this means cheaper costs for creating delivery listings.
+        <br/>
+        As a service provider, this means getting the whole payout of a delivery listing.
+      </p>
+      
+      <p class="text-xl mb-5">
+        The "Membership" section will now show when the subscription renewal date is.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-membership-status-subscribed.PNG'">
+      </div>
+
+      <p class="text-xl mb-5">
+        To cancel the subscription, tap "Cancel Subscription". The form will return to subscribe again however your canceled scription is still active until the original renewal date.
+      </p>
+
+    </section>
+  </div>
+</div>

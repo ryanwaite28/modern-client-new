@@ -1,0 +1,81 @@
+<div class="container mx-auto">
+  <div class="background-white m-3 sm:m-16">
+    <section class="p-3 sm:p-16 border border-gray-300 shadow-sm">
+      
+      <p class="text-5xl mb-10">Search for and Fulfilling a Delivery Listing (Service Provider)</p>
+      <p class="text-xl mb-5">
+        As a service provider using Stripe Connect, you are able to claim delivery listings on the app.
+      </p>
+
+      <p class="text-xl mb-5">
+        While logged in, tap the "Search" button on the bottom navigation.
+      </p>
+      <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/search-map-view.PNG'">
+
+      <p class="text-xl mb-5">
+        The initial screen will be a map. There are 3 buttons at the top right: the list icon is for searching for listings via selected pickup and dropoff locations, the location arrow icon is for getting your current location to pan the map to your position. 
+        The refresh/recycle arrow icon is for refreshing results based on the current bounds of the map (the areas visible/in view on map). 
+        It is recommended to use the map search instead of the list search.
+      </p>
+
+      <p class="text-xl mb-5">
+        After touching the refresh icon, If there are NO results, an alert will show to indicate that.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/search-no-results.PNG'">
+      </div>
+
+      <p class="text-xl mb-5">
+        After touching the refresh icon, If there ARE results, they will be represented as markers on the map. Tap the marker to open the delivery listing preview.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/search-map-view-example.PNG'">
+      </div>
+
+      <p class="text-xl mb-5">
+        The delivery preview will give a brief summary of the listing: the pickup and dropoff locations, date created, the payout, the distance between, etc. If you accept the payout, tap the "Claim" button to start the fulfillment promise.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-claim-example.PNG'">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/listing-assigned-claimed.PNG'">
+      </div>
+      
+      <p class="text-xl mb-5">
+        The delivery is now assigned to you. As a service provider, you can see your active delivering by tapping the "Delivering" tab on the bottom navigation.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/your-delivering.PNG'">
+      </div>
+
+      <p class="text-xl mb-5">
+        Tapping a list item will take you to the delivery listing details screen for that delivery. Swiping down from the top will refresh the screen with the latest information available.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-listing-info.PNG'">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-details-open-status.PNG'">
+      </div>
+
+      <p class="text-xl mb-5">
+        Similar to the customer perspective, you will see details about the delivery listing. As the carrier, you have more controls/actions on the delivery listing, such as providing tracking updates, sending messages, capturing IDs/Signatures, marking statuses, etc.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-carrier-controls-1.PNG'">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-listing-carrier-controls-2.PNG'">
+      </div>
+
+      <p class="text-xl mb-5">
+        From the delivery details screen, the controls for the service provider are located towards the bottom. From there, the app and UI will guide on how to use them.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-carrier-controls-1.PNG'">
+        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-listing-carrier-controls-2.PNG'">
+      </div>
+
+      <p class="text-xl mb-5">
+        After marking the delivery as dropped off, the work of the service provider is done. All that is left is to wait for the listing owner to review and payout. At that point, the delivery will be marked as complete.
+      </p>
+
+
+    </section>
+  </div>
+</div>
