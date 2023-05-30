@@ -27,6 +27,7 @@
     "deploy-cloudfront-dev": "node deploy-cloudfront-all.js dev",
     "deploy-cloudfront-production": "node deploy-cloudfront-all.js production",
     "deploy-cloudfront-modern-dev": "node deploy-cloudfront.js modern dev",
+    "deploy-cloudfront-modern": "node deploy-cloudfront.js modern production && node deploy-cloudfront.js modern dev",
     "deploy-cloudfront-modern-production": "node deploy-cloudfront.js modern production",
     "deploy-cloudfront-deliverme-dev": "node deploy-cloudfront.js deliverme dev",
     "deploy-cloudfront-deliverme-production": "node deploy-cloudfront.js deliverme production",

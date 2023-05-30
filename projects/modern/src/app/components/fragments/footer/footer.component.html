@@ -1,22 +1,42 @@
 <div class="bg-primary p-9">
-  <div class="flex flex-col sm:flex-row">
-    <div class="w-full sm:w-2/3 text-[color:white]">
-      <h1 class="text-2xl mb-1">Modern</h1>
-      <p>&reg; Copyright {{ currentYear }}</p>
-    </div>
-    <div class="grow">
-      <p class="text-xl mb-5 text-[color:white]">Links</p>
+  <div class="container mx-auto flex flex-col lg:flex-row gap-5">
+    <div class="w-full lg:w-2/3 mb-10 lg:mb-0 text-[color:white]">
+      <h1 class="text-7xl mb-1">Modern</h1>
+      <p><span class="">&copy;</span> 2022 Ryan Myron Waite, LLC. All Rights Reserved.</p>
 
-      <ul class="text-[color:white] list-disc">
-        <li><a [routerLink]="['/about']">About</a></li>
-        <li><a [routerLink]="['/tutorials']">Tutorials</a></li>
-        <li><a [routerLink]="['/contact']">Contact</a></li>
-        <li><a [routerLink]="['/password-reset']">Password Reset</a></li>
-        <li><a [routerLink]="['/terms-agreements']">Terms & Agreements</a></li>
-        <li><a [routerLink]="['/privacy-policy']">Privacy Policy</a></li>
-        <li><a [routerLink]="['/technical-details']">Technical Details</a></li>
-        <li><a [routerLink]="['/security-protection']">Security & Protection</a></li>
-      </ul>
+      <div class="my-10"></div>
+
+      <p class="text-3xl">Contact</p>
+      <p>
+        <span>Owner: <a target="_blank" href="https://www.linkedin.com/in/ryanwaite28">https://www.linkedin.com/in/ryanwaite28</a></span><br/>
+        <span>Email: <a href="mailto:business@ryanmyronwaite.com">business@ryanmyronwaite.com</a></span><br/>
+        <span>Phone: <a href="tel:2404296728">+1 (240) 429-6728</a></span>
+      </p>
+    </div>
+
+    <div class="grow flex flex-col lg:flex-row">
+      <div class="w-full lg:w-1/2">
+        <p class="text-3xl mb-5 text-[color:white]">Info</p>
+        <ul class="text-[color:white] list-disc">
+          <li><a [routerLink]="['/about']">About</a></li>
+          <li><a [routerLink]="['/background']">Background</a></li>
+          <li><a [routerLink]="['/contact']">Contact</a></li>
+          <li><a [routerLink]="['/password-reset']">Password Reset</a></li>
+          <li><a [routerLink]="['/terms-agreements']">Terms & Agreements</a></li>
+          <li><a [routerLink]="['/privacy-policy']">Privacy Policy</a></li>
+          <li><a [routerLink]="['/technical-details']">Technical Details</a></li>
+        </ul>
+      </div>
+      
+      <div class="w-full lg:w-1/2">
+        <p class="text-3xl mb-5 text-[color:white]">Help</p>
+        <ul class="text-[color:white] list-disc">
+          <li><a [routerLink]="['/demo']">Video Demo</a></li>
+          <li><a [routerLink]="['/tutorials']">Tutorials</a></li>
+          <li><a [routerLink]="['/password-reset']">Password Reset</a></li>
+        </ul>
+      </div>
+
     </div>
   </div>
 </div>

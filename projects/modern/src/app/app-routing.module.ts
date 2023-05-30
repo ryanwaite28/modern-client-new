@@ -47,17 +47,21 @@ import { TutorialSearchFulfillDeliveryListingPageComponent } from './components/
 import { TutorialViewStripeConnectedAccountProfilePageComponent } from './components/pages/tutorials-main-page/tutorial-view-stripe-connected-account-profile-page/tutorial-view-stripe-connected-account-profile-page.component';
 import { PasswordResetPageComponent } from './components/pages/password-reset-page/password-reset-page.component';
 import { VerifyPasswordResetPageComponent } from './components/pages/verify-password-reset-page/verify-password-reset-page.component';
+import { BackgroundStoryPageComponent } from './components/pages/background-story-page/background-story-page.component';
+import { AppDemoVideoPageComponent } from './components/pages/app-demo-video-page/app-demo-video-page.component';
 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
   { path: 'welcome', pathMatch: 'full', component: WelcomeComponent },
   { path: 'about', pathMatch: 'full', component: AboutComponent },
+  { path: 'background', pathMatch: 'full', component: BackgroundStoryPageComponent },
   { path: 'contact', pathMatch: 'full', component: ContactComponent },
   { path: 'terms-agreements', pathMatch: 'full', component: TermsAgreementsComponent },
   { path: 'privacy-policy', pathMatch: 'full', component: PrivacyPolicyComponent },
   { path: 'technical-details', pathMatch: 'full', component: TechnicalDetailsPageComponent },
   { path: 'security-protection', pathMatch: 'full', component: SecurityProtectionPageComponent },
+  { path: 'demo', pathMatch: 'full', component: AppDemoVideoPageComponent },
   { path: 'faq', pathMatch: 'full', component: FaqPageComponent },
   { path: 'password-reset', pathMatch: 'full', component: PasswordResetPageComponent },
   { path: 'verify-password-reset', pathMatch: 'full', component: VerifyPasswordResetPageComponent },

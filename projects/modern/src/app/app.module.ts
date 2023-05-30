@@ -61,6 +61,8 @@ import { TutorialViewStripeConnectedAccountProfilePageComponent } from './compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordResetPageComponent } from './components/pages/password-reset-page/password-reset-page.component';
 import { VerifyPasswordResetPageComponent } from './components/pages/verify-password-reset-page/verify-password-reset-page.component';
+import { BackgroundStoryPageComponent } from './components/pages/background-story-page/background-story-page.component';
+import { AppDemoVideoPageComponent } from './components/pages/app-demo-video-page/app-demo-video-page.component';
 
 
 
@@ -118,6 +120,8 @@ import { VerifyPasswordResetPageComponent } from './components/pages/verify-pass
     TutorialSearchFulfillDeliveryListingPageComponent,
     TutorialViewStripeConnectedAccountProfilePageComponent,
     VerifyPasswordResetPageComponent,
+    BackgroundStoryPageComponent,
+    AppDemoVideoPageComponent,
   ],
   imports: [
     BrowserModule,
