@@ -49,6 +49,7 @@ import { PasswordResetPageComponent } from './components/pages/password-reset-pa
 import { VerifyPasswordResetPageComponent } from './components/pages/verify-password-reset-page/verify-password-reset-page.component';
 import { BackgroundStoryPageComponent } from './components/pages/background-story-page/background-story-page.component';
 import { AppDemoVideoPageComponent } from './components/pages/app-demo-video-page/app-demo-video-page.component';
+import { StripeConnectOnboardingRedirectPageComponent } from './components/pages/stripe-connect-onboarding-redirect-page/stripe-connect-onboarding-redirect-page.component';
 
 
 const routes: Routes = [
@@ -65,6 +66,7 @@ const routes: Routes = [
   { path: 'faq', pathMatch: 'full', component: FaqPageComponent },
   { path: 'password-reset', pathMatch: 'full', component: PasswordResetPageComponent },
   { path: 'verify-password-reset', pathMatch: 'full', component: VerifyPasswordResetPageComponent },
+  { path: 'stripe-connect-onboarding-return', pathMatch: 'full', component: StripeConnectOnboardingRedirectPageComponent },
   { path: 'signup', pathMatch: 'full', component: SignupComponent, canActivate: [SignedOutGuard] },
   { path: 'signin', pathMatch: 'full', component: SigninComponent, canActivate: [SignedOutGuard] },
   { path: 'signout', pathMatch: 'full', component: SignoutComponent, canActivate: [SignedInGuard] },

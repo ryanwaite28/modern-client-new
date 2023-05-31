@@ -63,6 +63,7 @@ import { PasswordResetPageComponent } from './components/pages/password-reset-pa
 import { VerifyPasswordResetPageComponent } from './components/pages/verify-password-reset-page/verify-password-reset-page.component';
 import { BackgroundStoryPageComponent } from './components/pages/background-story-page/background-story-page.component';
 import { AppDemoVideoPageComponent } from './components/pages/app-demo-video-page/app-demo-video-page.component';
+import { StripeConnectOnboardingRedirectPageComponent } from './components/pages/stripe-connect-onboarding-redirect-page/stripe-connect-onboarding-redirect-page.component';
 
 
 
@@ -122,6 +123,7 @@ import { AppDemoVideoPageComponent } from './components/pages/app-demo-video-pag
     VerifyPasswordResetPageComponent,
     BackgroundStoryPageComponent,
     AppDemoVideoPageComponent,
+    StripeConnectOnboardingRedirectPageComponent,
   ],
   imports: [
     BrowserModule,
