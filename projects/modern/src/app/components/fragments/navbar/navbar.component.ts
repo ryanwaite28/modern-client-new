@@ -34,9 +34,9 @@ export class NavbarComponent implements OnInit {
               { text: `Create Delivery`, href: ['/', 'users', you.id, 'create-delivery'] },
               { text: `Deliveries`, href: ['/', 'users', you.id, 'deliveries'] },
               { text: `Delivering`, href: ['/', 'users', you.id, 'delivering'] },
-              { text: `Search`, href: ['/', 'users', you.id, 'search'] },
+              { text: `Search Form`, href: ['/', 'users', you.id, 'search'] },
+              { text: `Search Map`, href: ['/', 'deliveries', 'browse-map'] },
               { text: `Recent`, href: ['/', 'deliveries', 'browse-recent'] },
-              { text: `Map`, href: ['/', 'deliveries', 'browse-map'] },
               { text: `Sign Out`, href: ['/', 'signout'] },
             ]
           : [

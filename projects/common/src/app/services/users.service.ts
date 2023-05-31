@@ -438,9 +438,9 @@ export class UsersService {
   
   /** PUT */
   
-  create_stripe_account<T = any>(you_id: number) {
+  create_stripe_account<T = any>(you_id: number, redirectUrl) {
     return this.clientService.sendRequest<GenericApiResponse<T>>(
-      `/users/${you_id}/create-stripe-account`, `PUT`
+      `/users/${you_id}/create-stripe-account?redirectUrl=${redirectUrl}`, `PUT`, { redirectUrl }
     ).pipe(
       map((response: any) => {
         return response;

@@ -115,7 +115,7 @@ export class DeliveryCardComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    this.messages_list_end = !!this.delivery && this.delivery.delivery_messages!.length < 5;
+    this.messages_list_end = !!this.delivery && !!this.delivery.delivery_messages && this.delivery.delivery_messages.length < 5;
     if (!this.delivery) {
       console.warn(`delivery object not given...`, this);
       return;

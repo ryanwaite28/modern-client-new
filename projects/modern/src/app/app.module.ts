@@ -64,6 +64,7 @@ import { VerifyPasswordResetPageComponent } from './components/pages/verify-pass
 import { BackgroundStoryPageComponent } from './components/pages/background-story-page/background-story-page.component';
 import { AppDemoVideoPageComponent } from './components/pages/app-demo-video-page/app-demo-video-page.component';
 import { StripeConnectOnboardingRedirectPageComponent } from './components/pages/stripe-connect-onboarding-redirect-page/stripe-connect-onboarding-redirect-page.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -130,6 +131,7 @@ import { StripeConnectOnboardingRedirectPageComponent } from './components/pages
     AppRoutingModule,
     ModernCommonModule,
     BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [
     CsrfProvider,

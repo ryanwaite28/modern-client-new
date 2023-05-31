@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PaymentMethod, StripeCardElement, PaymentMethodResult } from '@stripe/stripe-js';
 import { AlertDivClass } from 'projects/common/src/app/enums/all.enums';
 import { PlainObject } from 'projects/common/src/app/interfaces/json-object.interface';
@@ -16,6 +16,8 @@ import { UsersService } from 'projects/common/src/app/services/users.service';
 import { UserStoreService } from 'projects/common/src/app/stores/user-store.service';
 import { capitalize, getUserFullName } from 'projects/common/src/app/_misc/chamber';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'common-user-settings',
@@ -126,6 +128,8 @@ export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
+  stripeOnboardingRefresh = false;
+
   constructor(
     private userStore: UserStoreService,
     private usersService: UsersService,
@@ -136,9 +140,22 @@ export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnD
     private googleService: GoogleMapsService,
     private stripeService: StripeService,
     private datePipe: DatePipe,
+    private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe({
+      next: (queryParams: Params) => {
+        console.log({ queryParams });
+        this.stripeOnboardingRefresh = !!queryParams['stripeOnboardingRefresh'];
+        if (queryParams['stripeOnboardingRefresh']) {
+          console.log(`Showing message...`);
+          this.alertService.showSuccessMessage(`Stripe Connect onboarding not finished yet. Please finish in order to gain access to app functionality.`);
+        }
+      }
+    });
+
     this.userStore.getChangesObs().subscribe({
       next: (you: IUser | null) => {
         this.initSettings(you);
@@ -497,18 +514,20 @@ export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnD
 
   createStripeAccount() {
     this.loading = true;
-    this.usersService.create_stripe_account(this.you!.id).subscribe(
-      (response: any) => {
+    const { origin, pathname } = window.location;
+    const redirectUrl = origin + pathname;
+    this.usersService.create_stripe_account(this.you!.id, redirectUrl).subscribe({
+      next: (response: any) => {
         this.loading = false;
         // window.location.href = response.data.onboarding_url;
         window.open(response.data.onboarding_url, `_blank`);
       },
-      (error: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         this.loading = false;
         this.handleResponseError(error);
       }
-      );
-    }
+    });
+  }
     
   createPaymentMethod() {
     const stripe = this.stripeService.getStripe();
