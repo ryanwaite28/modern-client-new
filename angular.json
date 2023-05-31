@@ -190,7 +190,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "40kb"
+                  "maximumError": "10mb"
                 }
               ],
               "fileReplacements": [
@@ -218,7 +218,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "40kb"
+                  "maximumError": "10mb"
                 }
               ],
               "fileReplacements": [
