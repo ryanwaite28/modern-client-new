@@ -17,10 +17,10 @@ export class StripeConnectOnboardingRedirectPageComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe({
       next: (params: Params) => {
-        if (params['appDeepLinkRedirect']) {
+        if (params['appDeepLinkRedirectURL']) {
           this.isRedirecting = true;
           setTimeout(() => {
-            window.open(params['appDeepLinkRedirect']);
+            window.open(params['appDeepLinkRedirectURL']);
           }, 3000);
         }
       }
