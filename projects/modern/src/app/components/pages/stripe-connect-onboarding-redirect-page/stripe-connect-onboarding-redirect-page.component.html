@@ -5,12 +5,14 @@
       <div class="font-sans">
         <p class="text-5xl mb-10">Stripe Connect onboarding return page.</p>
 
+        <!-- <p *ngIf="!!link">{{ link }}</p> -->
+
         <p class="text-xl mb-5">
           If onboarding was successful, you will be redirected to the app.
         </p>
         <div class="text-xl mb-5" *ngIf="isRedirecting">
           <p>Successfully onboarded Stripe Connect Account! Redirecting to app...</p>
-          <img src="https://static.carryapp.me/assets/img/spinner-loader-1.gif" alt="Loading icon" class="w-16" />
+          <img src="https://static.carryapp.me/assets/img/spinner-loader-1.gif" alt="Loading icon" class="w-8 my-3" />
         </div>
       </div>
 

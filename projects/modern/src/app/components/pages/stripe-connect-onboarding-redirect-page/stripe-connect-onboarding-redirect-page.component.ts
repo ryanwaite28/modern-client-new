@@ -9,6 +9,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class StripeConnectOnboardingRedirectPageComponent implements OnInit {
 
   isRedirecting = false;
+  link = '';
 
   constructor(
     private activatedRoute: ActivatedRoute
@@ -19,9 +20,12 @@ export class StripeConnectOnboardingRedirectPageComponent implements OnInit {
       next: (params: Params) => {
         if (params['appDeepLinkRedirectURL']) {
           this.isRedirecting = true;
+          this.link = params['appDeepLinkRedirectURL'];
+          // window.open(params['appDeepLinkRedirectURL']);
+          
           setTimeout(() => {
-            window.open(params['appDeepLinkRedirectURL']);
-          }, 3000);
+            location.href = params['appDeepLinkRedirectURL'];
+          }, 1000);
         }
       }
     });
