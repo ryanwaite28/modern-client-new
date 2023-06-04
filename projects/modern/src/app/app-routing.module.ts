@@ -50,12 +50,15 @@ import { VerifyPasswordResetPageComponent } from './components/pages/verify-pass
 import { BackgroundStoryPageComponent } from './components/pages/background-story-page/background-story-page.component';
 import { AppDemoVideoPageComponent } from './components/pages/app-demo-video-page/app-demo-video-page.component';
 import { StripeConnectOnboardingRedirectPageComponent } from './components/pages/stripe-connect-onboarding-redirect-page/stripe-connect-onboarding-redirect-page.component';
+import { ReleaseNotesPageComponent } from './components/pages/release-notes-page/release-notes-page.component';
+import { HelpPageComponent } from './components/pages/help-page/help-page.component';
 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
   { path: 'welcome', pathMatch: 'full', component: WelcomeComponent },
   { path: 'about', pathMatch: 'full', component: AboutComponent },
+  { path: 'help', pathMatch: 'full', component: HelpPageComponent },
   { path: 'background', pathMatch: 'full', component: BackgroundStoryPageComponent },
   { path: 'contact', pathMatch: 'full', component: ContactComponent },
   { path: 'terms-agreements', pathMatch: 'full', component: TermsAgreementsComponent },
@@ -88,6 +91,16 @@ const routes: Routes = [
     ]
   },
   // END Tutorial Pages
+
+  // Release Notes Pages
+  {
+    path: 'releases',
+    component: ReleaseNotesPageComponent,
+    children: [
+      // { path: 'installing', component: TutorialInstallingAppPageComponent },
+    ]
+  },
+  // END Release Notes Pages
   
   { path: 'verify-email/:uuid', pathMatch: 'full', component: CommonVerifyEmailComponent },
   { path: 'verify-stripe-account/:user_uuid', pathMatch: 'full', component: VerifyStripeAccountComponent },

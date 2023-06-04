@@ -65,6 +65,8 @@ import { BackgroundStoryPageComponent } from './components/pages/background-stor
 import { AppDemoVideoPageComponent } from './components/pages/app-demo-video-page/app-demo-video-page.component';
 import { StripeConnectOnboardingRedirectPageComponent } from './components/pages/stripe-connect-onboarding-redirect-page/stripe-connect-onboarding-redirect-page.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReleaseNotesPageComponent } from './components/pages/release-notes-page/release-notes-page.component';
+import { HelpPageComponent } from './components/pages/help-page/help-page.component';
 
 
 
@@ -125,6 +127,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     BackgroundStoryPageComponent,
     AppDemoVideoPageComponent,
     StripeConnectOnboardingRedirectPageComponent,
+    ReleaseNotesPageComponent,
+    HelpPageComponent,
   ],
   imports: [
     BrowserModule,
