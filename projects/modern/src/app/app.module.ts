@@ -67,6 +67,7 @@ import { StripeConnectOnboardingRedirectPageComponent } from './components/pages
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReleaseNotesPageComponent } from './components/pages/release-notes-page/release-notes-page.component';
 import { HelpPageComponent } from './components/pages/help-page/help-page.component';
+import { StripeIdentityVerificationRedirectPageComponent } from './components/pages/stripe-identity-verification-redirect-page/stripe-identity-verification-redirect-page.component';
 
 
 
@@ -129,6 +130,7 @@ import { HelpPageComponent } from './components/pages/help-page/help-page.compon
     StripeConnectOnboardingRedirectPageComponent,
     ReleaseNotesPageComponent,
     HelpPageComponent,
+    StripeIdentityVerificationRedirectPageComponent,
   ],
   imports: [
     BrowserModule,

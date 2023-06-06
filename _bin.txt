@@ -313,3 +313,31 @@ https://github.com/heroku/heroku-buildpack-multi-procfile.git
       </div>
       
     </div>
+
+
+-------------
+
+
+
+
+
+<a class="font-bold" target="_blank" href=""></a>
+
+
+
+
+
+<p class="text-lg mb-5">
+
+</p>
+
+
+
+<p class="text-lg mb-5">
+  The first programming language I learned was <a class="font-bold" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">JavaScript</a>/<a class="font-bold" target="_blank" href="https://www.typescriptlang.org/">TypeScript</a> 
+  so that was my weapon of choice; it works fine for what I want to do. 
+  The backend API (application programming interface) was written in <a class="font-bold" target="_blank" href="https://expressjs.com/">express.js</a> since it was the fastest and most flexible library to use and get started with. 
+  The database used is <a class="font-bold" target="_blank" href="https://www.postgresql.org/">PostgreSQL</a> since it is battle-tested and supports the kind of tasks/processing I need; 
+  the code uses <a class="font-bold" target="_blank" href="https://sequelize.org/">Sequelize</a> <a class="font-bold" target="_blank" href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">ORM</a> (object relational mapper) to interact with the database in an efficient way. 
+  
+</p>
