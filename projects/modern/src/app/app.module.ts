@@ -68,6 +68,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReleaseNotesPageComponent } from './components/pages/release-notes-page/release-notes-page.component';
 import { HelpPageComponent } from './components/pages/help-page/help-page.component';
 import { StripeIdentityVerificationRedirectPageComponent } from './components/pages/stripe-identity-verification-redirect-page/stripe-identity-verification-redirect-page.component';
+import { StripeIdentityVerificationUploadPageComponent } from './components/pages/stripe-identity-verification-upload-page/stripe-identity-verification-upload-page.component';
+import { TutorialStripeIdentityPageComponent } from './components/pages/tutorials-main-page/tutorial-stripe-identity-page/tutorial-stripe-identity-page.component';
 
 
 
@@ -131,6 +133,8 @@ import { StripeIdentityVerificationRedirectPageComponent } from './components/pa
     ReleaseNotesPageComponent,
     HelpPageComponent,
     StripeIdentityVerificationRedirectPageComponent,
+    StripeIdentityVerificationUploadPageComponent,
+    TutorialStripeIdentityPageComponent,
   ],
   imports: [
     BrowserModule,

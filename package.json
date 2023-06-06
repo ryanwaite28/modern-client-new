@@ -22,6 +22,7 @@
     "build-carmaster-dev": "ng build carmaster --configuration=dev",
     "build-carmaster-production": "ng build carmaster --configuration=production",
     "serve-modern": "ng serve --project=modern --port=5200",
+    "serve-modern-public": "ng serve --project=modern --port=5200 --host 0.0.0.0",
     "serve-deliverme": "ng serve --project=deliverme --port=4200",
     "serve-carmaster": "ng serve --project=carmaster --port=6200",
     "deploy-cloudfront-dev": "node deploy-cloudfront-all.js dev",

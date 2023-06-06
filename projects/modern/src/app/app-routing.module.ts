@@ -53,6 +53,8 @@ import { StripeConnectOnboardingRedirectPageComponent } from './components/pages
 import { ReleaseNotesPageComponent } from './components/pages/release-notes-page/release-notes-page.component';
 import { HelpPageComponent } from './components/pages/help-page/help-page.component';
 import { StripeIdentityVerificationRedirectPageComponent } from './components/pages/stripe-identity-verification-redirect-page/stripe-identity-verification-redirect-page.component';
+import { StripeIdentityVerificationUploadPageComponent } from './components/pages/stripe-identity-verification-upload-page/stripe-identity-verification-upload-page.component';
+import { TutorialStripeIdentityPageComponent } from './components/pages/tutorials-main-page/tutorial-stripe-identity-page/tutorial-stripe-identity-page.component';
 
 
 const routes: Routes = [
@@ -72,6 +74,7 @@ const routes: Routes = [
   { path: 'verify-password-reset', pathMatch: 'full', component: VerifyPasswordResetPageComponent },
   
   { path: 'stripe-connect-onboarding-return', pathMatch: 'full', component: StripeConnectOnboardingRedirectPageComponent },
+  { path: 'stripe-identity-verification-upload', pathMatch: 'full', component: StripeIdentityVerificationUploadPageComponent },
   { path: 'stripe-identity-verification-return', pathMatch: 'full', component: StripeIdentityVerificationRedirectPageComponent },
 
   { path: 'signup', pathMatch: 'full', component: SignupComponent, canActivate: [SignedOutGuard] },
@@ -88,6 +91,7 @@ const routes: Routes = [
       { path: 'signup', component: TutorialSignupPageComponent },
       { path: 'login', component: TutorialLoginPageComponent },
       { path: 'setting-up-stripe-connect', component: TutorialSettingUpStripeConnectPageComponent },
+      { path: 'stripe-identity-verification', component: TutorialStripeIdentityPageComponent },
       { path: 'stripe-customer-account', component: TutorialStripeCustomerAccountPageComponent },
       { path: 'create-manage-delivery-listing', component: TutorialCreateDeliveryListingPageComponent },
       { path: 'search-fulfill-delivery-listing', component: TutorialSearchFulfillDeliveryListingPageComponent },

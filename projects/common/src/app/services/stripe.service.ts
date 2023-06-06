@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
-import { from, mergeMap, of } from 'rxjs';
+import { BehaviorSubject, filter, from, mergeMap, of, take } from 'rxjs';
 import { StripeAmountFormatterPipe } from '../pipes/stripe-amount-formatter.pipe';
 import { ClientService } from './client.service';
 import { UsersService } from './users.service';
@@ -14,6 +14,11 @@ export class StripeService {
   private stripe_public_key: any;
   private stripe: Stripe | null = null;
   private is_subscription_active: boolean = false;
+
+  private isReadyStream = new BehaviorSubject<boolean>(false);
+  get isReady() {
+    return this.isReadyStream.asObservable().pipe(filter((state: boolean) => state), take(1));
+  }
 
   constructor(
     private clientService: ClientService,
@@ -40,6 +45,7 @@ export class StripeService {
 
           if (stripe) {
             console.log(`Stripe initialized successfully`, this);
+            this.isReadyStream.next(true);
             return of(true);
           }
           else {
