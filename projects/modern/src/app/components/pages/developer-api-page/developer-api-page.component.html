@@ -1,0 +1,49 @@
+<div class="container mx-auto">
+  <div class="background-white m-3 sm:m-16">
+    <section class="p-3 sm:p-16 border border-gray-300 shadow-sm">
+      
+      <p class="text-5xl mb-10">Developer API</p>
+      <p class="text-xl mb-5">
+        There is an API available to use your account programmatically. 
+        The backend services has a Swagger UI page, though it is not very detailed as of now, but id does show the available endpoints: <a target="_blank" [href]="swagger_ui_page">{{ swagger_ui_page }}</a>
+      </p>
+
+      <p class="text-xl mb-5">
+        When signing up, a developer API key is also created and assigned to the account; it will appear in the welcome email and can also be found in your settings -- do not expose or share with anyone.
+      </p>
+
+      <p class="text-xl mb-5">
+        To use the Carry API, use the api key to get an OAuth access token; Access Tokens expire 6 hours from creation. Pass the api key as a URL query param to /oauth/token as a GET request.
+      </p>
+
+      <p class="text-xl">
+        Example Request:
+      </p>
+      <pre>
+        <code>
+          curl -X 'GET' \
+          'http://localhost/oauth/token?api-key=api-key' \
+          -H 'accept: */*'
+        </code>
+      </pre>
+
+      <p class="text-xl">
+        Example Response:
+      </p>
+      <pre ngNonBindable>
+        <code ngNonBindable>
+          &lbrace;
+            "data": &lbrace;
+              "access_token": "access token..."
+            &rbrace;
+          &rbrace;
+        </code>
+      </pre>
+
+      <p class="text-xl">
+        After getting an access_token, you can make any request to the backend service using the <strong>/api</strong> path prefix. The access token must appear in a "x-oauth-access-token" header to validate the request.
+      </p>
+
+    </section>
+  </div>
+</div>

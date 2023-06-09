@@ -190,11 +190,11 @@ export class UserSettingsFragmentComponent implements OnInit, AfterViewInit, OnD
     this.setFormsInitialState();
 
     if (you) {
-      // this.usersService.get_user_api_key(you.id).subscribe({
-      //   next: (response: ServiceMethodResultsInfo<IApiKey>) => {
-      //     this.apiKey = response.data;
-      //   }
-      // });
+      this.usersService.get_user_api_key(you.id).subscribe({
+        next: (response: ServiceMethodResultsInfo<IApiKey>) => {
+          this.apiKey = response.data;
+        }
+      });
 
       this.usersService.get_user_customer_cards_payment_methods(you.id).subscribe({
         next: (response: any) => {

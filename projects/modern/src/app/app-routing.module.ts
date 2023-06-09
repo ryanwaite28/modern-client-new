@@ -55,6 +55,7 @@ import { HelpPageComponent } from './components/pages/help-page/help-page.compon
 import { StripeIdentityVerificationRedirectPageComponent } from './components/pages/stripe-identity-verification-redirect-page/stripe-identity-verification-redirect-page.component';
 import { StripeIdentityVerificationUploadPageComponent } from './components/pages/stripe-identity-verification-upload-page/stripe-identity-verification-upload-page.component';
 import { TutorialStripeIdentityPageComponent } from './components/pages/tutorials-main-page/tutorial-stripe-identity-page/tutorial-stripe-identity-page.component';
+import { DeveloperApiPageComponent } from './components/pages/developer-api-page/developer-api-page.component';
 
 
 const routes: Routes = [
@@ -69,6 +70,7 @@ const routes: Routes = [
   { path: 'technical-details', pathMatch: 'full', component: TechnicalDetailsPageComponent },
   { path: 'security-protection', pathMatch: 'full', component: SecurityProtectionPageComponent },
   { path: 'demo', pathMatch: 'full', component: AppDemoVideoPageComponent },
+  { path: 'developer', pathMatch: 'full', component: DeveloperApiPageComponent },
   { path: 'faq', pathMatch: 'full', component: FaqPageComponent },
   { path: 'password-reset', pathMatch: 'full', component: PasswordResetPageComponent },
   { path: 'verify-password-reset', pathMatch: 'full', component: VerifyPasswordResetPageComponent },

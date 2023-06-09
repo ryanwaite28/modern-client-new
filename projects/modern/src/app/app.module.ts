@@ -70,6 +70,7 @@ import { HelpPageComponent } from './components/pages/help-page/help-page.compon
 import { StripeIdentityVerificationRedirectPageComponent } from './components/pages/stripe-identity-verification-redirect-page/stripe-identity-verification-redirect-page.component';
 import { StripeIdentityVerificationUploadPageComponent } from './components/pages/stripe-identity-verification-upload-page/stripe-identity-verification-upload-page.component';
 import { TutorialStripeIdentityPageComponent } from './components/pages/tutorials-main-page/tutorial-stripe-identity-page/tutorial-stripe-identity-page.component';
+import { DeveloperApiPageComponent } from './components/pages/developer-api-page/developer-api-page.component';
 
 
 
@@ -135,6 +136,7 @@ import { TutorialStripeIdentityPageComponent } from './components/pages/tutorial
     StripeIdentityVerificationRedirectPageComponent,
     StripeIdentityVerificationUploadPageComponent,
     TutorialStripeIdentityPageComponent,
+    DeveloperApiPageComponent,
   ],
   imports: [
     BrowserModule,
