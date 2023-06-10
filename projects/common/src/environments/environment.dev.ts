@@ -1,6 +1,6 @@
 export const environment = {
   PRODUCTION: true,
-  API_DOMAIN: `https://rmw-modern-server-dev.herokuapp.com`,
+  API_DOMAIN: `https://backend-dev.carryapp.me`,
   MODERN_DOMAIN: `https://modernapps.cf`,
 
   APPS: [
