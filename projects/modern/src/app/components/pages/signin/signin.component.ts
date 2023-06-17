@@ -20,8 +20,8 @@ export class SigninComponent implements OnInit {
   ];
 
   signinForm = new UntypedFormGroup({
-    'email': new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
-    'password': new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    email_or_username: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
+    password: new UntypedFormControl('', this.COMMON_TEXT_VALIDATOR),
   });
   error = false;
   errorMessage: string | any;
