@@ -11,22 +11,21 @@
       <p class="text-xl mb-5">
         While signed in, tap the "Deliveries" tab on the bottom navigation.
       </p>
-      <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/customer-deliveries-screen.PNG'">
+      <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/deliveries-screen.png'">
 
       <p class="text-xl mb-5">
         This is where your delivery listings will show. You can swipe down from the top to refresh and swipe up to see older listings until the end is reached (all your listings are loaded). 
         At the top right on this screen, there is a plus button. Tapping it will navigate to the "Create a Delivery" screen.
       </p>
-      <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/new-delivery-info-section.PNG'">
+      <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/create-delivery-screen.png'">
 
       <p class="text-xl mb-5">
         From here, you fill out the form for the listing you want to create. It is very similar to the information any other carrier will ask for (from name & address, to name & address, size, weight, value of items, etc).
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/new-delivery-info-section-2.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/new-delivery-pickup-section.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/new-delivery-dropoff-section.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/new-delivery-address-search-section.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/create-delivery-info.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/create-delivery-pickup-info.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/create-delivery-pickup-address.png'">
       </div>
       <p class="text-xl mb-5">
         The <span>payout</span> field is how much you are paying; this is what the service provider gets pay for fulfilling the request.
@@ -43,56 +42,61 @@
         After filling out all fields, the "Review" section will give a summary of the costs.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/listing-with-insurance.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/listing-without-insurance.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/create-delivery-review.png'">
       </div>
 
       <p class="text-xl mb-5">
-        Terms and agreements must be accepted in order to submit the listing. To submit, select a payment option to use for paying then tap the Submit button at the very bottom. Upon submitting, Carry will attempt to place a hold 
-        on your payment option: if successfully authorized, Carry will hold the final total until the service is fulfilled by a service provider; the listing will then be created.
+        Terms and agreements must be accepted in order to submit the listing. To submit, select a payment option to use for paying then tap the Submit button at the very bottom. Upon submitting, Carry will attempt to <span class="font-bold">place a hold</span> 
+        on your payment option: if successfully authorized to place a hold, Carry will hold the final total until the delivery is fulfilled by a service provider; the listing will then be created.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="max-w-full polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/stripe-funds-hold.png'">
+        <img class="max-w-full polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/delivery-listing-payment-hold.png'">
       </div>
 
       <p class="text-xl mb-5">
         A successful submission will return you to the deliveries screen with the new listing item, along with an alert message reflecting that result. A delivery listing starts off in the <span class="font-bold">Open</span> status, meaning it is available for any service provider to claim and fulfill.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/new-delivery-created-example.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-open-status.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/create-delivery-success.png'">
+      </div>
+
+      <p class="text-xl mb-5">
+        The chevron icon is for expanding/collapsing details while the sync icon is for reloading the latest status/data of the delivery item.
+      </p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-list-item-expanded.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-list-item-reload-data.png'">
       </div>
 
       <p class="text-xl mb-5">
         Tapping a list item will take you to the delivery listing details screen for that delivery. Swiping down from the top will refresh the screen with the latest information available.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-listing-info.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-details-open-status.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-details-open-status.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-details-screen.png'">
       </div>
 
       <p class="text-xl mb-5">
         To cancel a listing, tap the delete (trash icon) button at the top right. Note: a listing cannot be deleted if a service provider has started fulfilling the listing. Deleting a listing will release the hold on the payment method used to create the listing.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-delete-prompt.PNG'">
-        <img class="max-w-full polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/stripe-funds-canceled.png'">
+        <img class="max-w-full polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/delivery-listing-payment-canceled.png'">
       </div>
 
       <p class="text-xl mb-5">
         Throughout the duration of a delivery listing (from listing creation to fulfillment), you will receive push notifications of events and activities from the assigned service provider. This includes tracking updates, messages, statuses, etc.
       </p>
-      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/notifications-1.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/notifications-2.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/notifications-3.PNG'">
-      </div>
+      <!-- <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/_____.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/_____.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/_____.png'">
+      </div> -->
 
       <p class="text-xl mb-5">
         As the owner of the listing, you are able to communicate with the service provider via messaging on the delivery listing. On the Delivery details screen, towards the bottom, tap the "Messages" button. From there, tap the plus icon at the top right. This will bring up the new message form.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/add-message.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-messages.png'">
       </div>
 
       <p class="text-xl mb-5">
@@ -104,7 +108,8 @@
         You can trigger the payout. After receiving the notification that the delivery was dropped off, refresh the screen to load the latest data. At the very bottom, there will be a "Pay Carrier" button. Tapping that button will payout to the carrier (service provider) and complete the delivery.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-listing-pay-carrier.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-pay-carrier-button.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-payment-successful.png'">
       </div>
 
       <p class="text-xl mb-5">

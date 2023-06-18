@@ -7,9 +7,9 @@
         Carry also uses the <a href="https://stripe.com/docs/billing/customer" class="font-bold" target="_blank">Customers</a> feature from Stripe to manage paying for delivery listings and membership subscriptions. After creating an account, the platform automatically created a customer account for you.
       </p>
       <p class="text-xl mb-5">
-        On the settings screen, scroll down until you get to the "Stripe Customer Account" section.
+        On the settings screen, tap the "Add Payment Method" settings.
       </p>
-      <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-stripe-adding-payment-method.PNG'">
+      <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/settings-main-screen-verified.png'">
 
       <p class="text-xl mb-5">
         This is where you can add any card information to associate to your Stripe customer account. Again, this is managed by Stripe; Carry does not keep or know about any personal finance data. 
@@ -17,20 +17,25 @@
         Stripe created SDKs (software development kit) for other platforms to use their services, one of which is the <a href="https://stripe.com/docs/libraries/react-native" class="font-bold" target="_blank">Stripe React Native SDK</a>. By using Stripe's SDK (and verification of Apple App Store/Google Play Store for compliance), 
         user input is protected and secured.
       </p>
+      
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/stripe-customer-add-payment-method.png'">
+      </div>
+
       <p class="text-xl mb-5">
-        After successfully submitting card information, you will see it as a payment option on your settings page.
+        After successfully submitting card information, you will see it as a payment option wherever payments are needed. To manage all payment methods on your stripe customer account, go back to the settings main menu and tap "Payment Methods on File".
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-payment-method-submit.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-payment-methods-list.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/settings-main-screen-verified.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/stripe-customer-payment-methods-on-file.png'">
       </div>
 
       <p class="text-xl mb-5">
         With payment methods attached to your Stripe customer account, you can now pay for things on the platform, the 2 main things being listings and subscriptions. To enter a subscription with the platform, go to the "Membership" section, choose a payment method on file and tap "Subscribe".
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-membership-subscribe.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-membership-subscribed.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/settings-main-screen-verified.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/platform-membership-subscribe.png'">
       </div>
       
       <p class="text-xl mb-5">
@@ -45,7 +50,7 @@
         The "Membership" section will now show when the subscription renewal date is.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/settings-membership-status-subscribed.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/platform-subscribe-success.png'">
       </div>
 
       <p class="text-xl mb-5">

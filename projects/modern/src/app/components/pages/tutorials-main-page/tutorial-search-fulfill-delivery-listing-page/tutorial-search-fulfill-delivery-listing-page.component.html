@@ -10,7 +10,7 @@
       <p class="text-xl mb-5">
         While logged in, tap the "Search" button on the bottom navigation.
       </p>
-      <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/search-map-view.PNG'">
+      <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/search-main-screen.png'">
 
       <p class="text-xl mb-5">
         The initial screen will be a map. There are 3 buttons at the top right: the list icon is for searching for listings via selected pickup and dropoff locations, the location arrow icon is for getting your current location to pan the map to your position. 
@@ -21,55 +21,62 @@
       <p class="text-xl mb-5">
         After touching the refresh icon, If there are NO results, an alert will show to indicate that.
       </p>
-      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/search-no-results.PNG'">
-      </div>
+      <!-- <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/_____.png'">
+      </div> -->
 
       <p class="text-xl mb-5">
-        After touching the refresh icon, If there ARE results, they will be represented as markers on the map. Tap the marker to open the delivery listing preview.
+        If there ARE results, they will be represented as markers on the map. Tap the marker to see a small overview of the details in an info window. Tap "See Details" to see more and open the delivery preview; from there, you will see a button to claim the delivery job.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/search-map-view-example.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/search-map-results.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/search-result-abstract-without-line.png'">
       </div>
 
       <p class="text-xl mb-5">
         The delivery preview will give a brief summary of the listing: the pickup and dropoff locations, date created, the payout, the distance between, etc. If you accept the payout, tap the "Claim" button to start the fulfillment promise.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-claim-example.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/listing-assigned-claimed.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/search-result-details.png'">
       </div>
       
       <p class="text-xl mb-5">
         The delivery is now assigned to you. As a service provider, you can see your active delivering by tapping the "Delivering" tab on the bottom navigation.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/your-delivering.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-claimed.png'">
       </div>
 
       <p class="text-xl mb-5">
         Tapping a list item will take you to the delivery listing details screen for that delivery. Swiping down from the top will refresh the screen with the latest information available.
       </p>
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-listing-info.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-details-open-status.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-details-screen.png'">
       </div>
 
       <p class="text-xl mb-5">
         Similar to the customer perspective, you will see details about the delivery listing. As the carrier, you have more controls/actions on the delivery listing, such as providing tracking updates, sending messages, capturing IDs/Signatures, marking statuses, etc.
       </p>
+      <p class="text-xl mb-5">
+        When handling a delivery, make sure to capture IDs/Signatures before marking as picked up/dropped off; you won't have access to those controls after updating the delivery status.
+      </p>
+
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-carrier-controls-1.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-listing-carrier-controls-2.PNG'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-status-section.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-tracking-updated-submitted.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-pickup-signature-pad-example.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-message-sent.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-dropoff-controls.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/delivery-info-example.png'">
       </div>
 
       <p class="text-xl mb-5">
         From the delivery details screen, the controls for the service provider are located towards the bottom. From there, the app and UI will guide on how to use them.
       </p>
-      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-carrier-controls-1.PNG'">
-        <img class="w-48 sm:w-64 polaroid mb-5" [src]="'https://static.carryapp.me/assets/img/tutorials-screenshots/delivery-listing-carrier-controls-2.PNG'">
-      </div>
+      <!-- <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/_____.png'">
+        <img class="w-full sm:w-96 polaroid mb-5" [src]="'https://static.carryapp.me/assets/previews/iphone/_____.png'">
+      </div> -->
 
       <p class="text-xl mb-5">
         After marking the delivery as dropped off, the work of the service provider is done. All that is left is to wait for the listing owner to review and payout. At that point, the delivery will be marked as complete.
